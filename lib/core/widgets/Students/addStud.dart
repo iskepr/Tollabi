@@ -28,7 +28,7 @@ class _AddStudState extends State<AddStud> {
           Input(title: "رقم الهاتف", controller: TextEditingController()),
           SizedBox(height: 20),
           Button(
-            title: "اضافة",
+            title: "إضافة",
             onTap: () {
               Navigator.pop(context);
             },

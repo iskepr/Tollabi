@@ -44,6 +44,7 @@ class _BottomBarState extends State<BottomBar> {
         children: List.generate(
           widget.pages.length,
           (index) => GestureDetector(
+            behavior: HitTestBehavior.opaque,
             onTap: () {
               setState(() {
                 selectedIndex = index;
@@ -55,7 +56,7 @@ class _BottomBarState extends State<BottomBar> {
               children: [
                 if (selectedIndex == index)
                   Container(
-                    width: 32,
+                    width: 42,
                     height: 2,
                     decoration: BoxDecoration(
                       color: ThemeColors.fourth,

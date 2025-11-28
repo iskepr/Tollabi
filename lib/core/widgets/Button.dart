@@ -8,6 +8,7 @@ class Button extends StatelessWidget {
     required this.onTap,
     this.icon,
     this.fontSize,
+    this.padding,
   });
 
   final String title;
@@ -15,15 +16,15 @@ class Button extends StatelessWidget {
   final Function() onTap;
 
   final double? fontSize;
+  final EdgeInsets? padding;
 
   @override
   Widget build(BuildContext context) {
-    return MaterialButton(
-      onPressed: onTap,
-      padding: EdgeInsets.zero,
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(24)),
+    return GestureDetector(
+      onTap: onTap,
       child: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 25, vertical: 15),
+        padding:
+            padding ?? const EdgeInsets.symmetric(horizontal: 25, vertical: 15),
         decoration: BoxDecoration(
           color: ThemeColors.third,
           borderRadius: BorderRadius.circular(24),

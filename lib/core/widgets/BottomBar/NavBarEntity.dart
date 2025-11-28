@@ -1,3 +1,4 @@
+import 'package:abo_sadah/pages/Groups/Groups.dart';
 import 'package:abo_sadah/pages/dashboadrd.dart';
 import 'package:abo_sadah/pages/Students/Students.dart';
 import 'package:flutter/material.dart';
@@ -25,6 +26,6 @@ List<NavBarEntity> userNavBarItems = [
   NavBarEntity(
     title: 'المجموعات',
     icon: LucideIcons.users300,
-    widget: Text("shiii"),
+    widget: Groups(),
   ),
 ];

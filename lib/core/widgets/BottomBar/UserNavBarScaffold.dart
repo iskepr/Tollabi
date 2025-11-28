@@ -1,4 +1,4 @@
-import 'package:abo_sadah/core/widgets/BottomBar/BottomBar.dart';
+import 'package:abo_sadah/core/widgets/BottomBar/NavBar.dart';
 import 'package:abo_sadah/core/widgets/BottomBar/NavBarEntity.dart';
 import 'package:flutter/material.dart';
 

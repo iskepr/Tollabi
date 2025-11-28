@@ -1,6 +1,7 @@
+import 'package:abo_sadah/core/Data/all.dart';
 import 'package:abo_sadah/core/Theme/Colors.dart';
-import 'package:abo_sadah/core/constants/assets.dart';
 import 'package:abo_sadah/core/widgets/Button.dart';
+import 'package:abo_sadah/core/widgets/Grid.dart';
 import 'package:abo_sadah/core/widgets/Input.dart';
 import 'package:abo_sadah/core/widgets/Students/addStud.dart';
 import 'package:abo_sadah/pages/Students/StudAcount.dart';
@@ -14,32 +15,7 @@ class Students extends StatefulWidget {
 }
 
 class _StudentsState extends State<Students> {
-  List<Map<String, dynamic>> students = [
-    {
-      "id": 1,
-      "name": "احمد علي خالد",
-      "phone": "+20 0109876543",
-      "img": Assets.assetsImgsBoy,
-    },
-    {
-      "id": 2,
-      "name": "محمد محمد محمد",
-      "phone": "+20 0109876543",
-      "img": Assets.assetsImgsBoy,
-    },
-    {
-      "id": 3,
-      "name": "احمد علي خالد",
-      "phone": "+20 0109876543",
-      "img": Assets.assetsImgsBoy,
-    },
-    {
-      "id": 4,
-      "name": "محمد محمد محمد",
-      "phone": "+20 0109876543",
-      "img": Assets.assetsImgsBoy,
-    },
-  ];
+  List<Map<String, dynamic>> students = AppData.students;
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -49,8 +25,9 @@ class _StudentsState extends State<Students> {
           children: [
             Text("كل الطلاب", style: TextStyle(fontSize: 20)),
             Button(
-              title: "+ اضافة صالب",
-              fontSize: 12,
+              title: "+ إضافة طالب",
+              fontSize: 14,
+              padding: EdgeInsets.symmetric(horizontal: 20, vertical: 12),
               onTap: () {
                 showModalBottomSheet(
                   context: context,
@@ -69,23 +46,15 @@ class _StudentsState extends State<Students> {
           controller: TextEditingController(),
         ),
         SizedBox(height: 10),
-        GridView.builder(
-          physics: NeverScrollableScrollPhysics(),
-          shrinkWrap: true,
-          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: 2,
-            mainAxisSpacing: 10,
-            crossAxisSpacing: 10,
-            childAspectRatio: 198 / 80,
-            mainAxisExtent: 70,
-          ),
-          itemCount: students.length,
-          itemBuilder: (BuildContext context, int index) => GestureDetector(
+        MyGrid(
+          count: students.length,
+          child: (BuildContext context, int index) => GestureDetector(
             onTap: () {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => StudAcount(userData: students[index]),
+                  builder: (context) =>
+                      StudAcount(studentData: students[index]),
                 ),
               );
             },
@@ -95,21 +64,22 @@ class _StudentsState extends State<Students> {
                 color: ThemeColors.forground,
                 borderRadius: BorderRadius.circular(24),
               ),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  CircleAvatar(
-                    backgroundImage: AssetImage(students[index]["img"]),
-                    maxRadius: 24,
-                  ),
-                  Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text(students[index]["name"]),
-                      Text(students[index]["phone"]),
-                    ],
-                  ),
-                ],
+              child: ListTile(
+                contentPadding: EdgeInsets.zero,
+                title: Text(
+                  students[index]["name"],
+                  style: TextStyle(fontSize: 14),
+                ),
+                subtitle: Text(
+                  students[index]["phone"],
+                  textDirection: TextDirection.ltr,
+                  textAlign: TextAlign.right,
+                  style: TextStyle(fontSize: 14),
+                ),
+                leading: CircleAvatar(
+                  backgroundImage: AssetImage(students[index]["img"]),
+                  maxRadius: 20,
+                ),
               ),
             ),
           ),
