@@ -1,7 +1,8 @@
+import 'package:abo_sadah/core/Data/all.dart';
 import 'package:abo_sadah/core/Theme/Colors.dart';
 import 'package:abo_sadah/core/widgets/BottomSheet.dart';
 import 'package:abo_sadah/core/widgets/Button.dart';
-import 'package:abo_sadah/core/widgets/Input.dart';
+import 'package:abo_sadah/core/widgets/Inputs/Input.dart';
 import 'package:flutter/material.dart';
 import 'package:lucide_icons_flutter/lucide_icons.dart';
 
@@ -9,12 +10,13 @@ class EditStud extends StatelessWidget {
   EditStud({super.key, required this.studentData});
 
   final Map studentData;
+  final List<Map<String, dynamic>> groups = AppData.groups;
 
   final Map<String, TextEditingController> c = {
     "img": TextEditingController(),
     "name": TextEditingController(),
     "phone": TextEditingController(),
-    "group": TextEditingController(),
+    "groupID": TextEditingController(),
   };
 
   @override
@@ -25,13 +27,11 @@ class EditStud extends StatelessWidget {
           Stack(
             alignment: Alignment.bottomRight,
             children: [
-              CircleAvatar(
-                backgroundImage: AssetImage(studentData["img"]),
-                radius: 80,
-              ),
+              Icon(LucideIcons.user),
               GestureDetector(
                 onTap: () {
                   print("اختيار صورة");
+                  print(groups.map((group) => group["name"]).toList());
                 },
                 child: CircleAvatar(
                   radius: 20,
@@ -59,8 +59,17 @@ class EditStud extends StatelessWidget {
           ),
           Input(
             title: "المجموعة",
-            value: studentData["group"],
-            controller: c["group"]!,
+            controller: c["groupID"]!,
+            type: "select",
+            value: groups.firstWhere(
+              (group) => group["id"] == studentData["groupID"],
+            )["name"],
+            items: groups.map((group) => group["name"]).toList(),
+            onChanged: (value) {
+              c["groupID"]!.text = groups
+                  .firstWhere((group) => group["name"] == value)["id"]
+                  .toString();
+            },
           ),
           SizedBox(height: 10),
           Button(

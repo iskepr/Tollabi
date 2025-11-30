@@ -1,14 +1,11 @@
+import 'package:abo_sadah/core/Data/all.dart';
 import 'package:abo_sadah/core/Theme/Colors.dart';
 import 'package:flutter/material.dart';
 
 class Analysis extends StatelessWidget {
   Analysis({super.key});
 
-  final List<Map<String, dynamic>> analysisData = [
-    {"title": "المجموعات", "value": "20"},
-    {"title": "الطلاب", "value": "50"},
-    {"title": "الرئيسية", "value": "30"},
-  ];
+  final List<Map<String, dynamic>> analysisData = AppData.analysisData;
 
   @override
   Widget build(BuildContext context) {
@@ -28,27 +25,36 @@ class Analysis extends StatelessWidget {
         Container(
           width: double.infinity,
           padding: EdgeInsets.symmetric(horizontal: 10),
-          child: Wrap(
-            children: List.generate(
-              analysisData.length,
-              (index) => AspectRatio(
-                aspectRatio: 1,
-                child: Container(
-                  margin: EdgeInsets.all(5),
-                  padding: EdgeInsets.all(5),
-                  decoration: BoxDecoration(
-                    color: ThemeColors.forground,
-                    borderRadius: BorderRadius.circular(24),
+          child: GridView.builder(
+            shrinkWrap: true,
+            physics: NeverScrollableScrollPhysics(),
+            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+              crossAxisCount: 3,
+              mainAxisSpacing: 5,
+              crossAxisSpacing: 5,
+              childAspectRatio: 1,
+              mainAxisExtent: 100,
+            ),
+            itemCount: analysisData.length,
+            itemBuilder: (context, index) => Container(
+              padding: EdgeInsets.all(5),
+              decoration: BoxDecoration(
+                color: ThemeColors.forground,
+                borderRadius: BorderRadius.circular(24),
+              ),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Text(
+                    analysisData[index]["title"],
+                    textAlign: TextAlign.center,
                   ),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Text(analysisData[index]["title"]),
-                      Text(analysisData[index]["value"]),
-                    ],
+                  Text(
+                    analysisData[index]["value"],
+                    style: TextStyle(fontWeight: FontWeight.bold),
                   ),
-                ),
+                ],
               ),
             ),
           ),

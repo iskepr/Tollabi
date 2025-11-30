@@ -1,6 +1,6 @@
 import 'package:abo_sadah/core/widgets/BottomSheet.dart';
 import 'package:abo_sadah/core/widgets/Button.dart';
-import 'package:abo_sadah/core/widgets/Input.dart';
+import 'package:abo_sadah/core/widgets/Inputs/Input.dart';
 import 'package:flutter/material.dart';
 
 class AddStud extends StatefulWidget {

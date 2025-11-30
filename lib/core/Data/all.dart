@@ -1,98 +1,14 @@
-import 'package:abo_sadah/core/constants/assets.dart';
-
 abstract class AppData {
   static final List<Map<String, dynamic>> students = [
-    {
-      "id": 1,
-      "name": "احمد علي خالد",
-      "phone": "+20 0109876543",
-      "groupID": 1,
-      "img": Assets.assetsImgsBoy,
-    },
+    {"id": 1, "name": "احمد علي خالد", "phone": "+20 0109876543", "groupID": 1},
     {
       "id": 2,
       "name": "محمد محمد محمد",
       "phone": "+20 0109876543",
       "groupID": 1,
-      "img": Assets.assetsImgsBoy,
     },
-    {
-      "id": 3,
-      "name": "احمد علي خالد",
-      "phone": "+20 0109876543",
-      "groupID": 1,
-      "img": Assets.assetsImgsBoy,
-    },
-    {
-      "id": 1,
-      "name": "احمد علي خالد",
-      "phone": "+20 0109876543",
-      "groupID": 1,
-      "img": Assets.assetsImgsBoy,
-    },
-    {
-      "id": 2,
-      "name": "محمد محمد محمد",
-      "phone": "+20 0109876543",
-      "groupID": 1,
-      "img": Assets.assetsImgsBoy,
-    },
-    {
-      "id": 3,
-      "name": "احمد علي خالد",
-      "phone": "+20 0109876543",
-      "groupID": 1,
-      "img": Assets.assetsImgsBoy,
-    },
-    {
-      "id": 1,
-      "name": "احمد علي خالد",
-      "phone": "+20 0109876543",
-      "groupID": 1,
-      "img": Assets.assetsImgsBoy,
-    },
-    {
-      "id": 2,
-      "name": "محمد محمد محمد",
-      "phone": "+20 0109876543",
-      "groupID": 1,
-      "img": Assets.assetsImgsBoy,
-    },
-    {
-      "id": 3,
-      "name": "احمد علي خالد",
-      "phone": "+20 0109876543",
-      "groupID": 1,
-      "img": Assets.assetsImgsBoy,
-    },
-    {
-      "id": 1,
-      "name": "احمد علي خالد",
-      "phone": "+20 0109876543",
-      "groupID": 1,
-      "img": Assets.assetsImgsBoy,
-    },
-    {
-      "id": 2,
-      "name": "محمد محمد محمد",
-      "phone": "+20 0109876543",
-      "groupID": 1,
-      "img": Assets.assetsImgsBoy,
-    },
-    {
-      "id": 3,
-      "name": "احمد علي خالد",
-      "phone": "+20 0109876543",
-      "groupID": 1,
-      "img": Assets.assetsImgsBoy,
-    },
-    {
-      "id": 4,
-      "name": "محمد محمد محمد",
-      "phone": "+20 0109876543",
-      "groupID": 2,
-      "img": Assets.assetsImgsBoy,
-    },
+    {"id": 3, "name": "احمد علي خالد", "phone": "+20 0109876543", "groupID": 1},
+    {"id": 4, "name": "احمد علي خالد", "phone": "+20 0109876543", "groupID": 2},
   ];
 
   static final List<Map<String, dynamic>> groups = [
@@ -109,5 +25,23 @@ abstract class AppData {
     {"id": 4, "title": "Task 1", "score": 10, "time": "17/11/2025"},
     {"id": 5, "title": "Task 1", "score": 10, "time": "17/11/2025"},
     {"id": 6, "title": "Task 1", "score": 10, "time": "17/11/2025"},
+  ];
+
+  static final List<Map<String, dynamic>> analysisData = [
+    {"title": "إيرادات الشهر الماضي", "value": "20"},
+    {"title": "إيرادات الشهر الحالي", "value": "50"},
+    {"title": "إيرادات اليوم", "value": "30"},
+
+    {"title": "مصروفات الشهر الماضي", "value": "30"},
+    {"title": "مصروفات الشهر الحالي", "value": "30"},
+    {"title": "مصروفات اليوم", "value": "30"},
+
+    {"title": "صافي الشهر الماضي", "value": "30"},
+    {"title": "صافي الشهر الحالي", "value": "30"},
+    {"title": "صافي اليوم", "value": "30"},
+
+    {"title": "المجموعات", "value": "30"},
+    {"title": "المشرفين", "value": "30"},
+    {"title": "الطلاب", "value": "30"},
   ];
 }

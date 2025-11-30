@@ -9,6 +9,7 @@ class Button extends StatelessWidget {
     this.icon,
     this.fontSize,
     this.padding,
+    this.radius,
   });
 
   final String title;
@@ -17,6 +18,7 @@ class Button extends StatelessWidget {
 
   final double? fontSize;
   final EdgeInsets? padding;
+  final double? radius;
 
   @override
   Widget build(BuildContext context) {
@@ -27,7 +29,7 @@ class Button extends StatelessWidget {
             padding ?? const EdgeInsets.symmetric(horizontal: 25, vertical: 15),
         decoration: BoxDecoration(
           color: ThemeColors.third,
-          borderRadius: BorderRadius.circular(24),
+          borderRadius: BorderRadius.circular(radius ?? 24),
         ),
         child: icon != null
             ? Icon(icon, color: ThemeColors.background)

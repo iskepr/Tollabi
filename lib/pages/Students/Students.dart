@@ -2,10 +2,11 @@ import 'package:abo_sadah/core/Data/all.dart';
 import 'package:abo_sadah/core/Theme/Colors.dart';
 import 'package:abo_sadah/core/widgets/Button.dart';
 import 'package:abo_sadah/core/widgets/Grid.dart';
-import 'package:abo_sadah/core/widgets/Input.dart';
-import 'package:abo_sadah/core/widgets/Students/addStud.dart';
+import 'package:abo_sadah/core/widgets/Inputs/Input.dart';
+import 'package:abo_sadah/core/widgets/Students/add.dart';
 import 'package:abo_sadah/pages/Students/StudAcount.dart';
 import 'package:flutter/material.dart';
+import 'package:lucide_icons_flutter/lucide_icons.dart';
 
 class Students extends StatefulWidget {
   const Students({super.key});
@@ -28,6 +29,7 @@ class _StudentsState extends State<Students> {
               title: "+ إضافة طالب",
               fontSize: 14,
               padding: EdgeInsets.symmetric(horizontal: 20, vertical: 12),
+              radius: 16,
               onTap: () {
                 showModalBottomSheet(
                   context: context,
@@ -76,10 +78,7 @@ class _StudentsState extends State<Students> {
                   textAlign: TextAlign.right,
                   style: TextStyle(fontSize: 14),
                 ),
-                leading: CircleAvatar(
-                  backgroundImage: AssetImage(students[index]["img"]),
-                  maxRadius: 20,
-                ),
+                leading: Icon(LucideIcons.user),
               ),
             ),
           ),

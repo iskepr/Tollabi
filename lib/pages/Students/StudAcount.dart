@@ -3,8 +3,8 @@ import 'package:abo_sadah/core/Theme/Colors.dart';
 import 'package:abo_sadah/core/Theme/TextStyles.dart';
 import 'package:abo_sadah/core/widgets/Button.dart';
 import 'package:abo_sadah/core/widgets/Grid.dart';
-import 'package:abo_sadah/core/widgets/Input.dart';
-import 'package:abo_sadah/pages/Students/EditStud.dart';
+import 'package:abo_sadah/core/widgets/Inputs/Input.dart';
+import 'package:abo_sadah/core/widgets/Students/edit.dart';
 import 'package:flutter/material.dart';
 import 'package:lucide_icons_flutter/lucide_icons.dart';
 
@@ -51,9 +51,7 @@ class StudAcount extends StatelessWidget {
                   borderRadius: BorderRadius.circular(24),
                 ),
                 child: ListTile(
-                  leading: CircleAvatar(
-                    backgroundImage: AssetImage(studentData["img"]),
-                  ),
+                  leading: Icon(LucideIcons.user),
                   title: Text(studentData["name"]),
                   subtitle: Text(studentData["phone"]),
                   trailing: Column(
