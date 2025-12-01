@@ -1,4 +1,5 @@
 import 'package:abo_sadah/core/Data/all.dart';
+import 'package:abo_sadah/core/Data/typs.dart';
 import 'package:abo_sadah/core/Theme/Colors.dart';
 import 'package:abo_sadah/core/Theme/TextStyles.dart';
 import 'package:abo_sadah/core/widgets/Button.dart';
@@ -12,21 +13,28 @@ import 'package:lucide_icons_flutter/lucide_icons.dart';
 class Group extends StatefulWidget {
   const Group({super.key, required this.group});
 
-  final Map<String, dynamic> group;
+  final GroupsEntity group;
 
   @override
   State<Group> createState() => _GroupState();
 }
 
 class _GroupState extends State<Group> {
-  List<Map<String, dynamic>> get students => widget.group["students"] = AppData
-      .students
-      .where((student) => student["groupID"] == widget.group["id"])
-      .toList();
+  List<StudentsEntity> allStudents = [];
+  List<StudentsEntity> students = [];
 
-  TextEditingController controller = TextEditingController();
+  TextEditingController search = TextEditingController();
 
   bool isAddStudent = false;
+
+  @override
+  void initState() {
+    super.initState();
+    allStudents = AppData.students;
+    students = allStudents
+        .where((student) => student.groupId == widget.group.id)
+        .toList();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -40,7 +48,10 @@ class _GroupState extends State<Group> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text(widget.group["name"], style: TextStyle(fontSize: 20)),
+                  Text(
+                    "مجموعة ${widget.group.id}",
+                    style: TextStyle(fontSize: 20),
+                  ),
                   Row(
                     children: [
                       Button(
@@ -94,17 +105,19 @@ class _GroupState extends State<Group> {
                       margin: EdgeInsets.symmetric(vertical: 5),
                       child: ListTile(
                         title: Text("عدد الطلاب: ${students.length}"),
-                        subtitle: Text(widget.group["days"]),
+                        subtitle: Text(
+                          "${widget.group.day1} - ${widget.group.day2}",
+                        ),
                         trailing: Column(
                           mainAxisAlignment: MainAxisAlignment.center,
                           crossAxisAlignment: CrossAxisAlignment.end,
                           children: [
                             Text(
-                              widget.group["name"],
+                              "مجموعة ${widget.group.id}",
                               style: TextStyles.trailing,
                             ),
                             Text(
-                              widget.group["time"],
+                              "${widget.group.from} : ${widget.group.to}",
                               style: TextStyles.trailing,
                             ),
                           ],
@@ -122,7 +135,12 @@ class _GroupState extends State<Group> {
                       title: "ابحث عن طالب",
                       style: "border",
                       prefixIcon: Icons.search,
-                      controller: controller,
+                      controller: search,
+                      onChanged: (value) => setState(() {
+                        students = allStudents
+                            .where((stud) => stud.name.contains(value))
+                            .toList();
+                      }),
                     ),
                     Column(
                       spacing: 5,
@@ -139,8 +157,8 @@ class _GroupState extends State<Group> {
                               horizontal: 10,
                             ),
                             leading: Icon(LucideIcons.user),
-                            title: Text(student["name"]),
-                            subtitle: Text(student["phone"]),
+                            title: Text(student.name),
+                            subtitle: Text(student.name),
                             trailing: Button(
                               title: "إعطاء درجة التاسك",
                               fontSize: 10,
@@ -180,32 +198,61 @@ class _GroupState extends State<Group> {
                             ),
                           ),
                           MyGrid(
-                            count: students.length,
-                            child: (BuildContext context, int index) =>
-                                GestureDetector(
-                                  onTap: () {},
-                                  child: Container(
-                                    padding: EdgeInsets.all(5),
-                                    decoration: BoxDecoration(
-                                      color: ThemeColors.forground,
-                                      borderRadius: BorderRadius.circular(24),
-                                    ),
-                                    child: ListTile(
-                                      contentPadding: EdgeInsets.zero,
-                                      title: Text(
-                                        students[index]["name"],
-                                        style: TextStyle(fontSize: 14),
+                            count: allStudents.length,
+                            child: (BuildContext context, int index) {
+                              bool isCheck =
+                                  allStudents[index].groupId == widget.group.id;
+                              return GestureDetector(
+                                onTap: () {},
+                                child: Container(
+                                  padding: EdgeInsets.all(5),
+                                  decoration: BoxDecoration(
+                                    color: ThemeColors.forground,
+                                    borderRadius: BorderRadius.circular(24),
+                                  ),
+                                  child: Row(
+                                    children: [
+                                      Checkbox(
+                                        value: isCheck,
+                                        onChanged: (val) {
+                                          if (val == null) return;
+                                          print(val);
+                                          print(allStudents[index]);
+                                          setState(() {
+                                            if (val == true) {
+                                              allStudents[index].groupId =
+                                                  widget.group.id;
+                                              print(allStudents[index]);
+                                            } else {
+                                              allStudents[index].groupId = null;
+                                              print(allStudents[index]);
+                                            }
+                                          });
+                                        },
                                       ),
-                                      subtitle: Text(
-                                        students[index]["phone"],
-                                        textDirection: TextDirection.ltr,
-                                        textAlign: TextAlign.right,
-                                        style: TextStyle(fontSize: 14),
+                                      Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        children: [
+                                          Text(
+                                            allStudents[index].name,
+                                            style: TextStyle(fontSize: 14),
+                                          ),
+                                          Text(
+                                            allStudents[index].phone,
+                                            textDirection: TextDirection.ltr,
+                                            textAlign: TextAlign.right,
+                                            style: TextStyle(fontSize: 14),
+                                          ),
+                                        ],
                                       ),
-                                      leading: Icon(LucideIcons.user),
-                                    ),
+                                    ],
                                   ),
                                 ),
+                              );
+                            },
                           ),
                         ],
                       ),

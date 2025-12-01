@@ -47,10 +47,6 @@ class _AddGroupState extends State<AddGroup> {
               style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
             ),
           ),
-          _fildBuilder(
-            "رقم المجموعة",
-            Input(title: "رقم المجموعة", controller: TextEditingController()),
-          ),
 
           _fildBuilder(
             "ايام المجموعة",

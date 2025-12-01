@@ -9,4 +9,10 @@ abstract class TextStyles {
     fontSize: 14,
     color: ThemeColors.third,
   );
+
+  static const TextStyle title = TextStyle(
+    fontSize: 22,
+    fontWeight: FontWeight.bold,
+    color: ThemeColors.black,
+  );
 }

@@ -1,4 +1,5 @@
 import 'package:abo_sadah/core/Data/all.dart';
+import 'package:abo_sadah/core/Data/typs.dart';
 import 'package:abo_sadah/core/Theme/Colors.dart';
 import 'package:abo_sadah/core/Theme/TextStyles.dart';
 import 'package:abo_sadah/core/widgets/Button.dart';
@@ -9,8 +10,8 @@ import 'package:flutter/material.dart';
 class Groups extends StatelessWidget {
   Groups({super.key});
 
-  final List<Map<String, dynamic>> groups = AppData.groups;
-  final List<Map<String, dynamic>> students = AppData.students;
+  final List<GroupsEntity> groups = AppData.groups;
+  final List<StudentsEntity> students = AppData.students;
 
   @override
   Widget build(BuildContext context) {
@@ -39,8 +40,8 @@ class Groups extends StatelessWidget {
         Column(
           children: List.generate(groups.length, (index) {
             final group = groups[index];
-            group["students"] = students
-                .where((student) => student["groupID"] == group["id"])
+            group.students = students
+                .where((student) => student.groupId == group.id)
                 .toList();
             return GestureDetector(
               onTap: () => Navigator.push(
@@ -55,14 +56,17 @@ class Groups extends StatelessWidget {
                 ),
                 margin: EdgeInsets.symmetric(vertical: 5),
                 child: ListTile(
-                  title: Text("عدد الطلاب: ${group["students"].length}"),
-                  subtitle: Text(group["days"]),
+                  title: Text("عدد الطلاب: ${group.students!.length}"),
+                  subtitle: Text("${group.day1} - ${group.day2}"),
                   trailing: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.end,
                     children: [
-                      Text(group["name"], style: TextStyles.trailing),
-                      Text(group["time"], style: TextStyles.trailing),
+                      Text("مجموعة ${group.id}", style: TextStyles.trailing),
+                      Text(
+                        "${group.from} : ${group.to}",
+                        style: TextStyles.trailing,
+                      ),
                     ],
                   ),
                 ),

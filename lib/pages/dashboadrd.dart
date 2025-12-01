@@ -1,11 +1,12 @@
 import 'package:abo_sadah/core/Data/all.dart';
+import 'package:abo_sadah/core/Data/typs.dart';
 import 'package:abo_sadah/core/Theme/Colors.dart';
 import 'package:flutter/material.dart';
 
 class Analysis extends StatelessWidget {
   Analysis({super.key});
 
-  final List<Map<String, dynamic>> analysisData = AppData.analysisData;
+  final List<AnalysisEntity> analysisData = AppData.analysisData;
 
   @override
   Widget build(BuildContext context) {
@@ -46,12 +47,9 @@ class Analysis extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
+                  Text(analysisData[index].title, textAlign: TextAlign.center),
                   Text(
-                    analysisData[index]["title"],
-                    textAlign: TextAlign.center,
-                  ),
-                  Text(
-                    analysisData[index]["value"],
+                    analysisData[index].value.toString(),
                     style: TextStyle(fontWeight: FontWeight.bold),
                   ),
                 ],

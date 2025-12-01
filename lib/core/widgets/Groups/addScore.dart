@@ -1,4 +1,5 @@
 import 'package:abo_sadah/core/Data/all.dart';
+import 'package:abo_sadah/core/Data/typs.dart';
 import 'package:abo_sadah/core/Theme/Colors.dart';
 import 'package:abo_sadah/core/Theme/TextStyles.dart';
 import 'package:abo_sadah/core/widgets/BottomSheet.dart';
@@ -10,10 +11,9 @@ import 'package:lucide_icons_flutter/lucide_icons.dart';
 class AddScore extends StatelessWidget {
   const AddScore({super.key, required this.studentData});
 
-  final Map studentData;
-  String get group => AppData.groups.firstWhere(
-    (group) => studentData["groupID"] == group["id"],
-  )["name"];
+  final StudentsEntity studentData;
+  int get group =>
+      AppData.groups.firstWhere((group) => studentData.groupId == group.id).id;
 
   _fildBuilder(String title, Widget child) {
     return Column(
@@ -50,8 +50,8 @@ class AddScore extends StatelessWidget {
             ),
             child: ListTile(
               leading: Icon(LucideIcons.user),
-              title: Text(studentData["name"]),
-              subtitle: Text(studentData["phone"]),
+              title: Text(studentData.name),
+              subtitle: Text(studentData.phone),
               trailing: Text(group.toString(), style: TextStyles.trailing),
             ),
           ),

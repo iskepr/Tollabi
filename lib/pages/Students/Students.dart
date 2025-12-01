@@ -1,4 +1,5 @@
 import 'package:abo_sadah/core/Data/all.dart';
+import 'package:abo_sadah/core/Data/typs.dart';
 import 'package:abo_sadah/core/Theme/Colors.dart';
 import 'package:abo_sadah/core/widgets/Button.dart';
 import 'package:abo_sadah/core/widgets/Grid.dart';
@@ -16,7 +17,8 @@ class Students extends StatefulWidget {
 }
 
 class _StudentsState extends State<Students> {
-  List<Map<String, dynamic>> students = AppData.students;
+  List<StudentsEntity> students = AppData.students;
+  TextEditingController search = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -45,7 +47,12 @@ class _StudentsState extends State<Students> {
           title: "ابحث عن طالب",
           style: "border",
           prefixIcon: Icons.search,
-          controller: TextEditingController(),
+          controller: search,
+          onChanged: (value) => setState(() {
+            students = AppData.students
+                .where((stud) => stud.name.contains(value))
+                .toList();
+          }),
         ),
         SizedBox(height: 10),
         MyGrid(
@@ -69,11 +76,11 @@ class _StudentsState extends State<Students> {
               child: ListTile(
                 contentPadding: EdgeInsets.zero,
                 title: Text(
-                  students[index]["name"],
+                  students[index].name,
                   style: TextStyle(fontSize: 14),
                 ),
                 subtitle: Text(
-                  students[index]["phone"],
+                  students[index].phone,
                   textDirection: TextDirection.ltr,
                   textAlign: TextAlign.right,
                   style: TextStyle(fontSize: 14),

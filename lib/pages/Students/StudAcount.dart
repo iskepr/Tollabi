@@ -1,4 +1,5 @@
 import 'package:abo_sadah/core/Data/all.dart';
+import 'package:abo_sadah/core/Data/typs.dart';
 import 'package:abo_sadah/core/Theme/Colors.dart';
 import 'package:abo_sadah/core/Theme/TextStyles.dart';
 import 'package:abo_sadah/core/widgets/Button.dart';
@@ -11,12 +12,11 @@ import 'package:lucide_icons_flutter/lucide_icons.dart';
 class StudAcount extends StatelessWidget {
   StudAcount({super.key, required this.studentData});
 
-  final Map<String, dynamic> studentData;
+  final StudentsEntity studentData;
 
-  List<Map<String, dynamic>> tasks = AppData.tasks;
-  String get group => AppData.groups.firstWhere(
-    (group) => studentData["groupID"] == group["id"],
-  )["name"];
+  List<TasksEntity> tasks = AppData.tasks;
+  int get group =>
+      AppData.groups.firstWhere((group) => studentData.groupId == group.id).id;
 
   TextEditingController controller = TextEditingController();
 
@@ -52,8 +52,8 @@ class StudAcount extends StatelessWidget {
                 ),
                 child: ListTile(
                   leading: Icon(LucideIcons.user),
-                  title: Text(studentData["name"]),
-                  subtitle: Text(studentData["phone"]),
+                  title: Text(studentData.name),
+                  subtitle: Text(studentData.phone),
                   trailing: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.end,
@@ -72,7 +72,10 @@ class StudAcount extends StatelessWidget {
                         icon: Icon(LucideIcons.squarePen, size: 14),
                       ),
                       SizedBox(height: 5),
-                      Text(group.toString(), style: TextStyles.trailing),
+                      Text(
+                        "مجموعة ${group.toString()}",
+                        style: TextStyles.trailing,
+                      ),
                     ],
                   ),
                 ),
@@ -87,22 +90,25 @@ class StudAcount extends StatelessWidget {
               SizedBox(height: 10),
               MyGrid(
                 count: tasks.length,
-                child: (BuildContext context, int index) => Container(
-                  padding: EdgeInsets.all(5),
-                  decoration: BoxDecoration(
-                    color: ThemeColors.forground,
-                    borderRadius: BorderRadius.circular(24),
-                  ),
-                  child: ListTile(
-                    contentPadding: EdgeInsets.symmetric(horizontal: 10),
-                    title: Text(tasks[index]["title"]),
-                    subtitle: Text("${tasks[index]["score"]}/10"),
-                    trailing: Text(
-                      tasks[index]["time"],
-                      style: TextStyle(fontSize: 14),
+                child: (BuildContext context, int index) {
+                  final time = tasks[index].time;
+                  return Container(
+                    padding: EdgeInsets.all(5),
+                    decoration: BoxDecoration(
+                      color: ThemeColors.forground,
+                      borderRadius: BorderRadius.circular(24),
                     ),
-                  ),
-                ),
+                    child: ListTile(
+                      contentPadding: EdgeInsets.symmetric(horizontal: 10),
+                      title: Text(tasks[index].title),
+                      subtitle: Text("${tasks[index].score}/10"),
+                      trailing: Text(
+                        "${time.day}/${time.month}/${time.year}",
+                        style: TextStyle(fontSize: 14),
+                      ),
+                    ),
+                  );
+                },
               ),
             ],
           ),

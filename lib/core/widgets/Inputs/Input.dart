@@ -28,7 +28,7 @@ class Input extends StatelessWidget {
   final String? style;
 
   final List? items;
-  final Function(String?)? onChanged;
+  final Function(String value)? onChanged;
 
   @override
   Widget build(BuildContext context) {
@@ -51,10 +51,14 @@ class Input extends StatelessWidget {
           ? Select(
               items: items!,
               value: value!,
-              onChanged: onChanged!,
+              onChanged: (value) => onChanged,
               decoration: decoration,
             )
-          : TextField(controller: controller, decoration: decoration),
+          : TextField(
+              controller: controller,
+              decoration: decoration,
+              onChanged: onChanged ?? (_) {},
+            ),
     );
   }
 }
