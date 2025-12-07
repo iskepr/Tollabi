@@ -9,6 +9,7 @@ import 'package:abo_sadah/core/widgets/Groups/edit.dart';
 import 'package:abo_sadah/core/widgets/Inputs/Input.dart';
 import 'package:flutter/material.dart';
 import 'package:lucide_icons_flutter/lucide_icons.dart';
+import 'package:provider/provider.dart';
 
 class Group extends StatefulWidget {
   const Group({super.key, required this.group});
@@ -30,7 +31,8 @@ class _GroupState extends State<Group> {
   @override
   void initState() {
     super.initState();
-    allStudents = AppData.students;
+    final data = Provider.of<AppData>(context, listen: false);
+    allStudents = data.students;
     students = allStudents
         .where((student) => student.groupId == widget.group.id)
         .toList();
@@ -117,7 +119,7 @@ class _GroupState extends State<Group> {
                               style: TextStyles.trailing,
                             ),
                             Text(
-                              "${widget.group.from} : ${widget.group.to}",
+                              "${widget.group.startTime} : ${widget.group.endTime}",
                               style: TextStyles.trailing,
                             ),
                           ],

@@ -7,13 +7,12 @@ import 'package:abo_sadah/core/widgets/Button.dart';
 import 'package:abo_sadah/core/widgets/Inputs/Input.dart';
 import 'package:flutter/material.dart';
 import 'package:lucide_icons_flutter/lucide_icons.dart';
+import 'package:provider/provider.dart';
 
 class AddScore extends StatelessWidget {
   const AddScore({super.key, required this.studentData});
 
   final StudentsEntity studentData;
-  int get group =>
-      AppData.groups.firstWhere((group) => studentData.groupId == group.id).id;
 
   _fildBuilder(String title, Widget child) {
     return Column(
@@ -48,11 +47,19 @@ class AddScore extends StatelessWidget {
               border: Border.all(color: ThemeColors.forground),
               borderRadius: BorderRadius.circular(24),
             ),
-            child: ListTile(
-              leading: Icon(LucideIcons.user),
-              title: Text(studentData.name),
-              subtitle: Text(studentData.phone),
-              trailing: Text(group.toString(), style: TextStyles.trailing),
+            child: Consumer<AppData>(
+              builder: (context, data, child) => ListTile(
+                leading: Icon(LucideIcons.user),
+                title: Text(studentData.name),
+                subtitle: Text(studentData.phone),
+                trailing: Text(
+                  data.groups
+                      .firstWhere((group) => studentData.groupId == group.id)
+                      .id
+                      .toString(),
+                  style: TextStyles.trailing,
+                ),
+              ),
             ),
           ),
           _fildBuilder(

@@ -13,22 +13,24 @@ class StudentsEntity {
 }
 
 class GroupsEntity {
-  int id;
+  int? id;
   String day1;
   String day2;
-  double from;
-  double to;
+  double startTime;
+  double endTime;
+  bool isAM;
   double price;
   double grade;
 
   List<StudentsEntity>? students;
 
   GroupsEntity({
-    required this.id,
+    this.id,
     required this.day1,
     required this.day2,
-    required this.from,
-    required this.to,
+    required this.startTime,
+    required this.endTime,
+    required this.isAM,
     required this.price,
     required this.grade,
     this.students,
@@ -46,6 +48,20 @@ class TasksEntity {
     required this.title,
     required this.score,
     required this.time,
+  });
+}
+
+class GradesEntity {
+  int id;
+  int taskID;
+  int score;
+  int groupID;
+
+  GradesEntity({
+    required this.id,
+    required this.taskID,
+    required this.score,
+    required this.groupID,
   });
 }
 

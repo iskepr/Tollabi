@@ -1,21 +1,19 @@
 import 'package:abo_sadah/core/Data/all.dart';
-import 'package:abo_sadah/core/Data/typs.dart';
 import 'package:abo_sadah/core/Theme/Colors.dart';
 import 'package:abo_sadah/core/Theme/TextStyles.dart';
 import 'package:abo_sadah/core/widgets/Button.dart';
 import 'package:abo_sadah/core/widgets/Groups/add.dart';
 import 'package:abo_sadah/pages/Groups/Group.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class Groups extends StatelessWidget {
-  Groups({super.key});
-
-  final List<GroupsEntity> groups = AppData.groups;
-  final List<StudentsEntity> students = AppData.students;
+  const Groups({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Column(
+      spacing: 10,
       children: [
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -36,43 +34,44 @@ class Groups extends StatelessWidget {
             ),
           ],
         ),
-        SizedBox(height: 10),
-        Column(
-          children: List.generate(groups.length, (index) {
-            final group = groups[index];
-            group.students = students
-                .where((student) => student.groupId == group.id)
-                .toList();
-            return GestureDetector(
-              onTap: () => Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => Group(group: group)),
-              ),
-              child: Container(
-                padding: EdgeInsets.all(5),
-                decoration: BoxDecoration(
-                  color: ThemeColors.forground,
-                  borderRadius: BorderRadius.circular(24),
+        Consumer<AppData>(
+          builder: (context, data, child) => Column(
+            children: List.generate(data.groups.length, (index) {
+              final group = data.groups[index];
+              group.students = data.students
+                  .where((student) => student.groupId == group.id)
+                  .toList();
+              return GestureDetector(
+                onTap: () => Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => Group(group: group)),
                 ),
-                margin: EdgeInsets.symmetric(vertical: 5),
-                child: ListTile(
-                  title: Text("عدد الطلاب: ${group.students!.length}"),
-                  subtitle: Text("${group.day1} - ${group.day2}"),
-                  trailing: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.end,
-                    children: [
-                      Text("مجموعة ${group.id}", style: TextStyles.trailing),
-                      Text(
-                        "${group.from} : ${group.to}",
-                        style: TextStyles.trailing,
-                      ),
-                    ],
+                child: Container(
+                  padding: EdgeInsets.all(5),
+                  decoration: BoxDecoration(
+                    color: ThemeColors.forground,
+                    borderRadius: BorderRadius.circular(24),
+                  ),
+                  margin: EdgeInsets.symmetric(vertical: 5),
+                  child: ListTile(
+                    title: Text("عدد الطلاب: ${group.students!.length}"),
+                    subtitle: Text("${group.day1} - ${group.day2}"),
+                    trailing: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.end,
+                      children: [
+                        Text("مجموعة ${group.id}", style: TextStyles.trailing),
+                        Text(
+                          "${group.startTime} : ${group.endTime}",
+                          style: TextStyles.trailing,
+                        ),
+                      ],
+                    ),
                   ),
                 ),
-              ),
-            );
-          }),
+              );
+            }),
+          ),
         ),
       ],
     );

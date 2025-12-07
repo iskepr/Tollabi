@@ -4,13 +4,15 @@ class Select extends StatelessWidget {
   const Select({
     super.key,
     required this.decoration,
+    required this.title,
     required this.value,
     required this.items,
     required this.onChanged,
   });
 
-  final String value;
-  final List items;
+  final String title;
+  final String? value;
+  final List<SelectItem> items;
   final Function(String?) onChanged;
   final InputDecoration decoration;
 
@@ -21,10 +23,17 @@ class Select extends StatelessWidget {
       initialValue: value,
       items: items
           .map<DropdownMenuItem<String>>(
-            (i) => DropdownMenuItem<String>(value: i, child: Text(i)),
+            (i) =>
+                DropdownMenuItem<String>(value: i.value, child: Text(i.title)),
           )
           .toList(),
       onChanged: onChanged,
     );
   }
+}
+
+class SelectItem {
+  final String title;
+  final String value;
+  SelectItem({required this.title, required this.value});
 }

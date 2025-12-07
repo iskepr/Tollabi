@@ -27,7 +27,7 @@ class Input extends StatelessWidget {
   final String? type;
   final String? style;
 
-  final List? items;
+  final List<SelectItem>? items;
   final Function(String value)? onChanged;
 
   @override
@@ -49,6 +49,7 @@ class Input extends StatelessWidget {
       ),
       child: type == "select"
           ? Select(
+              title: title,
               items: items!,
               value: value!,
               onChanged: (value) => onChanged,

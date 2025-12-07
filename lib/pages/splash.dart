@@ -16,11 +16,7 @@ class Splash extends StatelessWidget {
           children: [
             Column(
               children: [
-                Positioned(
-                  child: Expanded(
-                    child: Image.asset("assets/imgs/spalshMen.png"),
-                  ),
-                ),
+                Expanded(child: Image.asset("assets/imgs/spalshMen.png")),
                 Expanded(
                   child: Container(
                     decoration: BoxDecoration(
@@ -59,7 +55,9 @@ class Splash extends StatelessWidget {
                           onTap: () {
                             Navigator.pushReplacement(
                               context,
-                              MaterialPageRoute(builder: (context) => UserNavBarScaffold()),
+                              MaterialPageRoute(
+                                builder: (context) => UserNavBarScaffold(),
+                              ),
                             );
                           },
                         ),

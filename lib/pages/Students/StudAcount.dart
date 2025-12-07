@@ -8,15 +8,12 @@ import 'package:abo_sadah/core/widgets/Inputs/Input.dart';
 import 'package:abo_sadah/core/widgets/Students/edit.dart';
 import 'package:flutter/material.dart';
 import 'package:lucide_icons_flutter/lucide_icons.dart';
+import 'package:provider/provider.dart';
 
 class StudAcount extends StatelessWidget {
   StudAcount({super.key, required this.studentData});
 
   final StudentsEntity studentData;
-
-  List<TasksEntity> tasks = AppData.tasks;
-  int get group =>
-      AppData.groups.firstWhere((group) => studentData.groupId == group.id).id;
 
   TextEditingController controller = TextEditingController();
 
@@ -72,9 +69,11 @@ class StudAcount extends StatelessWidget {
                         icon: Icon(LucideIcons.squarePen, size: 14),
                       ),
                       SizedBox(height: 5),
-                      Text(
-                        "مجموعة ${group.toString()}",
-                        style: TextStyles.trailing,
+                      Consumer<AppData>(
+                        builder: (context, data, child) => Text(
+                          "مجموعة ${data.groups.firstWhere((group) => studentData.groupId == group.id).id}",
+                          style: TextStyles.trailing,
+                        ),
                       ),
                     ],
                   ),
@@ -88,27 +87,29 @@ class StudAcount extends StatelessWidget {
                 controller: controller,
               ),
               SizedBox(height: 10),
-              MyGrid(
-                count: tasks.length,
-                child: (BuildContext context, int index) {
-                  final time = tasks[index].time;
-                  return Container(
-                    padding: EdgeInsets.all(5),
-                    decoration: BoxDecoration(
-                      color: ThemeColors.forground,
-                      borderRadius: BorderRadius.circular(24),
-                    ),
-                    child: ListTile(
-                      contentPadding: EdgeInsets.symmetric(horizontal: 10),
-                      title: Text(tasks[index].title),
-                      subtitle: Text("${tasks[index].score}/10"),
-                      trailing: Text(
-                        "${time.day}/${time.month}/${time.year}",
-                        style: TextStyle(fontSize: 14),
+              Consumer<AppData>(
+                builder: (context, data, child) => MyGrid(
+                  count: data.tasks.length,
+                  child: (BuildContext context, int index) {
+                    final time = data.tasks[index].time;
+                    return Container(
+                      padding: EdgeInsets.all(5),
+                      decoration: BoxDecoration(
+                        color: ThemeColors.forground,
+                        borderRadius: BorderRadius.circular(24),
                       ),
-                    ),
-                  );
-                },
+                      child: ListTile(
+                        contentPadding: EdgeInsets.symmetric(horizontal: 10),
+                        title: Text(data.tasks[index].title),
+                        subtitle: Text("${data.tasks[index].score}/10"),
+                        trailing: Text(
+                          "${time.day}/${time.month}/${time.year}",
+                          style: TextStyle(fontSize: 14),
+                        ),
+                      ),
+                    );
+                  },
+                ),
               ),
             ],
           ),

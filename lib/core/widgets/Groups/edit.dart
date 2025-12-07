@@ -1,6 +1,8 @@
+import 'package:abo_sadah/core/Data/all.dart';
 import 'package:abo_sadah/core/widgets/BottomSheet.dart';
 import 'package:abo_sadah/core/widgets/Button.dart';
 import 'package:abo_sadah/core/widgets/Inputs/Input.dart';
+import 'package:abo_sadah/core/widgets/Inputs/Select.dart';
 import 'package:flutter/material.dart';
 
 class EditGroup extends StatefulWidget {
@@ -11,16 +13,8 @@ class EditGroup extends StatefulWidget {
 }
 
 class _EditGroupState extends State<EditGroup> {
-  final List days = [
-    "اختر اليوم",
-    "السبت",
-    "الاحد",
-    "الاثنين",
-    "الثلاثاء",
-    "الاربعاء",
-    "الخميس",
-    "الجمعة",
-  ];
+  final List days = AppData.days;
+
   _fildBuilder(String title, Widget child) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -49,11 +43,6 @@ class _EditGroupState extends State<EditGroup> {
           ),
 
           _fildBuilder(
-            "رقم المجموعة",
-            Input(title: "رقم المجموعة", controller: TextEditingController()),
-          ),
-
-          _fildBuilder(
             "ايام المجموعة",
             Row(
               children: [
@@ -62,7 +51,9 @@ class _EditGroupState extends State<EditGroup> {
                     title: "الفترة",
                     type: "select",
                     value: days.first,
-                    items: days,
+                    items: days
+                        .map((day) => SelectItem(title: day, value: day))
+                        .toList(),
                     onChanged: (value) {},
                     controller: TextEditingController(),
                   ),
@@ -73,7 +64,9 @@ class _EditGroupState extends State<EditGroup> {
                     title: "الفترة",
                     type: "select",
                     value: days.first,
-                    items: days,
+                    items: days
+                        .map((day) => SelectItem(title: day, value: day))
+                        .toList(),
                     onChanged: (value) {},
                     controller: TextEditingController(),
                   ),
@@ -104,8 +97,10 @@ class _EditGroupState extends State<EditGroup> {
                   child: Input(
                     title: "الفترة",
                     type: "select",
-                    value: "صباحاً",
-                    items: ["صباحاً", "مساءً"],
+                    value: AppData.times.first,
+                    items: AppData.times
+                        .map((time) => SelectItem(title: time, value: time))
+                        .toList(),
                     onChanged: (value) {},
                     controller: TextEditingController(),
                   ),

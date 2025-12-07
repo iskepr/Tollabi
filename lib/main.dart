@@ -1,10 +1,21 @@
+import 'package:abo_sadah/core/Data/all.dart';
 import 'package:abo_sadah/core/Theme/Colors.dart';
+import 'package:abo_sadah/core/sqflite/mySql.dart';
+import 'package:abo_sadah/core/sqflite/tabels.dart';
 import 'package:abo_sadah/generated/l10n.dart' show S;
 import 'package:abo_sadah/pages/splash.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:provider/provider.dart';
+import 'package:sqflite_common_ffi/sqflite_ffi.dart';
 
-void main() {
+void main() async {
+  databaseFactory = databaseFactoryFfi;
+  WidgetsFlutterBinding.ensureInitialized();
+
+  await MySqfLite.init('abo_sadah.db');
+  await createTables();
+
   runApp(const MyApp());
 }
 
@@ -13,23 +24,26 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      locale: Locale("ar"),
-      localizationsDelegates: [
-        S.delegate,
-        GlobalMaterialLocalizations.delegate,
-        GlobalWidgetsLocalizations.delegate,
-        GlobalCupertinoLocalizations.delegate,
-      ],
-      supportedLocales: S.delegate.supportedLocales,
-      debugShowCheckedModeBanner: false,
-      title: 'ابو سداح',
-      theme: ThemeData(
-        fontFamily: "Tajawal",
-        colorScheme: ColorScheme.fromSeed(seedColor: ThemeColors.primary),
-        scaffoldBackgroundColor: ThemeColors.background,
+    return ChangeNotifierProvider(
+      create: (context) => AppData(),
+      child: MaterialApp(
+        locale: Locale("ar"),
+        localizationsDelegates: [
+          S.delegate,
+          GlobalMaterialLocalizations.delegate,
+          GlobalWidgetsLocalizations.delegate,
+          GlobalCupertinoLocalizations.delegate,
+        ],
+        supportedLocales: S.delegate.supportedLocales,
+        debugShowCheckedModeBanner: false,
+        title: 'ابو سداح',
+        theme: ThemeData(
+          fontFamily: "Tajawal",
+          colorScheme: ColorScheme.fromSeed(seedColor: ThemeColors.primary),
+          scaffoldBackgroundColor: ThemeColors.background,
+        ),
+        home: const Splash(),
       ),
-      home: const Splash(),
     );
   }
 }
