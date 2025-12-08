@@ -1,6 +1,6 @@
-import 'package:abo_sadah/core/Data/all.dart';
-import 'package:abo_sadah/core/Data/typs.dart';
-import 'package:abo_sadah/core/sqflite/mySql.dart';
+import 'package:abo_sadah/core/data/all.dart';
+import 'package:abo_sadah/core/data/typs.dart';
+import 'package:abo_sadah/core/data/sqflite/sql.dart';
 import 'package:abo_sadah/core/widgets/BottomSheet.dart';
 import 'package:abo_sadah/core/widgets/Button.dart';
 import 'package:abo_sadah/core/widgets/Inputs/Input.dart';
@@ -162,11 +162,6 @@ class _AddGroupState extends State<AddGroup> {
 
                 data.addGroup(
                   GroupsEntity(
-                    day1: c["day1"]!.text,
-                    day2: c["day2"]!.text,
-                    startTime: double.parse(c["startTime"]!.text),
-                    endTime: double.parse(c["endTime"]!.text),
-                    isAM: c["isAM"]!.text == times.first ? true : false,
                     price: double.parse(c["price"]!.text),
                     grade: double.parse(c["grade"]!.text),
                   ),

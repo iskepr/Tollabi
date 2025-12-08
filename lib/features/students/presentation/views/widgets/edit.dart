@@ -1,5 +1,5 @@
-import 'package:abo_sadah/core/Data/all.dart';
-import 'package:abo_sadah/core/Data/typs.dart';
+import 'package:abo_sadah/core/data/all.dart';
+import 'package:abo_sadah/core/data/typs.dart';
 import 'package:abo_sadah/core/Theme/TextStyles.dart';
 import 'package:abo_sadah/core/widgets/BottomSheet.dart';
 import 'package:abo_sadah/core/widgets/Button.dart';
@@ -43,7 +43,7 @@ class EditStud extends StatelessWidget {
               controller: c["groupID"]!,
               type: "select",
               value: data.groups
-                  .firstWhere((group) => group.id == studentData.groupId)
+                  .firstWhere((group) => group.id == studentData.groupID)
                   .id
                   .toString(),
               items: data.groups

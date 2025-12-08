@@ -1,26 +1,26 @@
-import 'package:abo_sadah/core/Data/all.dart';
-import 'package:abo_sadah/core/Data/typs.dart';
+import 'package:abo_sadah/core/data/all.dart';
+import 'package:abo_sadah/core/data/typs.dart';
 import 'package:abo_sadah/core/Theme/Colors.dart';
 import 'package:abo_sadah/core/Theme/TextStyles.dart';
 import 'package:abo_sadah/core/widgets/Button.dart';
 import 'package:abo_sadah/core/widgets/Grid.dart';
-import 'package:abo_sadah/core/widgets/Groups/addScore.dart';
-import 'package:abo_sadah/core/widgets/Groups/edit.dart';
+import 'package:abo_sadah/features/groups/presentation/views/widgets/addScore.dart';
+import 'package:abo_sadah/features/groups/presentation/views/widgets/edit.dart';
 import 'package:abo_sadah/core/widgets/Inputs/Input.dart';
 import 'package:flutter/material.dart';
 import 'package:lucide_icons_flutter/lucide_icons.dart';
 import 'package:provider/provider.dart';
 
-class Group extends StatefulWidget {
-  const Group({super.key, required this.group});
+class GroupView extends StatefulWidget {
+  const GroupView({super.key, required this.group});
 
   final GroupsEntity group;
 
   @override
-  State<Group> createState() => _GroupState();
+  State<GroupView> createState() => _GroupViewState();
 }
 
-class _GroupState extends State<Group> {
+class _GroupViewState extends State<GroupView> {
   List<StudentsEntity> allStudents = [];
   List<StudentsEntity> students = [];
 
@@ -34,7 +34,7 @@ class _GroupState extends State<Group> {
     final data = Provider.of<AppData>(context, listen: false);
     allStudents = data.students;
     students = allStudents
-        .where((student) => student.groupId == widget.group.id)
+        .where((student) => student.groupID == widget.group.id)
         .toList();
   }
 
@@ -107,9 +107,9 @@ class _GroupState extends State<Group> {
                       margin: EdgeInsets.symmetric(vertical: 5),
                       child: ListTile(
                         title: Text("عدد الطلاب: ${students.length}"),
-                        subtitle: Text(
-                          "${widget.group.day1} - ${widget.group.day2}",
-                        ),
+                        // subtitle: Text(
+                        //   "${widget.group.day1} - ${widget.group.day2}",
+                        // ),
                         trailing: Column(
                           mainAxisAlignment: MainAxisAlignment.center,
                           crossAxisAlignment: CrossAxisAlignment.end,
@@ -118,10 +118,10 @@ class _GroupState extends State<Group> {
                               "مجموعة ${widget.group.id}",
                               style: TextStyles.trailing,
                             ),
-                            Text(
-                              "${widget.group.startTime} : ${widget.group.endTime}",
-                              style: TextStyles.trailing,
-                            ),
+                            // Text(
+                            //   "${widget.group.startTime} : ${widget.group.endTime}",
+                            //   style: TextStyles.trailing,
+                            // ),
                           ],
                         ),
                       ),
@@ -203,7 +203,7 @@ class _GroupState extends State<Group> {
                             count: allStudents.length,
                             child: (BuildContext context, int index) {
                               bool isCheck =
-                                  allStudents[index].groupId == widget.group.id;
+                                  allStudents[index].groupID == widget.group.id;
                               return GestureDetector(
                                 onTap: () {},
                                 child: Container(
@@ -222,11 +222,11 @@ class _GroupState extends State<Group> {
                                           print(allStudents[index]);
                                           setState(() {
                                             if (val == true) {
-                                              allStudents[index].groupId =
+                                              allStudents[index].groupID =
                                                   widget.group.id;
                                               print(allStudents[index]);
                                             } else {
-                                              allStudents[index].groupId = null;
+                                              allStudents[index].groupID = null;
                                               print(allStudents[index]);
                                             }
                                           });

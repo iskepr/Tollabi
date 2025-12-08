@@ -1,10 +1,12 @@
-import 'package:abo_sadah/core/widgets/BottomBar/UserNavBarScaffold.dart';
+import 'package:abo_sadah/core/constants/assets.dart';
 import 'package:flutter/material.dart';
 import 'package:abo_sadah/core/widgets/Button.dart';
 import 'package:abo_sadah/core/Theme/Colors.dart';
+import 'package:abo_sadah/core/widgets/BottomBar/UserNavBarScaffold.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
-class Splash extends StatelessWidget {
-  const Splash({super.key});
+class SplashBody extends StatelessWidget {
+  const SplashBody({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -16,7 +18,7 @@ class Splash extends StatelessWidget {
           children: [
             Column(
               children: [
-                Expanded(child: Image.asset("assets/imgs/spalshMen.png")),
+                Expanded(child: Image.asset(Assets.assetsImgsSpalshMen)),
                 Expanded(
                   child: Container(
                     decoration: BoxDecoration(
@@ -30,9 +32,9 @@ class Splash extends StatelessWidget {
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
-                        SizedBox(height: 20),
+                        const SizedBox(height: 20),
 
-                        Text(
+                        const Text(
                           "مرحبا بك أبو سداح !",
                           style: TextStyle(
                             fontSize: 24,
@@ -40,7 +42,7 @@ class Splash extends StatelessWidget {
                             fontWeight: FontWeight.w900,
                           ),
                         ),
-                        Text(
+                        const Text(
                           "هذا هو مركز إدارتك الذكية للدروس\nالخصوصية. نظّم حصصك، وتابع طلابك،\nورتّب مواعيدك بكل سهولة، لتتفرّغ\nلما يهم حقًا: التدريس وصناعة أثر أكبر.",
                           textAlign: TextAlign.center,
                           style: TextStyle(
@@ -52,7 +54,10 @@ class Splash extends StatelessWidget {
 
                         Button(
                           title: "ابدا الان",
-                          onTap: () {
+                          onTap: () async {
+                            final prefs = await SharedPreferences.getInstance();
+                            await prefs.setBool('isFirstTime', false);
+
                             Navigator.pushReplacement(
                               context,
                               MaterialPageRoute(
@@ -62,14 +67,14 @@ class Splash extends StatelessWidget {
                           },
                         ),
 
-                        SizedBox(height: 20),
+                        const SizedBox(height: 20),
                       ],
                     ),
                   ),
                 ),
               ],
             ),
-            Center(child: Image.asset("assets/imgs/logo.png")),
+            Center(child: Image.asset(Assets.assetsImgsLogo)),
           ],
         ),
       ),

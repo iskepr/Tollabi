@@ -1,6 +1,6 @@
-import 'package:abo_sadah/pages/Groups/Groups.dart';
-import 'package:abo_sadah/pages/dashboadrd.dart';
-import 'package:abo_sadah/pages/Students/Students.dart';
+import 'package:abo_sadah/features/groups/presentation/views/groups_view.dart';
+import 'package:abo_sadah/features/dashboadrd/presentation/views/dash_view.dart';
+import 'package:abo_sadah/features/students/presentation/views/students_view.dart';
 import 'package:flutter/material.dart';
 import 'package:lucide_icons_flutter/lucide_icons.dart';
 
@@ -16,16 +16,26 @@ List<NavBarEntity> userNavBarItems = [
   NavBarEntity(
     title: 'الرئيسية',
     icon: LucideIcons.house300,
-    widget: Analysis(),
+    widget: DashView(),
+  ),
+  NavBarEntity(
+    title: 'حضور الطلاب',
+    icon: LucideIcons.graduationCap300,
+    widget: StudentsView(),
   ),
   NavBarEntity(
     title: 'الطلاب',
-    icon: LucideIcons.notepadText300,
-    widget: Students(),
+    icon: LucideIcons.user300,
+    widget: StudentsView(),
+  ),
+  NavBarEntity(
+    title: 'المصروفات',
+    icon: LucideIcons.walletCards300,
+    widget: StudentsView(),
   ),
   NavBarEntity(
     title: 'المجموعات',
     icon: LucideIcons.users300,
-    widget: Groups(),
+    widget: GroupsView(),
   ),
 ];

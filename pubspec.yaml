@@ -19,7 +19,7 @@ publish_to: "none" # Remove this line if you wish to publish to pub.dev
 version: 1.0.0+1
 
 environment:
-    sdk: ^3.9.2
+  sdk: ^3.9.2
 
 # Dependencies specify other packages that your package needs in order to work.
 # To automatically upgrade your package dependencies to the latest versions
@@ -28,70 +28,68 @@ environment:
 # the latest version available on pub.dev. To see which dependencies have newer
 # versions available, run `flutter pub outdated`.
 dependencies:
-    flutter:
-        sdk: flutter
-
-    # The following adds the Cupertino Icons font to your application.
-    # Use with the CupertinoIcons class for iOS style icons.
-    cupertino_icons: ^1.0.8
-    lucide_icons_flutter: ^3.1.6
-    flutter_localizations:
-        sdk: flutter
-    sqflite: ^2.4.2
-    provider: ^6.1.5+1
-    sqflite_common_ffi: ^2.4.0
+  cupertino_icons: ^1.0.8
+  flutter:
+    sdk: flutter
+  flutter_localizations:
+    sdk: flutter
+  lucide_icons_flutter: ^3.1.6
+  provider: ^6.1.5+1
+  shared_preferences: ^2.5.3
+  sqflite: ^2.4.2
+  sqflite_common_ffi: ^2.4.0
 
 dev_dependencies:
-    flutter_test:
-        sdk: flutter
 
-    # The "flutter_lints" package below contains a set of recommended lints to
-    # encourage good coding practices. The lint set provided by the package is
-    # activated in the `analysis_options.yaml` file located at the root of your
-    # package. See that file for information about deactivating specific lint
-    # rules and activating additional ones.
-    flutter_lints: ^5.0.0
+  # The "flutter_lints" package below contains a set of recommended lints to
+  # encourage good coding practices. The lint set provided by the package is
+  # activated in the `analysis_options.yaml` file located at the root of your
+  # package. See that file for information about deactivating specific lint
+  # rules and activating additional ones.
+  flutter_lints: ^5.0.0
+  flutter_test:
+    sdk: flutter
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
 # The following section is specific to Flutter packages.
 flutter:
-    # The following line ensures that the Material Icons font is
-    # included with your application, so that you can use the icons in
-    # the material Icons class.
-    uses-material-design: true
+  # The following line ensures that the Material Icons font is
+  # included with your application, so that you can use the icons in
+  # the material Icons class.
+  uses-material-design: true
 
-    # To add assets to your application, add an assets section, like this:
-    assets:
-        - assets/imgs/
+  # To add assets to your application, add an assets section, like this:
+  assets:
+    - assets/imgs/
 
-    # An image asset can refer to one or more resolution-specific "variants", see
-    # https://flutter.dev/to/resolution-aware-images
-    # For details regarding adding assets from package dependencies, see
-    # https://flutter.dev/to/asset-from-package
-    # To add custom fonts to your application, add a fonts section here,
-    # in this "flutter" section. Each entry in this list should have a
-    # "family" key with the font family name, and a "fonts" key with a
-    # list giving the asset and other descriptors for the font. For
-    # example:
-    fonts:
-        - family: VEXA
-          fonts:
-              - asset: assets/fonts/VEXA/VEXA-light.ttf
-                weight: 300
-              - asset: assets/fonts/VEXA/VEXA.ttf
-                weight: 900
-        - family: Tajawal
-          fonts:
-              - asset: assets/fonts/Tajawal/Tajawal-Black.ttf
-                weight: 300
-              - asset: assets/fonts/Tajawal/Tajawal-Bold.ttf
-                weight: 700
-              - asset: assets/fonts/Tajawal/Tajawal-Regular.ttf
-                weight: 400
+  # An image asset can refer to one or more resolution-specific "variants", see
+  # https://flutter.dev/to/resolution-aware-images
+  # For details regarding adding assets from package dependencies, see
+  # https://flutter.dev/to/asset-from-package
+  # To add custom fonts to your application, add a fonts section here,
+  # in this "flutter" section. Each entry in this list should have a
+  # "family" key with the font family name, and a "fonts" key with a
+  # list giving the asset and other descriptors for the font. For
+  # example:
+  fonts:
+    - family: VEXA
+      fonts:
+        - asset: assets/fonts/VEXA/VEXA-light.ttf
+          weight: 300
+        - asset: assets/fonts/VEXA/VEXA.ttf
+          weight: 900
+    - family: Tajawal
+      fonts:
+        - asset: assets/fonts/Tajawal/Tajawal-Black.ttf
+          weight: 300
+        - asset: assets/fonts/Tajawal/Tajawal-Bold.ttf
+          weight: 700
+        - asset: assets/fonts/Tajawal/Tajawal-Regular.ttf
+          weight: 400
 flutter_intl:
-    enabled: true
+  enabled: true
 flutter_assets:
-    assets_path: assets/
-    output_path: lib/core/constants/
-    filename: assets.dart
+  assets_path: assets/
+  output_path: lib/core/constants/
+  filename: assets.dart

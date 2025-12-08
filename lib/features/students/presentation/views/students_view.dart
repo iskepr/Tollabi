@@ -1,17 +1,17 @@
-import 'package:abo_sadah/core/Data/all.dart';
-import 'package:abo_sadah/core/Data/typs.dart';
+import 'package:abo_sadah/core/data/all.dart';
+import 'package:abo_sadah/core/data/typs.dart';
 import 'package:abo_sadah/core/Theme/Colors.dart';
 import 'package:abo_sadah/core/widgets/Button.dart';
 import 'package:abo_sadah/core/widgets/Grid.dart';
 import 'package:abo_sadah/core/widgets/Inputs/Input.dart';
-import 'package:abo_sadah/core/widgets/Students/add.dart';
-import 'package:abo_sadah/pages/Students/StudAcount.dart';
+import 'package:abo_sadah/features/students/presentation/views/widgets/add.dart';
+import 'package:abo_sadah/features/students/presentation/views/student_acount_view.dart';
 import 'package:flutter/material.dart';
 import 'package:lucide_icons_flutter/lucide_icons.dart';
 import 'package:provider/provider.dart';
 
-class Students extends StatelessWidget {
-  Students({super.key});
+class StudentsView extends StatelessWidget {
+  StudentsView({super.key});
 
   List<StudentsEntity> students = [];
   TextEditingController search = TextEditingController();
@@ -58,7 +58,7 @@ class Students extends StatelessWidget {
                   context,
                   MaterialPageRoute(
                     builder: (context) =>
-                        StudAcount(studentData: students[index]),
+                        StudentAcountView(studentData: students[index]),
                   ),
                 );
               },

@@ -1,17 +1,17 @@
-import 'package:abo_sadah/core/Data/all.dart';
-import 'package:abo_sadah/core/Data/typs.dart';
+import 'package:abo_sadah/core/data/all.dart';
+import 'package:abo_sadah/core/data/typs.dart';
 import 'package:abo_sadah/core/Theme/Colors.dart';
 import 'package:abo_sadah/core/Theme/TextStyles.dart';
 import 'package:abo_sadah/core/widgets/Button.dart';
 import 'package:abo_sadah/core/widgets/Grid.dart';
 import 'package:abo_sadah/core/widgets/Inputs/Input.dart';
-import 'package:abo_sadah/core/widgets/Students/edit.dart';
+import 'package:abo_sadah/features/students/presentation/views/widgets/edit.dart';
 import 'package:flutter/material.dart';
 import 'package:lucide_icons_flutter/lucide_icons.dart';
 import 'package:provider/provider.dart';
 
-class StudAcount extends StatelessWidget {
-  StudAcount({super.key, required this.studentData});
+class StudentAcountView extends StatelessWidget {
+  StudentAcountView({super.key, required this.studentData});
 
   final StudentsEntity studentData;
 
@@ -71,7 +71,7 @@ class StudAcount extends StatelessWidget {
                       SizedBox(height: 5),
                       Consumer<AppData>(
                         builder: (context, data, child) => Text(
-                          "مجموعة ${data.groups.firstWhere((group) => studentData.groupId == group.id).id}",
+                          "مجموعة ${data.groups.firstWhere((group) => studentData.groupID == group.id).id}",
                           style: TextStyles.trailing,
                         ),
                       ),
@@ -87,30 +87,30 @@ class StudAcount extends StatelessWidget {
                 controller: controller,
               ),
               SizedBox(height: 10),
-              Consumer<AppData>(
-                builder: (context, data, child) => MyGrid(
-                  count: data.tasks.length,
-                  child: (BuildContext context, int index) {
-                    final time = data.tasks[index].time;
-                    return Container(
-                      padding: EdgeInsets.all(5),
-                      decoration: BoxDecoration(
-                        color: ThemeColors.forground,
-                        borderRadius: BorderRadius.circular(24),
-                      ),
-                      child: ListTile(
-                        contentPadding: EdgeInsets.symmetric(horizontal: 10),
-                        title: Text(data.tasks[index].title),
-                        subtitle: Text("${data.tasks[index].score}/10"),
-                        trailing: Text(
-                          "${time.day}/${time.month}/${time.year}",
-                          style: TextStyle(fontSize: 14),
-                        ),
-                      ),
-                    );
-                  },
-                ),
-              ),
+              // Consumer<AppData>(
+              //   builder: (context, data, child) => MyGrid(
+              //     count: data.tasks.length,
+              //     child: (BuildContext context, int index) {
+              //       final time = data.tasks[index].time;
+              //       return Container(
+              //         padding: EdgeInsets.all(5),
+              //         decoration: BoxDecoration(
+              //           color: ThemeColors.forground,
+              //           borderRadius: BorderRadius.circular(24),
+              //         ),
+              //         child: ListTile(
+              //           contentPadding: EdgeInsets.symmetric(horizontal: 10),
+              //           title: Text(data.tasks[index].title),
+              //           subtitle: Text("${data.tasks[index].score}/10"),
+              //           trailing: Text(
+              //             "${time.day}/${time.month}/${time.year}",
+              //             style: TextStyle(fontSize: 14),
+              //           ),
+              //         ),
+              //       );
+              //     },
+              //   ),
+              // ),
             ],
           ),
         ),

@@ -14,6 +14,9 @@ class MySqfLite {
     _instance._database = await openDatabase(
       join(await getDatabasesPath(), dbName),
       version: 1,
+      onConfigure: (db) async {
+        await db.execute('PRAGMA foreign_keys = ON');
+      },
       onCreate: (db, version) async {},
     );
   }

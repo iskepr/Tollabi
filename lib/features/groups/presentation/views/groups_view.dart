@@ -1,14 +1,14 @@
-import 'package:abo_sadah/core/Data/all.dart';
+import 'package:abo_sadah/core/data/all.dart';
 import 'package:abo_sadah/core/Theme/Colors.dart';
 import 'package:abo_sadah/core/Theme/TextStyles.dart';
 import 'package:abo_sadah/core/widgets/Button.dart';
-import 'package:abo_sadah/core/widgets/Groups/add.dart';
-import 'package:abo_sadah/pages/Groups/Group.dart';
+import 'package:abo_sadah/features/groups/presentation/views/widgets/add.dart';
+import 'package:abo_sadah/features/groups/presentation/views/group_view.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-class Groups extends StatelessWidget {
-  const Groups({super.key});
+class GroupsView extends StatelessWidget {
+  const GroupsView({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -39,12 +39,14 @@ class Groups extends StatelessWidget {
             children: List.generate(data.groups.length, (index) {
               final group = data.groups[index];
               group.students = data.students
-                  .where((student) => student.groupId == group.id)
+                  .where((student) => student.groupID == group.id)
                   .toList();
               return GestureDetector(
                 onTap: () => Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => Group(group: group)),
+                  MaterialPageRoute(
+                    builder: (context) => GroupView(group: group),
+                  ),
                 ),
                 child: Container(
                   padding: EdgeInsets.all(5),
@@ -55,16 +57,16 @@ class Groups extends StatelessWidget {
                   margin: EdgeInsets.symmetric(vertical: 5),
                   child: ListTile(
                     title: Text("عدد الطلاب: ${group.students!.length}"),
-                    subtitle: Text("${group.day1} - ${group.day2}"),
+                    // subtitle: Text("${group.day1} - ${group.day2}"),
                     trailing: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       crossAxisAlignment: CrossAxisAlignment.end,
                       children: [
                         Text("مجموعة ${group.id}", style: TextStyles.trailing),
-                        Text(
-                          "${group.startTime} : ${group.endTime}",
-                          style: TextStyles.trailing,
-                        ),
+                        // Text(
+                        //   "${group.startTime} : ${group.endTime}",
+                        //   style: TextStyles.trailing,
+                        // ),
                       ],
                     ),
                   ),

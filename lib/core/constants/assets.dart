@@ -38,10 +38,6 @@ class Assets {
   /// assets/fonts/VEXA/VEXA-light.ttf
   static const String assetsFontsVEXAVEXALight = "assets/fonts/VEXA/VEXA-light.ttf";
 
-  /// Assets for assetsImgsBoy
-  /// assets/imgs/boy.jpg
-  static const String assetsImgsBoy = "assets/imgs/boy.jpg";
-
   /// Assets for assetsImgsLogo
   /// assets/imgs/logo.png
   static const String assetsImgsLogo = "assets/imgs/logo.png";

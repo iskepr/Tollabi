@@ -1,5 +1,5 @@
-import 'package:abo_sadah/core/Data/all.dart';
-import 'package:abo_sadah/core/Data/typs.dart';
+import 'package:abo_sadah/core/data/all.dart';
+import 'package:abo_sadah/core/data/typs.dart';
 import 'package:abo_sadah/core/Theme/Colors.dart';
 import 'package:abo_sadah/core/Theme/TextStyles.dart';
 import 'package:abo_sadah/core/widgets/BottomSheet.dart';
@@ -54,7 +54,7 @@ class AddScore extends StatelessWidget {
                 subtitle: Text(studentData.phone),
                 trailing: Text(
                   data.groups
-                      .firstWhere((group) => studentData.groupId == group.id)
+                      .firstWhere((group) => studentData.groupID == group.id)
                       .id
                       .toString(),
                   style: TextStyles.trailing,

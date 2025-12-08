@@ -29,12 +29,10 @@ class _BottomBarState extends State<BottomBar> {
 
   @override
   Widget build(BuildContext context) {
-    final width = MediaQuery.of(context).size.width;
-
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 10),
-      margin: EdgeInsets.symmetric(horizontal: width * 0.1, vertical: 20),
-      height: MediaQuery.of(context).size.height * 0.1,
+      margin: EdgeInsets.symmetric(horizontal: 15, vertical: 15),
+      height: 65,
       decoration: BoxDecoration(
         color: ThemeColors.primary,
         borderRadius: BorderRadius.circular(24),
@@ -56,7 +54,7 @@ class _BottomBarState extends State<BottomBar> {
               children: [
                 if (selectedIndex == index)
                   Container(
-                    width: 42,
+                    width: 32,
                     height: 2,
                     decoration: BoxDecoration(
                       color: ThemeColors.fourth,
@@ -65,13 +63,14 @@ class _BottomBarState extends State<BottomBar> {
                         BoxShadow(
                           color: ThemeColors.fourth,
                           blurRadius: 10,
-                          offset: const Offset(0, 5),
+                          spreadRadius: 2,
+                          offset: const Offset(0, 1),
                         ),
                       ],
                     ),
                   )
                 else
-                  SizedBox(width: 32, height: 2),
+                  const SizedBox(width: 32, height: 2),
 
                 Column(
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -85,13 +84,13 @@ class _BottomBarState extends State<BottomBar> {
                       widget.pages[index].title,
                       style: TextStyle(
                         color: ThemeColors.background,
-                        fontSize: 16,
+                        fontSize: 13,
                       ),
                     ),
                   ],
                 ),
 
-                SizedBox(),
+                const SizedBox(),
               ],
             ),
           ),
