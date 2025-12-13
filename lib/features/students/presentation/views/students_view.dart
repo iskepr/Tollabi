@@ -46,7 +46,7 @@ class StudentsView extends StatelessWidget {
             prefixIcon: Icons.search,
             controller: search,
             onChanged: (value) => students = data.students
-                .where((stud) => stud.name.contains(value))
+                .where((stud) => stud.name.contains(value.toString()))
                 .toList(),
           ),
           SizedBox(height: 10),

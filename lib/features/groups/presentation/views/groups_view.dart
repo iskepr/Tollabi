@@ -35,45 +35,52 @@ class GroupsView extends StatelessWidget {
           ],
         ),
         Consumer<AppData>(
-          builder: (context, data, child) => Column(
-            children: List.generate(data.groups.length, (index) {
-              final group = data.groups[index];
-              group.students = data.students
-                  .where((student) => student.groupID == group.id)
-                  .toList();
-              return GestureDetector(
-                onTap: () => Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => GroupView(group: group),
-                  ),
+          builder: (context, data, child) => data.groups.isEmpty
+              ? Center(child: Text("لا يوجد مجموعات"))
+              : Column(
+                  children: List.generate(data.groups.length, (index) {
+                    final group = data.groups[index];
+                    group.students = data.students
+                        .where((student) => student.groupID == group.id)
+                        .toList();
+                    return GestureDetector(
+                      onTap: () => Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => GroupView(group: group),
+                        ),
+                      ),
+                      child: Container(
+                        padding: EdgeInsets.all(5),
+                        decoration: BoxDecoration(
+                          color: ThemeColors.forground,
+                          borderRadius: BorderRadius.circular(24),
+                        ),
+                        margin: EdgeInsets.symmetric(vertical: 5),
+                        child: ListTile(
+                          title: Text("عدد الطلاب: ${group.students!.length}"),
+                          subtitle: Text(
+                            group.timeGroups!.map((e) => e.day).join(" - "),
+                          ),
+                          trailing: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.end,
+                            children: [
+                              Text(
+                                "مجموعة ${group.id}",
+                                style: TextStyles.trailing,
+                              ),
+                              // Text(
+                              //   "${group.start_time} : ${group.end_time}"
+                              //   style: TextStyles.trailing,
+                              // ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    );
+                  }),
                 ),
-                child: Container(
-                  padding: EdgeInsets.all(5),
-                  decoration: BoxDecoration(
-                    color: ThemeColors.forground,
-                    borderRadius: BorderRadius.circular(24),
-                  ),
-                  margin: EdgeInsets.symmetric(vertical: 5),
-                  child: ListTile(
-                    title: Text("عدد الطلاب: ${group.students!.length}"),
-                    // subtitle: Text("${group.day1} - ${group.day2}"),
-                    trailing: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.end,
-                      children: [
-                        Text("مجموعة ${group.id}", style: TextStyles.trailing),
-                        // Text(
-                        //   "${group.startTime} : ${group.endTime}",
-                        //   style: TextStyles.trailing,
-                        // ),
-                      ],
-                    ),
-                  ),
-                ),
-              );
-            }),
-          ),
         ),
       ],
     );

@@ -1,3 +1,5 @@
+import 'package:day_night_time_picker/lib/state/time.dart';
+
 class GroupsEntity {
   int? id;
   double price;
@@ -11,11 +13,11 @@ class GroupsEntity {
       id: map['id'],
       price: (map['price'] as num).toDouble(),
       grade: (map['grade'] as num).toDouble(),
-      timeGroups: (map['time_groups'] as List)
-          .map((e) => TimeGroupsEntity.fromMap(e))
+      timeGroups: (map['time_groups'] as List<dynamic>?)
+          ?.map((e) => TimeGroupsEntity.fromMap(e))
           .toList(),
-      students: (map['students'] as List)
-          .map((e) => StudentsEntity.fromMap(e))
+      students: (map['students'] as List<dynamic>?)
+          ?.map((e) => StudentsEntity.fromMap(e))
           .toList(),
     );
   }
@@ -27,32 +29,44 @@ class GroupsEntity {
     this.timeGroups,
     this.students,
   });
+
+  @override
+  String toString() {
+    return "GroupsEntity(id: $id, price: $price, grade: $grade, timeGroups: $timeGroups, students: $students)";
+  }
 }
 
 class TimeGroupsEntity {
-  int id;
+  int? id;
   String day;
-  String startTime;
-  String endTime;
+  Time startTime;
+  Time endTime;
   int? groupID;
 
   factory TimeGroupsEntity.fromMap(Map<String, dynamic> map) {
+    final s = DateTime.parse(map['start_time']);
+    final e = DateTime.parse(map['end_time']);
     return TimeGroupsEntity(
       id: map['id'],
       day: map['day'],
-      startTime: map['start_time'],
-      endTime: map['end_time'],
+      startTime: Time(hour: s.hour, minute: s.minute),
+      endTime: Time(hour: e.hour, minute: e.minute),
       groupID: map['group_id'],
     );
   }
 
   TimeGroupsEntity({
-    required this.id,
+    this.id,
     required this.day,
     required this.startTime,
     required this.endTime,
     this.groupID,
   });
+
+  @override
+  String toString() {
+    return "TimeGroupsEntity(id: $id, day: $day, startTime: $startTime, endTime: $endTime, groupID: $groupID)";
+  }
 }
 
 class StudentsEntity {

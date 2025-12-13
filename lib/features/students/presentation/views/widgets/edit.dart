@@ -56,7 +56,9 @@ class EditStud extends StatelessWidget {
                   .toList(),
               onChanged: (value) {
                 c["groupID"]!.text = data.groups
-                    .firstWhere((group) => group.id == int.parse(value))
+                    .firstWhere(
+                      (group) => group.id == int.parse(value.toString()),
+                    )
                     .id
                     .toString();
               },

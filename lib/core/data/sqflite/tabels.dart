@@ -10,8 +10,8 @@ Future<void> createTables() async {
   await MySqfLite().createTable("time_groups", {
     "id": "INTEGER PRIMARY KEY AUTOINCREMENT",
     "day": "TEXT NOT NULL",
-    "startTime": "TEXT NOT NULL",
-    "endTime": "TEXT NOT NULL",
+    "start_time": "TEXT NOT NULL",
+    "end_time": "TEXT NOT NULL",
     "group_id": "INTEGER REFERENCES groups(id) ON DELETE CASCADE",
   });
 

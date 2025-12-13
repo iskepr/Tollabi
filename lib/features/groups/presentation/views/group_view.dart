@@ -107,22 +107,14 @@ class _GroupViewState extends State<GroupView> {
                       margin: EdgeInsets.symmetric(vertical: 5),
                       child: ListTile(
                         title: Text("عدد الطلاب: ${students.length}"),
-                        // subtitle: Text(
-                        //   "${widget.group.day1} - ${widget.group.day2}",
-                        // ),
-                        trailing: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.end,
-                          children: [
-                            Text(
-                              "مجموعة ${widget.group.id}",
-                              style: TextStyles.trailing,
-                            ),
-                            // Text(
-                            //   "${widget.group.startTime} : ${widget.group.endTime}",
-                            //   style: TextStyles.trailing,
-                            // ),
-                          ],
+                        subtitle: Text(
+                          widget.group.timeGroups!
+                              .map((e) => e.day)
+                              .join(" - "),
+                        ),
+                        trailing: Text(
+                          "مجموعة ${widget.group.id}",
+                          style: TextStyles.trailing,
                         ),
                       ),
                     ),
@@ -140,7 +132,9 @@ class _GroupViewState extends State<GroupView> {
                       controller: search,
                       onChanged: (value) => setState(() {
                         students = allStudents
-                            .where((stud) => stud.name.contains(value))
+                            .where(
+                              (stud) => stud.name.contains(value.toString()),
+                            )
                             .toList();
                       }),
                     ),

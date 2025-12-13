@@ -15,10 +15,28 @@ class AppData extends ChangeNotifier {
     groups = groupsData.map(GroupsEntity.fromMap).toList();
 
     final timeGroupsData = await MySqfLite().query('time_groups');
-    timeGroups = timeGroupsData.map(TimeGroupsEntity.fromMap).toList();
+    //  timeGroups = timeGroupsData.map(TimeGroupsEntity.fromMap).toList();
 
     final studentsData = await MySqfLite().query('students');
-    students = studentsData.map(StudentsEntity.fromMap).toList();
+    //  students = studentsData.map(StudentsEntity.fromMap).toList();
+
+    groups = groupsData.map((gMap) {
+      final gId = gMap['id'];
+      final groupStudents = studentsData
+          .where((s) => s['group_id'] == gId)
+          .toList();
+      final groupTimes = timeGroupsData
+          .where((t) => t['group_id'] == gId)
+          .toList();
+
+      return GroupsEntity.fromMap({
+        ...gMap,
+        'students': groupStudents,
+        'time_groups': groupTimes,
+      });
+    }).toList();
+
+    print(groups);
 
     final attendancesData = await MySqfLite().query('attendances');
     attendances = attendancesData.map(AttendancesEntity.fromMap).toList();
@@ -37,7 +55,35 @@ class AppData extends ChangeNotifier {
       'price': group.price,
       'grade': group.grade,
     });
-    groups.add(GroupsEntity(id: id, price: group.price, grade: group.grade));
+
+    for (var timeGroup in group.timeGroups!) {
+      final now = DateTime.now();
+      final s = timeGroup.startTime;
+      final e = timeGroup.endTime;
+
+      await MySqfLite().insert('time_groups', {
+        'day': timeGroup.day,
+        'start_time': DateTime(
+          now.year,
+          now.month,
+          now.day,
+          s.hour,
+          s.minute,
+          s.second,
+        ).toString(),
+        'end_time': DateTime(
+          now.year,
+          now.month,
+          now.day,
+          e.hour,
+          e.minute,
+          e.second,
+        ).toString(),
+        'group_id': id,
+      });
+    }
+
+    _init();
     notifyListeners();
   }
 
