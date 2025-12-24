@@ -97,6 +97,7 @@ class AppData extends ChangeNotifier {
     return list.where(test).fold(0.0, (sum, e) => sum + e.amount);
   }
 
+  // Groups
   void addGroup(GroupsEntity group) async {
     int id = await MySqfLite().insert("groups", {
       "price": group.price,
@@ -134,6 +135,18 @@ class AppData extends ChangeNotifier {
     notifyListeners();
   }
 
+  void editGroup(GroupsEntity group) async {
+    await MySqfLite().update(
+      "groups",
+      {"price": group.price, "grade": group.grade},
+      whereClause: "id = ?",
+      whereArgs: [group.id],
+    );
+    _init();
+    notifyListeners();
+  }
+
+  // Students
   void addStudent(StudentsEntity student) async {
     await MySqfLite().insert("students", {
       "name": student.name,
@@ -159,6 +172,7 @@ class AppData extends ChangeNotifier {
     notifyListeners();
   }
 
+  // Expenses
   void addExpense(ExpensesEntity expense) async {
     await MySqfLite().insert("expenses", {
       "title": expense.title,

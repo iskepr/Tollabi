@@ -2,7 +2,7 @@ import 'package:abo_sadah/core/data/all.dart';
 import 'package:abo_sadah/core/Theme/Colors.dart';
 import 'package:abo_sadah/core/Theme/TextStyles.dart';
 import 'package:abo_sadah/core/widgets/Button.dart';
-import 'package:abo_sadah/features/groups/presentation/views/widgets/add.dart';
+import 'package:abo_sadah/features/groups/presentation/views/widgets/add_group.dart';
 import 'package:abo_sadah/features/groups/presentation/views/group_view.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';

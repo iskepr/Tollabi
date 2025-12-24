@@ -1,3 +1,4 @@
+import 'package:abo_sadah/features/attendances/presentation/views/attendances_view.dart';
 import 'package:abo_sadah/features/expenses/presentation/views/expenses_view.dart';
 import 'package:abo_sadah/features/groups/presentation/views/groups_view.dart';
 import 'package:abo_sadah/features/dashboard/presentation/views/dash_view.dart';
@@ -22,7 +23,7 @@ List<NavBarEntity> userNavBarItems = [
   NavBarEntity(
     title: 'حضور الطلاب',
     icon: LucideIcons.graduationCap300,
-    widget: StudentsView(),
+    widget: AttendancesView(),
   ),
   NavBarEntity(
     title: 'الطلاب',
