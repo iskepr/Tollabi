@@ -21,7 +21,7 @@ class Select extends StatelessWidget {
     return DropdownButtonFormField<String>(
       decoration: decoration,
       initialValue: value,
-      items: items
+      items: [SelectItem(title: title, value: title), ...items]
           .map<DropdownMenuItem<String>>(
             (i) =>
                 DropdownMenuItem<String>(value: i.value, child: Text(i.title)),

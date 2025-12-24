@@ -18,75 +18,77 @@ class StudentsView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Consumer<AppData>(
-      builder: (context, data, child) => Column(
-        children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text("كل الطلاب", style: TextStyle(fontSize: 20)),
-              Button(
-                title: "+ إضافة طالب",
-                fontSize: 14,
-                padding: EdgeInsets.symmetric(horizontal: 20, vertical: 12),
-                radius: 16,
+      builder: (context, data, child) {
+        students = data.students;
+        return Column(
+          spacing: 10,
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text("كل الطلاب", style: TextStyle(fontSize: 20)),
+                Button(
+                  title: "+ إضافة طالب",
+                  fontSize: 14,
+                  padding: EdgeInsets.symmetric(horizontal: 20, vertical: 12),
+                  radius: 16,
+                  onTap: () {
+                    showModalBottomSheet(
+                      context: context,
+                      isScrollControlled: true,
+                      builder: (context) => AddStud(),
+                    );
+                  },
+                ),
+              ],
+            ),
+            Input(
+              title: "ابحث عن طالب",
+              style: "border",
+              prefixIcon: Icons.search,
+              controller: search,
+              onChanged: (value) => students = data.students
+                  .where((stud) => stud.name.contains(value.toString()))
+                  .toList(),
+            ),
+            MyGrid(
+              count: students.length,
+              child: (BuildContext context, int index) => GestureDetector(
                 onTap: () {
-                  showModalBottomSheet(
-                    context: context,
-                    isScrollControlled: true,
-                    builder: (context) => AddStud(),
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) =>
+                          StudentAcountView(studentData: students[index]),
+                    ),
                   );
                 },
-              ),
-            ],
-          ),
-          SizedBox(height: 10),
-          Input(
-            title: "ابحث عن طالب",
-            style: "border",
-            prefixIcon: Icons.search,
-            controller: search,
-            onChanged: (value) => students = data.students
-                .where((stud) => stud.name.contains(value.toString()))
-                .toList(),
-          ),
-          SizedBox(height: 10),
-          MyGrid(
-            count: students.length,
-            child: (BuildContext context, int index) => GestureDetector(
-              onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) =>
-                        StudentAcountView(studentData: students[index]),
+                child: Container(
+                  padding: EdgeInsets.all(5),
+                  decoration: BoxDecoration(
+                    color: ThemeColors.forground,
+                    borderRadius: BorderRadius.circular(24),
                   ),
-                );
-              },
-              child: Container(
-                padding: EdgeInsets.all(5),
-                decoration: BoxDecoration(
-                  color: ThemeColors.forground,
-                  borderRadius: BorderRadius.circular(24),
-                ),
-                child: ListTile(
-                  contentPadding: EdgeInsets.zero,
-                  title: Text(
-                    students[index].name,
-                    style: TextStyle(fontSize: 14),
+                  child: ListTile(
+                    contentPadding: EdgeInsets.zero,
+                    title: Text(
+                      students[index].name,
+                      style: TextStyle(fontSize: 14),
+                    ),
+                    subtitle: Text(
+                      students[index].phone,
+                      textDirection: TextDirection.ltr,
+                      textAlign: TextAlign.right,
+                      style: TextStyle(fontSize: 14),
+                    ),
+                    leading: Icon(LucideIcons.user),
                   ),
-                  subtitle: Text(
-                    students[index].phone,
-                    textDirection: TextDirection.ltr,
-                    textAlign: TextAlign.right,
-                    style: TextStyle(fontSize: 14),
-                  ),
-                  leading: Icon(LucideIcons.user),
                 ),
               ),
             ),
-          ),
-        ],
-      ),
+          ],
+        );
+      },
     );
   }
 }

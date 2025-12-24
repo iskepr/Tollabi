@@ -70,7 +70,7 @@ class TimeGroupsEntity {
 }
 
 class StudentsEntity {
-  int id;
+  int? id;
   String name;
   String phone;
   int? groupID;
@@ -90,13 +90,18 @@ class StudentsEntity {
   }
 
   StudentsEntity({
-    required this.id,
+    this.id,
     required this.name,
     required this.phone,
     this.groupID,
     required this.createdTime,
     this.groupData,
   });
+
+  @override
+  String toString() {
+    return "StudentsEntity(id: $id, name: $name, phone: $phone, groupID: $groupID, createdTime: $createdTime, groupData: $groupData)";
+  }
 }
 
 class AttendancesEntity {

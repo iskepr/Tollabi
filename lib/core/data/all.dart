@@ -18,7 +18,9 @@ class AppData extends ChangeNotifier {
     //  timeGroups = timeGroupsData.map(TimeGroupsEntity.fromMap).toList();
 
     final studentsData = await MySqfLite().query('students');
-    //  students = studentsData.map(StudentsEntity.fromMap).toList();
+    students = studentsData.map(StudentsEntity.fromMap).toList();
+
+    print(students);
 
     groups = groupsData.map((gMap) {
       final gId = gMap['id'];
@@ -35,8 +37,6 @@ class AppData extends ChangeNotifier {
         'time_groups': groupTimes,
       });
     }).toList();
-
-    print(groups);
 
     final attendancesData = await MySqfLite().query('attendances');
     attendances = attendancesData.map(AttendancesEntity.fromMap).toList();
@@ -87,8 +87,32 @@ class AppData extends ChangeNotifier {
     notifyListeners();
   }
 
-  List<TimeGroupsEntity> timeGroups = [];
   List<StudentsEntity> students = [];
+  void addStudent(StudentsEntity student) async {
+    await MySqfLite().insert('students', {
+      'name': student.name,
+      "phone": student.phone,
+      "created_time": student.createdTime.toString(),
+    });
+    _init();
+    notifyListeners();
+  }
+
+  void editStudent(StudentsEntity student) async {
+    await MySqfLite().update(
+      'students',
+      {
+        'name': student.name,
+        "phone": student.phone,
+        'group_id': student.groupID,
+      },
+      whereClause: 'id = ?',
+      whereArgs: [student.id],
+    );
+    _init();
+    notifyListeners();
+  }
+
   List<AttendancesEntity> attendances = [];
   List<ExpensesEntity> expenses = [];
 

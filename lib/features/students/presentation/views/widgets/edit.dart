@@ -14,14 +14,16 @@ class EditStud extends StatelessWidget {
   final StudentsEntity studentData;
 
   final Map<String, TextEditingController> c = {
-    "img": TextEditingController(),
     "name": TextEditingController(),
     "phone": TextEditingController(),
     "groupID": TextEditingController(),
   };
 
+  final String gTitle = "اختر مجموعة";
+
   @override
   Widget build(BuildContext context) {
+    final data = Provider.of<AppData>(context, listen: false);
     return MyBottomsheet(
       child: Column(
         spacing: 5,
@@ -39,13 +41,15 @@ class EditStud extends StatelessWidget {
           ),
           Consumer<AppData>(
             builder: (context, data, child) => Input(
-              title: "المجموعة",
+              title: gTitle,
               controller: c["groupID"]!,
               type: "select",
-              value: data.groups
-                  .firstWhere((group) => group.id == studentData.groupID)
-                  .id
-                  .toString(),
+              value: studentData.groupID == null
+                  ? gTitle
+                  : data.groups
+                        .firstWhere((group) => group.id == studentData.groupID)
+                        .id
+                        .toString(),
               items: data.groups
                   .map(
                     (group) => SelectItem(
@@ -64,10 +68,21 @@ class EditStud extends StatelessWidget {
               },
             ),
           ),
-          SizedBox(height: 10),
+          const SizedBox(height: 30),
           Button(
             title: "حفظ",
             onTap: () {
+              data.editStudent(
+                StudentsEntity(
+                  id: studentData.id,
+                  groupID: c["groupID"]!.text == gTitle
+                      ? null
+                      : int.parse(c["groupID"]!.text),
+                  name: c["name"]!.text,
+                  phone: c["phone"]!.text,
+                  createdTime: studentData.createdTime,
+                ),
+              );
               Navigator.pop(context);
             },
           ),

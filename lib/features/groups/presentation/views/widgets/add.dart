@@ -64,7 +64,7 @@ class _AddGroupState extends State<AddGroup> {
 
   @override
   Widget build(BuildContext context) {
-    final data = Provider.of<AppData>(context);
+    final data = Provider.of<AppData>(context, listen: false);
 
     return MyBottomsheet(
       child: SingleChildScrollView(

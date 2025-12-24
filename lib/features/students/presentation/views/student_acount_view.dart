@@ -70,7 +70,7 @@ class StudentAcountView extends StatelessWidget {
                       SizedBox(height: 5),
                       Consumer<AppData>(
                         builder: (context, data, child) => Text(
-                          "مجموعة ${data.groups.firstWhere((group) => studentData.groupID == group.id).id}",
+                          "مجموعة ${studentData.groupID == null ? "غير محددة" : data.groups.firstWhere((group) => studentData.groupID == group.id).id}",
                           style: TextStyles.trailing,
                         ),
                       ),
