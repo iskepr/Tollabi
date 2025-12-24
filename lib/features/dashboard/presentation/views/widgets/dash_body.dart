@@ -1,5 +1,6 @@
 import 'package:abo_sadah/core/Theme/Colors.dart';
 import 'package:abo_sadah/core/data/all.dart';
+import 'package:abo_sadah/core/utils/format.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -51,7 +52,7 @@ class DashBody extends StatelessWidget {
                       textAlign: TextAlign.center,
                     ),
                     Text(
-                      data.analysisData[index].value.toString(),
+                      formatDouble(data.analysisData[index].value.toDouble()),
                       style: TextStyle(fontWeight: FontWeight.bold),
                     ),
                   ],

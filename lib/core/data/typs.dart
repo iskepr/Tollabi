@@ -166,7 +166,7 @@ class ExpensesEntity {
 
 class AnalysisEntity {
   String title;
-  int value;
+  num value;
 
   AnalysisEntity({required this.title, required this.value});
 }

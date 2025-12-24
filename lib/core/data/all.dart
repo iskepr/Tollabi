@@ -1,55 +1,102 @@
-import "package:abo_sadah/core/data/typs.dart";
-import "package:abo_sadah/core/data/sqflite/sql.dart";
 import "package:flutter/material.dart";
 import "package:shared_preferences/shared_preferences.dart";
+import "package:abo_sadah/core/data/typs.dart";
+import "package:abo_sadah/core/data/sqflite/sql.dart";
 
 class AppData extends ChangeNotifier {
+  final MySqfLite _db = MySqfLite();
+
+  bool isFirstTime = false;
+  List<GroupsEntity> groups = [];
+  List<StudentsEntity> students = [];
+  List<AttendancesEntity> attendances = [];
+  List<ExpensesEntity> expenses = [];
+  List<AnalysisEntity> analysisData = [];
+
   AppData() {
     _init();
   }
+
   Future<void> _init() async {
     final prefs = await SharedPreferences.getInstance();
-    isFirstTime = prefs.getBool("isFirstTime")!;
+    isFirstTime = prefs.getBool("isFirstTime") ?? true;
 
-    final groupsData = await MySqfLite().query("groups");
-    groups = groupsData.map(GroupsEntity.fromMap).toList();
+    final results = await Future.wait([
+      _db.query("groups"),
+      _db.query("time_groups"),
+      _db.query("students"),
+      _db.query("attendances"),
+      _db.query("expenses"),
+    ]);
 
-    final timeGroupsData = await MySqfLite().query("time_groups");
-    //  timeGroups = timeGroupsData.map(TimeGroupsEntity.fromMap).toList();
+    final rawGroups = results[0];
+    final rawTimes = results[1];
+    final rawStudents = results[2];
+    final rawAttendances = results[3];
+    final rawExpenses = results[4];
 
-    final studentsData = await MySqfLite().query("students");
-    students = studentsData.map(StudentsEntity.fromMap).toList();
+    // Mapping
+    students = rawStudents.map(StudentsEntity.fromMap).toList();
+    attendances = rawAttendances.map(AttendancesEntity.fromMap).toList();
+    expenses = rawExpenses.map(ExpensesEntity.fromMap).toList();
 
-    groups = groupsData.map((gMap) {
+    groups = rawGroups.map((gMap) {
       final gId = gMap["id"];
-      final groupStudents = studentsData
-          .where((s) => s["group_id"] == gId)
-          .toList();
-      final groupTimes = timeGroupsData
-          .where((t) => t["group_id"] == gId)
-          .toList();
-
       return GroupsEntity.fromMap({
         ...gMap,
-        "students": groupStudents,
-        "time_groups": groupTimes,
+        "students": rawStudents.where((s) => s["group_id"] == gId).toList(),
+        "time_groups": rawTimes.where((t) => t["group_id"] == gId).toList(),
       });
     }).toList();
 
-    final attendancesData = await MySqfLite().query("attendances");
-    attendances = attendancesData.map(AttendancesEntity.fromMap).toList();
-
-    final expensesData = await MySqfLite().query("expenses");
-    expenses = expensesData.map(ExpensesEntity.fromMap).toList();
-
-    print(expenses);
-
+    _calculateAnalysis();
     notifyListeners();
   }
 
-  bool isFirstTime = false;
+  void _calculateAnalysis() {
+    final now = DateTime.now();
 
-  List<GroupsEntity> groups = [];
+    double expMonth = _sumExpenses(
+      expenses,
+      (e) => e.createdTime.month == now.month && e.createdTime.year == now.year,
+    );
+    double expLastMonth = _sumExpenses(
+      expenses,
+      (e) =>
+          e.createdTime.month == now.month - 1 &&
+          e.createdTime.year == now.year,
+    );
+    double expToday = _sumExpenses(
+      expenses,
+      (e) => e.createdTime.day == now.day && e.createdTime.month == now.month,
+    );
+
+    analysisData = [
+      AnalysisEntity(title: "الطلاب", value: students.length),
+      AnalysisEntity(title: "المجموعات", value: groups.length),
+      AnalysisEntity(title: "المشرفين", value: 0),
+
+      AnalysisEntity(title: "إيرادات الشهر الحالي", value: 0),
+      AnalysisEntity(title: "إيرادات اليوم", value: 0),
+      AnalysisEntity(title: "إيرادات الشهر الماضي", value: 0),
+
+      AnalysisEntity(title: "مصروفات الشهر الحالي", value: expMonth),
+      AnalysisEntity(title: "مصروفات اليوم", value: expToday),
+      AnalysisEntity(title: "مصروفات الشهر الماضي", value: expLastMonth),
+
+      AnalysisEntity(title: "صافي الشهر الحالي", value: 0),
+      AnalysisEntity(title: "صافي اليوم", value: 0),
+      AnalysisEntity(title: "صافي الشهر الماضي", value: 0),
+    ];
+  }
+
+  double _sumExpenses(
+    List<ExpensesEntity> list,
+    bool Function(ExpensesEntity) test,
+  ) {
+    return list.where(test).fold(0.0, (sum, e) => sum + e.amount);
+  }
+
   void addGroup(GroupsEntity group) async {
     int id = await MySqfLite().insert("groups", {
       "price": group.price,
@@ -87,7 +134,6 @@ class AppData extends ChangeNotifier {
     notifyListeners();
   }
 
-  List<StudentsEntity> students = [];
   void addStudent(StudentsEntity student) async {
     await MySqfLite().insert("students", {
       "name": student.name,
@@ -113,8 +159,6 @@ class AppData extends ChangeNotifier {
     notifyListeners();
   }
 
-  List<AttendancesEntity> attendances = [];
-  List<ExpensesEntity> expenses = [];
   void addExpense(ExpensesEntity expense) async {
     await MySqfLite().insert("expenses", {
       "title": expense.title,
@@ -125,24 +169,6 @@ class AppData extends ChangeNotifier {
     _init();
     notifyListeners();
   }
-
-  List<AnalysisEntity> analysisData = [
-    AnalysisEntity(title: "إيرادات الشهر الماضي", value: 200),
-    AnalysisEntity(title: "إيرادات الشهر الحالي", value: 1220),
-    AnalysisEntity(title: "إيرادات اليوم", value: 433),
-
-    AnalysisEntity(title: "مصروفات الشهر الماضي", value: 20),
-    AnalysisEntity(title: "مصروفات الشهر الحالي", value: 20),
-    AnalysisEntity(title: "مصروفات اليوم", value: 20),
-
-    AnalysisEntity(title: "صافي الشهر الماضي", value: 20),
-    AnalysisEntity(title: "صافي الشهر الحالي", value: 20),
-    AnalysisEntity(title: "صافي اليوم", value: 20),
-
-    AnalysisEntity(title: "المجموعات", value: 20),
-    AnalysisEntity(title: "المشرفين", value: 20),
-    AnalysisEntity(title: "الطلاب", value: 20),
-  ];
 
   static final List days = [
     "السبت",
