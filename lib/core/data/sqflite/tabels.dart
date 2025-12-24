@@ -34,9 +34,9 @@ Future<void> createTables() async {
 
   await MySqfLite().createTable("expenses", {
     "id": "INTEGER PRIMARY KEY AUTOINCREMENT",
-    "title": "TEXT",
+    "title": "TEXT NOT NULL",
     "description": "TEXT",
-    "amount": "REAL",
+    "amount": "REAL NOT NULL",
     "created_time": "TEXT",
   });
 }

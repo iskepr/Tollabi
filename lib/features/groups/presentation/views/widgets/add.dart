@@ -195,9 +195,7 @@ class _AddGroupState extends State<AddGroup> {
                   type: "number",
                 ),
               ),
-
               const SizedBox(height: 20),
-
               Button(
                 title: "حفظ المجموعة",
                 onTap: () async {

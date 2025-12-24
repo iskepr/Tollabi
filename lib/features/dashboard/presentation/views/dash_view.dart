@@ -1,4 +1,4 @@
-import 'package:abo_sadah/features/dashboadrd/presentation/views/widgets/dash_body.dart';
+import 'package:abo_sadah/features/dashboard/presentation/views/widgets/dash_body.dart';
 import 'package:flutter/material.dart';
 
 class DashView extends StatelessWidget {

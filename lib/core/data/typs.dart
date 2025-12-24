@@ -134,9 +134,9 @@ class AttendancesEntity {
 }
 
 class ExpensesEntity {
-  int id;
+  int? id;
   String title;
-  String description;
+  String? note;
   double amount;
   DateTime createdTime;
 
@@ -144,19 +144,24 @@ class ExpensesEntity {
     return ExpensesEntity(
       id: map['id'],
       title: map['title'],
-      description: map['description'],
+      note: map['description'],
       amount: (map['amount'] as num).toDouble(),
       createdTime: DateTime.parse(map['created_time']),
     );
   }
 
   ExpensesEntity({
-    required this.id,
+    this.id,
     required this.title,
-    required this.description,
+    this.note,
     required this.amount,
     required this.createdTime,
   });
+
+  @override
+  String toString() {
+    return "ExpensesEntity(id: $id, title: $title, note: $note, amount: $amount, createdTime: $createdTime)";
+  }
 }
 
 class AnalysisEntity {

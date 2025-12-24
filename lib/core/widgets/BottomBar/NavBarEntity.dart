@@ -1,5 +1,6 @@
+import 'package:abo_sadah/features/expenses/presentation/views/expenses_view.dart';
 import 'package:abo_sadah/features/groups/presentation/views/groups_view.dart';
-import 'package:abo_sadah/features/dashboadrd/presentation/views/dash_view.dart';
+import 'package:abo_sadah/features/dashboard/presentation/views/dash_view.dart';
 import 'package:abo_sadah/features/students/presentation/views/students_view.dart';
 import 'package:flutter/material.dart';
 import 'package:lucide_icons_flutter/lucide_icons.dart';
@@ -31,7 +32,7 @@ List<NavBarEntity> userNavBarItems = [
   NavBarEntity(
     title: 'المصروفات',
     icon: LucideIcons.walletCards300,
-    widget: StudentsView(),
+    widget: ExpensesView(),
   ),
   NavBarEntity(
     title: 'المجموعات',
