@@ -71,9 +71,12 @@ class AddAttendances extends StatelessWidget {
               Consumer<AppData>(
                 builder: (context, data, child) {
                   final DateTime today = DateTime.now();
+                  final students = data.students
+                      .where((stud) => stud.groupID == group.id)
+                      .toList();
                   return Column(
-                    children: List.generate(data.students.length, (index) {
-                      final student = data.students[index];
+                    children: List.generate(students.length, (index) {
+                      final student = students[index];
                       AttendancesEntity? attendedData;
                       try {
                         attendedData = data.attendances.firstWhere((att) {

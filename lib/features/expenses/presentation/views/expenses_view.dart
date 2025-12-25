@@ -40,7 +40,12 @@ class ExpensesView extends StatelessWidget {
             return Container(
               padding: EdgeInsets.all(10),
               decoration: BoxDecoration(
-                color: ThemeColors.primary,
+                gradient: LinearGradient(
+                  colors: [
+                    ThemeColors.primary.withAlpha(200),
+                    ThemeColors.primary,
+                  ],
+                ),
                 borderRadius: BorderRadius.circular(30),
               ),
               child: ListTile(

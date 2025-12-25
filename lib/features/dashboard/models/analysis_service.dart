@@ -49,6 +49,13 @@ class AnalysisService {
       AnalysisEntity(title: "المجموعات", value: groups.length),
       AnalysisEntity(title: "المشرفين", value: 0),
 
+      AnalysisEntity(title: "صافي الشهر الحالي", value: incMonth - expMonth),
+      AnalysisEntity(title: "صافي اليوم", value: incToday - expToday),
+      AnalysisEntity(
+        title: "صافي الشهر الماضي",
+        value: incLastMonth - expLastMonth,
+      ),
+
       AnalysisEntity(title: "إيرادات الشهر الحالي", value: incMonth),
       AnalysisEntity(title: "إيرادات اليوم", value: incToday),
       AnalysisEntity(title: "إيرادات الشهر الماضي", value: incLastMonth),
@@ -56,13 +63,6 @@ class AnalysisService {
       AnalysisEntity(title: "مصروفات الشهر الحالي", value: expMonth),
       AnalysisEntity(title: "مصروفات اليوم", value: expToday),
       AnalysisEntity(title: "مصروفات الشهر الماضي", value: expLastMonth),
-
-      AnalysisEntity(title: "صافي الشهر الحالي", value: incMonth - expMonth),
-      AnalysisEntity(title: "صافي اليوم", value: incToday - expToday),
-      AnalysisEntity(
-        title: "صافي الشهر الماضي",
-        value: incLastMonth - expLastMonth,
-      ),
     ];
   }
 

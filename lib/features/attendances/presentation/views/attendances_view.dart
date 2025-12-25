@@ -58,7 +58,7 @@ class _AttendancesViewState extends State<AttendancesView> {
             return Column(
               spacing: 10,
               children: List.generate(allGroups.length, (index) {
-                final group = data.groups[index];
+                final group = allGroups[index];
                 return GestureDetector(
                   onTap: () => Navigator.push(
                     context,
