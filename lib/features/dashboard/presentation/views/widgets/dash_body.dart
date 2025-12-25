@@ -4,14 +4,24 @@ import 'package:abo_sadah/core/utils/format.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-class DashBody extends StatelessWidget {
+class DashBody extends StatefulWidget {
   const DashBody({super.key});
+
+  @override
+  State<DashBody> createState() => _DashBodyState();
+}
+
+class _DashBodyState extends State<DashBody> {
+  @override
+  void initState() {
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
     return Column(
       children: [
-        Text(
+        const Text(
           "مرحبا بك أبو سداح !",
           style: TextStyle(
             fontSize: 24,
@@ -19,8 +29,11 @@ class DashBody extends StatelessWidget {
             fontFamily: "VEXA",
           ),
         ),
-        SizedBox(height: 20),
-        Text("الإحصائيات", style: TextStyle(fontFamily: "VEXA", fontSize: 20)),
+        const SizedBox(height: 20),
+        const Text(
+          "الإحصائيات",
+          style: TextStyle(fontFamily: "VEXA", fontSize: 20),
+        ),
 
         Container(
           width: double.infinity,

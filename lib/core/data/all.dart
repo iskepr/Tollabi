@@ -1,3 +1,4 @@
+import "package:abo_sadah/features/dashboard/models/analysis_service.dart";
 import "package:flutter/material.dart";
 import "package:shared_preferences/shared_preferences.dart";
 import "package:abo_sadah/core/data/typs.dart";
@@ -12,12 +13,14 @@ class AppData extends ChangeNotifier {
   List<AttendancesEntity> attendances = [];
   List<ExpensesEntity> expenses = [];
   List<AnalysisEntity> analysisData = [];
+  bool isLoading = true;
 
   AppData() {
-    _init();
+    init();
   }
 
-  Future<void> _init() async {
+  Future<void> init() async {
+    isLoading = true;
     final prefs = await SharedPreferences.getInstance();
     isFirstTime = prefs.getBool("isFirstTime") ?? true;
 
@@ -49,52 +52,14 @@ class AppData extends ChangeNotifier {
       });
     }).toList();
 
-    _calculateAnalysis();
+    updateAnalysis();
+    isLoading = false;
     notifyListeners();
   }
 
-  void _calculateAnalysis() {
-    final now = DateTime.now();
-
-    double expMonth = _sumExpenses(
-      expenses,
-      (e) => e.createdTime.month == now.month && e.createdTime.year == now.year,
-    );
-    double expLastMonth = _sumExpenses(
-      expenses,
-      (e) =>
-          e.createdTime.month == now.month - 1 &&
-          e.createdTime.year == now.year,
-    );
-    double expToday = _sumExpenses(
-      expenses,
-      (e) => e.createdTime.day == now.day && e.createdTime.month == now.month,
-    );
-
-    analysisData = [
-      AnalysisEntity(title: "الطلاب", value: students.length),
-      AnalysisEntity(title: "المجموعات", value: groups.length),
-      AnalysisEntity(title: "المشرفين", value: 0),
-
-      AnalysisEntity(title: "إيرادات الشهر الحالي", value: 0),
-      AnalysisEntity(title: "إيرادات اليوم", value: 0),
-      AnalysisEntity(title: "إيرادات الشهر الماضي", value: 0),
-
-      AnalysisEntity(title: "مصروفات الشهر الحالي", value: expMonth),
-      AnalysisEntity(title: "مصروفات اليوم", value: expToday),
-      AnalysisEntity(title: "مصروفات الشهر الماضي", value: expLastMonth),
-
-      AnalysisEntity(title: "صافي الشهر الحالي", value: 0),
-      AnalysisEntity(title: "صافي اليوم", value: 0),
-      AnalysisEntity(title: "صافي الشهر الماضي", value: 0),
-    ];
-  }
-
-  double _sumExpenses(
-    List<ExpensesEntity> list,
-    bool Function(ExpensesEntity) test,
-  ) {
-    return list.where(test).fold(0.0, (sum, e) => sum + e.amount);
+  void updateAnalysis() {
+    analysisData = AnalysisService.calculate(students, groups, expenses, attendances);
+    notifyListeners();
   }
 
   // Groups
@@ -131,7 +96,7 @@ class AppData extends ChangeNotifier {
       });
     }
 
-    _init();
+    init();
     notifyListeners();
   }
 
@@ -142,7 +107,7 @@ class AppData extends ChangeNotifier {
       whereClause: "id = ?",
       whereArgs: [group.id],
     );
-    _init();
+    init();
     notifyListeners();
   }
 
@@ -153,7 +118,7 @@ class AppData extends ChangeNotifier {
       "phone": student.phone,
       "created_time": student.createdTime.toString(),
     });
-    _init();
+    init();
     notifyListeners();
   }
 
@@ -168,7 +133,7 @@ class AppData extends ChangeNotifier {
       whereClause: "id = ?",
       whereArgs: [student.id],
     );
-    _init();
+    init();
     notifyListeners();
   }
 
@@ -180,7 +145,30 @@ class AppData extends ChangeNotifier {
       "description": expense.note,
       "created_time": expense.createdTime.toString(),
     });
-    _init();
+    init();
+    notifyListeners();
+  }
+
+  // Attendances
+  void addAttendance(AttendancesEntity attendance) async {
+    await MySqfLite().insert("attendances", {
+      "student_id": attendance.studentID,
+      "group_id": attendance.groupID,
+      "grade": attendance.grade,
+      "status": attendance.status,
+      "created_time": attendance.createdTime.toString(),
+    });
+    init();
+    notifyListeners();
+  }
+
+  void deleteAttendance(int id) async {
+    await MySqfLite().delete(
+      "attendances",
+      whereClause: "id = ?",
+      whereArgs: [id],
+    );
+    init();
     notifyListeners();
   }
 

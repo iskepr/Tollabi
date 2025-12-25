@@ -62,19 +62,9 @@ class GroupsView extends StatelessWidget {
                           subtitle: Text(
                             group.timeGroups!.map((e) => e.day).join(" - "),
                           ),
-                          trailing: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            crossAxisAlignment: CrossAxisAlignment.end,
-                            children: [
-                              Text(
-                                "مجموعة ${group.id}",
-                                style: TextStyles.trailing,
-                              ),
-                              // Text(
-                              //   "${group.start_time} : ${group.end_time}"
-                              //   style: TextStyles.trailing,
-                              // ),
-                            ],
+                          trailing: Text(
+                            "مجموعة ${group.id}",
+                            style: TextStyles.trailing,
                           ),
                         ),
                       ),

@@ -105,7 +105,7 @@ class StudentsEntity {
 }
 
 class AttendancesEntity {
-  int id;
+  int? id;
   int studentID;
   int groupID;
   double? grade;
@@ -124,13 +124,18 @@ class AttendancesEntity {
   }
 
   AttendancesEntity({
-    required this.id,
+    this.id,
     required this.studentID,
     required this.groupID,
     this.grade,
     required this.status,
     required this.createdTime,
   });
+
+  @override
+  String toString() {
+    return "AttendancesEntity(id: $id, studentID: $studentID, groupID: $groupID, grade: $grade, status: $status, createdTime: $createdTime)";
+  }
 }
 
 class ExpensesEntity {
