@@ -35,121 +35,123 @@ class _GroupViewState extends State<GroupView> {
     final data = Provider.of<AppData>(context);
     group = data.groups.firstWhere((g) => g.id == group.id);
     return Scaffold(
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.all(15),
-          child: Column(
-            spacing: 10,
-            children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text("مجموعة ${group.id}", style: TextStyle(fontSize: 20)),
-                  Row(
-                    spacing: 5,
-                    children: [
-                      if (!isAddStudent)
-                        CustomButton(
-                          title: "إضافة طالب للمجموعة",
-                          fontSize: 14,
-                          padding: EdgeInsets.symmetric(
-                            horizontal: 20,
-                            vertical: 11,
+      body: SafeArea(
+        child: SingleChildScrollView(
+          child: Padding(
+            padding: const EdgeInsets.all(15),
+            child: Column(
+              spacing: 10,
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text("مجموعة ${group.id}", style: TextStyle(fontSize: 20)),
+                    Row(
+                      spacing: 5,
+                      children: [
+                        if (!isAddStudent)
+                          CustomButton(
+                            title: "إضافة طالب للمجموعة",
+                            fontSize: 14,
+                            padding: EdgeInsets.symmetric(
+                              horizontal: 20,
+                              vertical: 11,
+                            ),
+                            onTap: () {
+                              setState(() => isAddStudent = true);
+                            },
                           ),
+                        CustomButton(
+                          title: "الرجوع",
+                          icon: LucideIcons.chevronRight,
+                          padding: EdgeInsets.all(10),
+                          fontSize: 10,
                           onTap: () {
-                            setState(() => isAddStudent = true);
+                            Navigator.pop(context);
                           },
                         ),
+                      ],
+                    ),
+                  ],
+                ),
+                Row(
+                  spacing: 10,
+                  children: [
+                    if (!isAddStudent)
                       CustomButton(
-                        title: "الرجوع",
-                        icon: LucideIcons.chevronRight,
+                        title: "تعديل",
+                        icon: LucideIcons.squarePen,
                         padding: EdgeInsets.all(10),
-                        fontSize: 10,
                         onTap: () {
-                          Navigator.pop(context);
+                          showModalBottomSheet(
+                            context: context,
+                            isScrollControlled: true,
+                            builder: (context) => EditGroup(groupData: group),
+                          );
+                        },
+                      ),
+                    Expanded(
+                      child: Container(
+                        padding: EdgeInsets.all(5),
+                        decoration: BoxDecoration(
+                          color: ThemeColors.forground,
+                          borderRadius: BorderRadius.circular(24),
+                        ),
+                        margin: EdgeInsets.symmetric(vertical: 5),
+                        child: Column(
+                          children: [
+                            ListTile(
+                              title: Text(
+                                "عدد الطلاب: ${group.students!.length}",
+                              ),
+                              subtitle: Text(
+                                group.timeGroups!.map((e) => e.day).join(" - "),
+                              ),
+                              trailing: Text(
+                                "مجموعة ${group.id}",
+                                style: TextStyles.trailing,
+                              ),
+                            ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceAround,
+                              children: [
+                                Text(
+                                  "السعر ${formatDouble(group.price)} جنية",
+                                  style: TextStyles.trailing,
+                                ),
+                                Text(
+                                  "الدرجة ${formatDouble(group.grade)}",
+                                  style: TextStyles.trailing,
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+                if (!isAddStudent) AllGroupStudents(group: group),
+                if (isAddStudent)
+                  Column(
+                    children: [
+                      AddStudentsInGroup(group: group),
+                      CustomButton(
+                        title: "موافق",
+                        padding: EdgeInsets.symmetric(
+                          horizontal: 40,
+                          vertical: 10,
+                        ),
+                        fontSize: 16,
+                        radius: 16,
+                        onTap: () {
+                          setState(() => isAddStudent = false);
                         },
                       ),
                     ],
                   ),
-                ],
-              ),
-              Row(
-                spacing: 10,
-                children: [
-                  if (!isAddStudent)
-                    CustomButton(
-                      title: "تعديل",
-                      icon: LucideIcons.squarePen,
-                      padding: EdgeInsets.all(10),
-                      onTap: () {
-                        showModalBottomSheet(
-                          context: context,
-                          isScrollControlled: true,
-                          builder: (context) => EditGroup(groupData: group),
-                        );
-                      },
-                    ),
-                  Expanded(
-                    child: Container(
-                      padding: EdgeInsets.all(5),
-                      decoration: BoxDecoration(
-                        color: ThemeColors.forground,
-                        borderRadius: BorderRadius.circular(24),
-                      ),
-                      margin: EdgeInsets.symmetric(vertical: 5),
-                      child: Column(
-                        children: [
-                          ListTile(
-                            title: Text(
-                              "عدد الطلاب: ${group.students!.length}",
-                            ),
-                            subtitle: Text(
-                              group.timeGroups!.map((e) => e.day).join(" - "),
-                            ),
-                            trailing: Text(
-                              "مجموعة ${group.id}",
-                              style: TextStyles.trailing,
-                            ),
-                          ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceAround,
-                            children: [
-                              Text(
-                                "السعر ${formatDouble(group.price)} جنية",
-                                style: TextStyles.trailing,
-                              ),
-                              Text(
-                                "الدرجة ${formatDouble(group.grade)}",
-                                style: TextStyles.trailing,
-                              ),
-                            ],
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-              if (!isAddStudent) AllGroupStudents(group: group),
-              if (isAddStudent)
-                Column(
-                  children: [
-                    AddStudentsInGroup(group: group),
-                    CustomButton(
-                      title: "موافق",
-                      padding: EdgeInsets.symmetric(
-                        horizontal: 40,
-                        vertical: 10,
-                      ),
-                      fontSize: 16,
-                      radius: 16,
-                      onTap: () {
-                        setState(() => isAddStudent = false);
-                      },
-                    ),
-                  ],
-                ),
-            ],
+              ],
+            ),
           ),
         ),
       ),

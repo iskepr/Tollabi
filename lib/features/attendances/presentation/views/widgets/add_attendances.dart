@@ -4,6 +4,7 @@ import 'package:abo_sadah/core/data/all.dart';
 import 'package:abo_sadah/core/data/typs.dart';
 import 'package:abo_sadah/core/widgets/custom_button.dart';
 import 'package:abo_sadah/core/widgets/Inputs/Input.dart';
+import 'package:abo_sadah/features/groups/presentation/views/widgets/add_score.dart';
 import 'package:flutter/material.dart';
 import 'package:lucide_icons_flutter/lucide_icons.dart';
 import 'package:provider/provider.dart';
@@ -108,25 +109,48 @@ class AddAttendances extends StatelessWidget {
                           leading: Icon(LucideIcons.user),
                           title: Text(student.name),
                           subtitle: Text(student.phone),
-                          trailing: Checkbox(
-                            value: isAttended,
-                            onChanged: (v) {
-                              if (v == true) {
-                                data.addAttendance(
-                                  AttendancesEntity(
-                                    studentID: student.id!,
-                                    groupID: group.id!,
-                                    grade: 0,
-                                    status: 0,
-                                    createdTime: DateTime.now(),
-                                  ),
-                                );
-                              } else {
-                                if (attendedData != null) {
-                                  data.deleteAttendance(attendedData.id!);
-                                }
-                              }
-                            },
+                          trailing: Row(
+                            mainAxisSize: MainAxisSize.min,
+                            spacing: 5,
+                            children: [
+                              CustomButton(
+                                title: "إعطاء درجة التاسك",
+                                fontSize: 10,
+                                padding: EdgeInsets.symmetric(
+                                  horizontal: 10,
+                                  vertical: 5,
+                                ),
+                                onTap: () {
+                                  showModalBottomSheet(
+                                    context: context,
+                                    isScrollControlled: true,
+                                    builder: (context) =>
+                                        AddScore(studentData: students[index]),
+                                  );
+                                },
+                              ),
+                              Checkbox(
+                                value: isAttended,
+                                onChanged: (v) {
+                                  if (v == true) {
+                                    data.addAttendance(
+                                      AttendancesEntity(
+                                        studentID: student.id!,
+                                        groupID: group.id!,
+                                        grade: 0,
+                                        price: group.price,
+                                        status: 1,
+                                        createdTime: DateTime.now(),
+                                      ),
+                                    );
+                                  } else {
+                                    if (attendedData != null) {
+                                      data.deleteAttendance(attendedData.id!);
+                                    }
+                                  }
+                                },
+                              ),
+                            ],
                           ),
                         ),
                       );

@@ -109,6 +109,7 @@ class AttendancesEntity {
   int studentID;
   int groupID;
   double? grade;
+  double? price;
   int status;
   DateTime createdTime;
 
@@ -118,6 +119,7 @@ class AttendancesEntity {
       studentID: map['student_id'],
       groupID: map['group_id'],
       grade: map['grade'],
+      price: map['price'],
       status: map['status'],
       createdTime: DateTime.parse(map['created_time']),
     );
@@ -128,13 +130,14 @@ class AttendancesEntity {
     required this.studentID,
     required this.groupID,
     this.grade,
+    this.price,
     required this.status,
     required this.createdTime,
   });
 
   @override
   String toString() {
-    return "AttendancesEntity(id: $id, studentID: $studentID, groupID: $groupID, grade: $grade, status: $status, createdTime: $createdTime)";
+    return "AttendancesEntity(id: $id, studentID: $studentID, groupID: $groupID, grade: $grade, price: $price, status: $status, createdTime: $createdTime)";
   }
 }
 

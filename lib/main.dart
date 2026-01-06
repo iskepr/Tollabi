@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:abo_sadah/core/data/all.dart';
 import 'package:abo_sadah/core/Theme/Colors.dart';
 import 'package:abo_sadah/core/data/sqflite/sql.dart';
@@ -12,7 +14,10 @@ import 'package:abo_sadah/core/data/sqflite/tabels.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  databaseFactory = databaseFactoryFfi;
+  if (Platform.isLinux || Platform.isWindows || Platform.isMacOS) {
+    sqfliteFfiInit();
+    databaseFactory = databaseFactoryFfi;
+  }
 
   await MySqfLite.init('abo_sadah.db');
   await createTables();

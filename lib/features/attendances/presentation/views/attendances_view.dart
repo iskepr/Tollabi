@@ -54,6 +54,9 @@ class _AttendancesViewState extends State<AttendancesView> {
 
         Consumer<AppData>(
           builder: (context, data, child) {
+            if (allGroups.isEmpty) {
+              return Text("لا يوجد مجموعات لليوم");
+            }
             return Column(
               spacing: 10,
               children: List.generate(allGroups.length, (index) {

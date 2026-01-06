@@ -1,13 +1,22 @@
 import 'package:flutter/material.dart';
 
 class CustomGrid extends StatelessWidget {
-  const CustomGrid({super.key, required this.child, required this.count});
+  const CustomGrid({
+    super.key,
+    required this.child,
+    required this.count,
+    required this.emptyText,
+  });
 
   final Widget Function(BuildContext, int) child;
   final int count;
+  final String emptyText;
 
   @override
   Widget build(BuildContext context) {
+    if (count == 0) {
+      return Text(emptyText);
+    }
     return GridView.builder(
       physics: NeverScrollableScrollPhysics(),
       shrinkWrap: true,

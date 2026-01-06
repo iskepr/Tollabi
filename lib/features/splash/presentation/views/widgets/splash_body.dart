@@ -12,8 +12,7 @@ class SplashBody extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: ThemeColors.secondary,
-      body: Directionality(
-        textDirection: TextDirection.rtl,
+      body: SafeArea(
         child: Stack(
           children: [
             Column(

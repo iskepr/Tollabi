@@ -14,10 +14,12 @@ class _UserNavBarScaffoldState extends State<UserNavBarScaffold> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.all(15),
-          child: userNavBarItems[_currentIndex].widget,
+      body: SafeArea(
+        child: SingleChildScrollView(
+          child: Padding(
+            padding: const EdgeInsets.all(15),
+            child: userNavBarItems[_currentIndex].widget,
+          ),
         ),
       ),
       extendBody: true,

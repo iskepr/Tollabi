@@ -68,6 +68,9 @@ class ExpensesView extends StatelessWidget {
 
         Consumer<AppData>(
           builder: (context, data, child) {
+            if (data.expenses.isEmpty) {
+              return Text("لا يوجد مصروفات");
+            }
             return Column(
               spacing: 10,
               children: List.generate(data.expenses.length, (index) {

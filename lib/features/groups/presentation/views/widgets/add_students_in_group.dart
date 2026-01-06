@@ -26,6 +26,7 @@ class AddStudentsInGroup extends StatelessWidget {
               Consumer<AppData>(
                 builder: (context, data, child) => CustomGrid(
                   count: data.students.length,
+                  emptyText: "لا يوجد طلاب",
                   child: (BuildContext context, int index) {
                     bool isCheck = data.students[index].groupID == group.id;
                     return GestureDetector(

@@ -53,6 +53,7 @@ class StudentsView extends StatelessWidget {
             ),
             CustomGrid(
               count: students.length,
+              emptyText: "لا يوجد طلاب",
               child: (BuildContext context, int index) => GestureDetector(
                 onTap: () {
                   Navigator.push(
