@@ -24,7 +24,7 @@ class _CustomBottomSheetState extends State<CustomBottomSheet> {
           color: widget.bg ? ThemeColors.background : ThemeColors.forground,
           borderRadius: BorderRadius.vertical(top: Radius.circular(30)),
         ),
-        padding: EdgeInsets.all(20),
+        padding: EdgeInsets.only(top: 20, left: 10, right: 10),
         child: SingleChildScrollView(
           controller: controller,
           child: Column(

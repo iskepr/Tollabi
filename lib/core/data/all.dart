@@ -86,7 +86,6 @@ class AppData extends ChangeNotifier {
           now.day,
           s.hour,
           s.minute,
-          s.second,
         ).toString(),
         "end_time": DateTime(
           now.year,
@@ -94,7 +93,6 @@ class AppData extends ChangeNotifier {
           now.day,
           e.hour,
           e.minute,
-          e.second,
         ).toString(),
         "group_id": id,
       });
@@ -111,6 +109,66 @@ class AppData extends ChangeNotifier {
       whereClause: "id = ?",
       whereArgs: [group.id],
     );
+
+    final now = DateTime.now();
+
+    final List<int> timeGroupsIds = group.timeGroups!
+        .where((t) => t.id != null)
+        .map((t) => t.id!)
+        .toList();
+
+    if (timeGroupsIds.isEmpty) {
+      await MySqfLite().delete(
+        "time_groups",
+        whereClause: "group_id = ?",
+        whereArgs: [group.id],
+      );
+    } else {
+      String placeholders = timeGroupsIds.map((_) => "?").join(", ");
+      await MySqfLite().delete(
+        "time_groups",
+        whereClause: "group_id = ? AND id NOT IN ($placeholders)",
+        whereArgs: [group.id, ...timeGroupsIds],
+      );
+    }
+
+    for (var timeGroup in group.timeGroups!) {
+      final s = timeGroup.startTime;
+      final e = timeGroup.endTime;
+
+      final data = {
+        "day": timeGroup.day,
+        "start_time": DateTime(
+          now.year,
+          now.month,
+          now.day,
+          s.hour,
+          s.minute,
+        ).toIso8601String(),
+        "end_time": DateTime(
+          now.year,
+          now.month,
+          now.day,
+          e.hour,
+          e.minute,
+        ).toIso8601String(),
+        "group_id": group.id,
+      };
+
+      if (timeGroup.id == null || timeGroup.id == 0) {
+        await MySqfLite().insert("time_groups", data);
+        print("تم إضافة موعد جديد");
+      } else {
+        await MySqfLite().update(
+          "time_groups",
+          data,
+          whereClause: "id = ?",
+          whereArgs: [timeGroup.id],
+        );
+        print("تم تعديل موعد");
+      }
+    }
+
     init();
     notifyListeners();
   }
@@ -137,7 +195,6 @@ class AppData extends ChangeNotifier {
       whereClause: "id = ?",
       whereArgs: [student.id],
     );
-    print(student);
     init();
     notifyListeners();
   }

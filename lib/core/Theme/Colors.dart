@@ -8,4 +8,5 @@ class ThemeColors {
   static const Color fourth = Color(0xFFB7FF00);
   static const Color background = Colors.white;
   static const Color forground = Color(0xFFF2F1ED);
+  static const Color error = Colors.red;
 }

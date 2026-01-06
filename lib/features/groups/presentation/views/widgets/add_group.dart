@@ -1,5 +1,6 @@
 import 'package:abo_sadah/core/data/all.dart';
 import 'package:abo_sadah/core/data/typs.dart';
+import 'package:abo_sadah/core/functions/show_message.dart';
 import 'package:abo_sadah/core/widgets/custom_bottom_sheet.dart';
 import 'package:abo_sadah/core/widgets/custom_button.dart';
 import 'package:abo_sadah/core/widgets/Inputs/Input.dart';
@@ -184,7 +185,7 @@ class _AddGroupState extends State<AddGroup> {
                   title: "سعر الحصة",
                   controller: c["price"]!,
                   type: "number",
-                ), // ضفت type number
+                ),
               ),
 
               _fildBuilder(
@@ -200,9 +201,7 @@ class _AddGroupState extends State<AddGroup> {
                 title: "حفظ المجموعة",
                 onTap: () async {
                   if (c["price"]!.text.isEmpty) {
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(content: Text("برجاء إدخال السعر")),
-                    );
+                    showMessage(context, "برجاء إدخال سعر الحصة");
                     return;
                   }
 
@@ -214,9 +213,7 @@ class _AddGroupState extends State<AddGroup> {
                     ),
                   );
 
-                  if (context.mounted) {
-                    Navigator.pop(context);
-                  }
+                  if (context.mounted) Navigator.pop(context);
                 },
               ),
               const SizedBox(height: 20),

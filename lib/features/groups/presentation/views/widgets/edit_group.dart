@@ -1,12 +1,20 @@
 import 'package:abo_sadah/core/data/all.dart';
+import 'package:abo_sadah/core/data/typs.dart';
+import 'package:abo_sadah/core/functions/show_message.dart';
+import 'package:abo_sadah/core/utils/format.dart';
 import 'package:abo_sadah/core/widgets/custom_bottom_sheet.dart';
 import 'package:abo_sadah/core/widgets/custom_button.dart';
 import 'package:abo_sadah/core/widgets/Inputs/Input.dart';
 import 'package:abo_sadah/core/widgets/Inputs/Select.dart';
+import 'package:day_night_time_picker/day_night_time_picker.dart';
 import 'package:flutter/material.dart';
+import 'package:lucide_icons_flutter/lucide_icons.dart';
+import 'package:provider/provider.dart';
 
 class EditGroup extends StatefulWidget {
-  const EditGroup({super.key});
+  const EditGroup({super.key, required this.groupData});
+
+  final GroupsEntity groupData;
 
   @override
   State<EditGroup> createState() => _EditGroupState();
@@ -14,118 +22,207 @@ class EditGroup extends StatefulWidget {
 
 class _EditGroupState extends State<EditGroup> {
   final List days = AppData.days;
+  List<TimeGroupsEntity> groupDays = [];
 
-  _fildBuilder(String title, Widget child) {
+  final Map<String, TextEditingController> c = {
+    "price": TextEditingController(),
+    "grade": TextEditingController(),
+  };
+
+  @override
+  void initState() {
+    super.initState();
+    groupDays = widget.groupData.timeGroups!;
+    c["price"]!.text = formatDouble(widget.groupData.price);
+    c["grade"]!.text = formatDouble(widget.groupData.grade);
+  }
+
+  void _addNewDay() {
+    groupDays.add(
+      TimeGroupsEntity(
+        day: days.first,
+        startTime: Time(hour: 12, minute: 0),
+        endTime: Time(hour: 13, minute: 0),
+      ),
+    );
+    setState(() {});
+  }
+
+  Widget _fildBuilder(String title, Widget child, {Widget? withDelete}) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(
-          title,
-          style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Text(
+              title,
+              style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+            ),
+            withDelete ?? Container(),
+          ],
         ),
+        const SizedBox(height: 5),
         child,
+        const SizedBox(height: 10),
       ],
     );
   }
 
   @override
   Widget build(BuildContext context) {
+    final data = Provider.of<AppData>(context, listen: false);
+
     return CustomBottomSheet(
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          const Padding(
-            padding: EdgeInsets.all(15),
-            child: Text(
-              "تعديل بيانات المجموعة",
-              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-            ),
-          ),
+      child: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              const Text(
+                "إضافة مجموعة جديدة",
+                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+              ),
+              const SizedBox(height: 20),
 
-          _fildBuilder(
-            "ايام المجموعة",
-            Row(
-              children: [
-                Expanded(
-                  child: Input(
-                    title: "الفترة",
-                    type: "select",
-                    value: days.first,
-                    items: days
-                        .map((day) => SelectItem(title: day, value: day))
-                        .toList(),
-                    onChanged: (value) {},
-                    controller: TextEditingController(),
-                  ),
-                ),
-                const SizedBox(width: 10),
-                Expanded(
-                  child: Input(
-                    title: "الفترة",
-                    type: "select",
-                    value: days.first,
-                    items: days
-                        .map((day) => SelectItem(title: day, value: day))
-                        .toList(),
-                    onChanged: (value) {},
-                    controller: TextEditingController(),
-                  ),
-                ),
-              ],
-            ),
-          ),
+              Column(
+                spacing: 10,
+                children: List.generate(groupDays.length, (index) {
+                  final d = groupDays[index];
 
-          _fildBuilder(
-            "مواعيد المجموعة",
-            Row(
-              children: [
-                Expanded(
-                  child: Input(
-                    title: "من",
-                    controller: TextEditingController(),
-                  ),
-                ),
-                const SizedBox(width: 10),
-                Expanded(
-                  child: Input(
-                    title: "الى",
-                    controller: TextEditingController(),
-                  ),
-                ),
-                const SizedBox(width: 10),
-                Expanded(
-                  child: Input(
-                    title: "الفترة",
-                    type: "select",
-                    value: AppData.times.first,
-                    items: AppData.times
-                        .map((time) => SelectItem(title: time, value: time))
-                        .toList(),
-                    onChanged: (value) {},
-                    controller: TextEditingController(),
-                  ),
-                ),
-              ],
-            ),
-          ),
+                  return _fildBuilder(
+                    "مواعيد المجموعة ${index + 1}",
+                    Column(
+                      children: [
+                        Input(
+                          title: "اختر اليوم",
+                          type: "select",
+                          value: d.day,
+                          items: days
+                              .map((day) => SelectItem(title: day, value: day))
+                              .toList(),
+                          onChanged: (v) {
+                            setState(() {
+                              groupDays[index].day = v.toString();
+                            });
+                          },
+                        ),
+                        Row(
+                          spacing: 10,
+                          children: [
+                            Expanded(
+                              child: OutlinedButton(
+                                onPressed: () {
+                                  Navigator.of(context).push(
+                                    showPicker(
+                                      context: context,
+                                      value: d.startTime,
+                                      onChange: (v) {
+                                        setState(
+                                          () => groupDays[index].startTime = v,
+                                        );
+                                      },
+                                    ),
+                                  );
+                                },
+                                child: Text(
+                                  "من: ${d.startTime.format(context)}",
+                                  style: const TextStyle(fontSize: 13),
+                                ),
+                              ),
+                            ),
+                            Expanded(
+                              child: OutlinedButton(
+                                onPressed: () {
+                                  Navigator.of(context).push(
+                                    showPicker(
+                                      context: context,
+                                      value: d.endTime,
+                                      onChange: (v) {
+                                        setState(
+                                          () => groupDays[index].endTime = v,
+                                        );
+                                      },
+                                    ),
+                                  );
+                                },
+                                child: Text(
+                                  "الى: ${d.endTime.format(context)}",
+                                  style: const TextStyle(fontSize: 13),
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
+                    withDelete: groupDays.length > 1
+                        ? IconButton(
+                            icon: const Icon(
+                              LucideIcons.trash,
+                              color: Colors.red,
+                              size: 20,
+                            ),
+                            onPressed: () {
+                              setState(() {
+                                groupDays.removeAt(index);
+                              });
+                            },
+                          )
+                        : null,
+                  );
+                }),
+              ),
 
-          _fildBuilder(
-            "سعر الحصة",
-            Input(title: "سعر الحصة", controller: TextEditingController()),
-          ),
-          _fildBuilder(
-            "درجة الحصة",
-            Input(title: "درجة الحصة", controller: TextEditingController()),
-          ),
+              if (groupDays.length < 6)
+                TextButton(
+                  onPressed: () {
+                    _addNewDay();
+                  },
+                  child: const Text("إضافة يوم آخر"),
+                ),
 
-          const SizedBox(height: 20),
-          CustomButton(
-            title: "إضافة",
-            onTap: () {
-              Navigator.pop(context);
-            },
+              _fildBuilder(
+                "سعر الحصة",
+                Input(
+                  title: "سعر الحصة",
+                  controller: c["price"]!,
+                  type: "number",
+                ),
+              ),
+
+              _fildBuilder(
+                "درجة الحصة",
+                Input(
+                  title: "درجة الحصة",
+                  controller: c["grade"]!,
+                  type: "number",
+                ),
+              ),
+              CustomButton(
+                title: "حفظ المجموعة",
+                onTap: () async {
+                  if (c["price"]!.text.isEmpty) {
+                    showMessage(context, "برجاء إدخال سعر الحصة");
+                    return;
+                  }
+
+                  data.editGroup(
+                    GroupsEntity(
+                      id: widget.groupData.id,
+                      timeGroups: groupDays,
+                      price: double.parse(c["price"]!.text),
+                      grade: double.parse(c["grade"]!.text),
+                    ),
+                  );
+
+                  if (context.mounted) Navigator.pop(context);
+                },
+              ),
+            ],
           ),
-        ],
+        ),
       ),
     );
   }

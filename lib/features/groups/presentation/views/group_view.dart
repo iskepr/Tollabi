@@ -2,6 +2,7 @@ import 'package:abo_sadah/core/data/all.dart';
 import 'package:abo_sadah/core/data/typs.dart';
 import 'package:abo_sadah/core/Theme/Colors.dart';
 import 'package:abo_sadah/core/Theme/TextStyles.dart';
+import 'package:abo_sadah/core/utils/format.dart';
 import 'package:abo_sadah/core/widgets/custom_button.dart';
 import 'package:abo_sadah/features/groups/presentation/views/widgets/add_students_in_group.dart';
 import 'package:abo_sadah/features/groups/presentation/views/widgets/all_group_students.dart';
@@ -21,9 +22,18 @@ class GroupView extends StatefulWidget {
 
 class _GroupViewState extends State<GroupView> {
   bool isAddStudent = false;
+  late GroupsEntity group;
+
+  @override
+  void initState() {
+    super.initState();
+    group = widget.group;
+  }
 
   @override
   Widget build(BuildContext context) {
+    final data = Provider.of<AppData>(context);
+    group = data.groups.firstWhere((g) => g.id == group.id);
     return Scaffold(
       body: SingleChildScrollView(
         child: Padding(
@@ -34,10 +44,7 @@ class _GroupViewState extends State<GroupView> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text(
-                    "مجموعة ${widget.group.id}",
-                    style: TextStyle(fontSize: 20),
-                  ),
+                  Text("مجموعة ${group.id}", style: TextStyle(fontSize: 20)),
                   Row(
                     spacing: 5,
                     children: [
@@ -78,7 +85,7 @@ class _GroupViewState extends State<GroupView> {
                         showModalBottomSheet(
                           context: context,
                           isScrollControlled: true,
-                          builder: (context) => EditGroup(),
+                          builder: (context) => EditGroup(groupData: group),
                         );
                       },
                     ),
@@ -90,31 +97,44 @@ class _GroupViewState extends State<GroupView> {
                         borderRadius: BorderRadius.circular(24),
                       ),
                       margin: EdgeInsets.symmetric(vertical: 5),
-                      child: ListTile(
-                        title: Consumer<AppData>(
-                          builder: (context, data, child) => Text(
-                            "عدد الطلاب: ${(data.students).where((e) => e.groupID == widget.group.id).length}",
+                      child: Column(
+                        children: [
+                          ListTile(
+                            title: Text(
+                              "عدد الطلاب: ${group.students!.length}",
+                            ),
+                            subtitle: Text(
+                              group.timeGroups!.map((e) => e.day).join(" - "),
+                            ),
+                            trailing: Text(
+                              "مجموعة ${group.id}",
+                              style: TextStyles.trailing,
+                            ),
                           ),
-                        ),
-                        subtitle: Text(
-                          widget.group.timeGroups!
-                              .map((e) => e.day)
-                              .join(" - "),
-                        ),
-                        trailing: Text(
-                          "مجموعة ${widget.group.id}",
-                          style: TextStyles.trailing,
-                        ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceAround,
+                            children: [
+                              Text(
+                                "السعر ${formatDouble(group.price)} جنية",
+                                style: TextStyles.trailing,
+                              ),
+                              Text(
+                                "الدرجة ${formatDouble(group.grade)}",
+                                style: TextStyles.trailing,
+                              ),
+                            ],
+                          ),
+                        ],
                       ),
                     ),
                   ),
                 ],
               ),
-              if (!isAddStudent) AllGroupStudents(group: widget.group),
+              if (!isAddStudent) AllGroupStudents(group: group),
               if (isAddStudent)
                 Column(
                   children: [
-                    AddStudentsInGroup(group: widget.group),
+                    AddStudentsInGroup(group: group),
                     CustomButton(
                       title: "موافق",
                       padding: EdgeInsets.symmetric(
