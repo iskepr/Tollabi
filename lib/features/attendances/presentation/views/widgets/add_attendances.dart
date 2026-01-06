@@ -46,7 +46,11 @@ class AddAttendances extends StatelessWidget {
                 ),
                 margin: EdgeInsets.symmetric(vertical: 5),
                 child: ListTile(
-                  title: Text("عدد الطلاب: ${group.students!.length}"),
+                  title: Consumer<AppData>(
+                    builder: (context, data, child) => Text(
+                      "عدد الحضور: ${data.attendances.where((e) => e.groupID == group.id && e.createdTime.day == DateTime.now().day).length} من ${group.students!.length}",
+                    ),
+                  ),
                   subtitle: Text(
                     group.timeGroups!.map((e) => e.day).join(" - "),
                   ),

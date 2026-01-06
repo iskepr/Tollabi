@@ -39,6 +39,7 @@ class _AttendancesViewState extends State<AttendancesView> {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Text("حُضور مجموعات اليوم", style: TextStyle(fontSize: 20)),
+            SizedBox(height: 40),
           ],
         ),
         Input(
@@ -47,9 +48,7 @@ class _AttendancesViewState extends State<AttendancesView> {
           prefixIcon: Icons.search,
           controller: search,
           onChanged: (value) => setState(() {
-            groups = allGroups
-                .where((stud) => stud.id == value.toString())
-                .toList();
+            groups = allGroups.where((stud) => stud.id == value).toList();
           }),
         ),
 
@@ -72,7 +71,9 @@ class _AttendancesViewState extends State<AttendancesView> {
                       borderRadius: BorderRadius.circular(16),
                     ),
                     child: ListTile(
-                      title: Text("عدد الطلاب: ${group.students!.length}"),
+                      title: Text(
+                        "عدد الحضور: ${data.attendances.where((e) => e.groupID == group.id && e.createdTime.day == DateTime.now().day).length} من ${group.students!.length}",
+                      ),
                       subtitle: Text(
                         group.timeGroups!.map((e) => e.day).join(" - "),
                       ),

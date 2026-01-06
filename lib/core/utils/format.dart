@@ -15,9 +15,9 @@ FormatEntity formatTime(DateTime time) {
     ap: p,
     formatC: "$h:${e.minute} $p",
     format:
-        "${e.day}/${e.month}${now.year == e.year ? "" : "${e.year.toString().substring(2)}/"}",
+        "${e.day}/${e.month}${now.year == e.year ? "" : "/${e.year.toString().substring(2)}"}",
     formatH:
-        "${e.day}/${e.month}${now.year == e.year ? "" : "${e.year.toString().substring(2)}/"} $h:${e.minute} $p",
+        "${e.day}/${e.month}${now.year == e.year ? "" : "/${e.year.toString().substring(2)}"} $h:${e.minute} $p",
   );
 }
 

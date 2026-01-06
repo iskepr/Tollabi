@@ -58,7 +58,12 @@ class AppData extends ChangeNotifier {
   }
 
   void updateAnalysis() {
-    analysisData = AnalysisService.calculate(students, groups, expenses, attendances);
+    analysisData = AnalysisService.calculate(
+      students,
+      groups,
+      expenses,
+      attendances,
+    );
     notifyListeners();
   }
 
@@ -133,6 +138,7 @@ class AppData extends ChangeNotifier {
       whereClause: "id = ?",
       whereArgs: [student.id],
     );
+    print(student);
     init();
     notifyListeners();
   }

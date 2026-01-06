@@ -3,10 +3,9 @@ import 'package:abo_sadah/core/data/typs.dart';
 import 'package:abo_sadah/core/Theme/Colors.dart';
 import 'package:abo_sadah/core/Theme/TextStyles.dart';
 import 'package:abo_sadah/core/widgets/Button.dart';
-import 'package:abo_sadah/core/widgets/Grid.dart';
-import 'package:abo_sadah/features/groups/presentation/views/widgets/add_score.dart';
+import 'package:abo_sadah/features/groups/presentation/views/widgets/add_students_in_group.dart';
+import 'package:abo_sadah/features/groups/presentation/views/widgets/all_group_students.dart';
 import 'package:abo_sadah/features/groups/presentation/views/widgets/edit_group.dart';
-import 'package:abo_sadah/core/widgets/Inputs/Input.dart';
 import 'package:flutter/material.dart';
 import 'package:lucide_icons_flutter/lucide_icons.dart';
 import 'package:provider/provider.dart';
@@ -21,22 +20,7 @@ class GroupView extends StatefulWidget {
 }
 
 class _GroupViewState extends State<GroupView> {
-  List<StudentsEntity> allStudents = [];
-  List<StudentsEntity> students = [];
-
-  TextEditingController search = TextEditingController();
-
   bool isAddStudent = false;
-
-  @override
-  void initState() {
-    super.initState();
-    final data = Provider.of<AppData>(context, listen: false);
-    allStudents = data.students;
-    students = allStudents
-        .where((student) => student.groupID == widget.group.id)
-        .toList();
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -107,7 +91,11 @@ class _GroupViewState extends State<GroupView> {
                       ),
                       margin: EdgeInsets.symmetric(vertical: 5),
                       child: ListTile(
-                        title: Text("عدد الطلاب: ${students.length}"),
+                        title: Consumer<AppData>(
+                          builder: (context, data, child) => Text(
+                            "عدد الطلاب: ${(data.students).where((e) => e.groupID == widget.group.id).length}",
+                          ),
+                        ),
                         subtitle: Text(
                           widget.group.timeGroups!
                               .map((e) => e.day)
@@ -122,147 +110,11 @@ class _GroupViewState extends State<GroupView> {
                   ),
                 ],
               ),
-              if (!isAddStudent)
-                Column(
-                  spacing: 10,
-                  children: [
-                    Input(
-                      title: "ابحث عن طالب",
-                      style: "border",
-                      prefixIcon: Icons.search,
-                      controller: search,
-                      onChanged: (value) => setState(() {
-                        students = allStudents
-                            .where(
-                              (stud) => stud.name.contains(value.toString()),
-                            )
-                            .toList();
-                      }),
-                    ),
-                    Consumer<AppData>(
-                      builder: (context, data, child) {
-                        return Column(
-                          spacing: 5,
-                          children: List.generate(students.length, (index) {
-                            final student = students[index];
-                            return Container(
-                              decoration: BoxDecoration(
-                                color: ThemeColors.forground,
-                                borderRadius: BorderRadius.circular(24),
-                              ),
-                              padding: EdgeInsets.all(5),
-                              child: ListTile(
-                                contentPadding: EdgeInsets.symmetric(
-                                  horizontal: 10,
-                                ),
-                                leading: Icon(LucideIcons.user),
-                                title: Text(student.name),
-                                subtitle: Text(student.name),
-                                trailing: Button(
-                                  title: "إعطاء درجة التاسك",
-                                  fontSize: 10,
-                                  padding: EdgeInsets.symmetric(
-                                    horizontal: 10,
-                                    vertical: 5,
-                                  ),
-                                  onTap: () {
-                                    showModalBottomSheet(
-                                      context: context,
-                                      isScrollControlled: true,
-                                      builder: (context) => AddScore(
-                                        studentData: students[index],
-                                      ),
-                                    );
-                                  },
-                                ),
-                              ),
-                            );
-                          }),
-                        );
-                      },
-                    ),
-                  ],
-                ),
-
+              if (!isAddStudent) AllGroupStudents(group: widget.group),
               if (isAddStudent)
                 Column(
                   children: [
-                    SizedBox(
-                      height: MediaQuery.of(context).size.height * 0.65,
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            "إختر الطلاب:",
-                            style: TextStyle(
-                              fontSize: 16,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                          MyGrid(
-                            count: allStudents.length,
-                            child: (BuildContext context, int index) {
-                              final data = Provider.of<AppData>(
-                                context,
-                                listen: false,
-                              );
-
-                              bool isCheck =
-                                  allStudents[index].groupID == widget.group.id;
-                              return GestureDetector(
-                                onTap: () {},
-                                child: Container(
-                                  padding: EdgeInsets.all(5),
-                                  decoration: BoxDecoration(
-                                    color: ThemeColors.forground,
-                                    borderRadius: BorderRadius.circular(24),
-                                  ),
-                                  child: Row(
-                                    children: [
-                                      Checkbox(
-                                        value: isCheck,
-                                        onChanged: (val) {
-                                          if (val == null) return;
-                                          setState(() {
-                                            if (val == true) {
-                                              allStudents[index].groupID =
-                                                  widget.group.id;
-                                            } else {
-                                              allStudents[index].groupID = null;
-                                            }
-                                            data.editStudent(
-                                              allStudents[index],
-                                            );
-                                          });
-                                        },
-                                      ),
-                                      Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.center,
-                                        children: [
-                                          Text(
-                                            allStudents[index].name,
-                                            style: TextStyle(fontSize: 14),
-                                          ),
-                                          Text(
-                                            allStudents[index].phone,
-                                            textDirection: TextDirection.ltr,
-                                            textAlign: TextAlign.right,
-                                            style: TextStyle(fontSize: 14),
-                                          ),
-                                        ],
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              );
-                            },
-                          ),
-                        ],
-                      ),
-                    ),
+                    AddStudentsInGroup(group: widget.group),
                     Button(
                       title: "موافق",
                       padding: EdgeInsets.symmetric(

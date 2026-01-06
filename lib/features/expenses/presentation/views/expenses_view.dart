@@ -70,29 +70,27 @@ class ExpensesView extends StatelessWidget {
           builder: (context, data, child) {
             return Column(
               spacing: 10,
-              children: List.generate(
-                data.expenses.length,
-                (index) => Container(
+              children: List.generate(data.expenses.length, (index) {
+                final expense = data.expenses[index];
+                return Container(
                   decoration: BoxDecoration(
                     color: ThemeColors.forground,
                     borderRadius: BorderRadius.circular(16),
                   ),
                   child: ListTile(
-                    title: Text(data.expenses[index].title),
+                    title: Text(expense.title),
                     subtitle: Text(
-                      (data.expenses[index].note ?? '').isNotEmpty
-                          ? "${data.expenses[index].note} - ${formatTime(data.expenses[index].createdTime).formatH}"
-                          : formatTime(
-                              data.expenses[index].createdTime,
-                            ).formatH,
+                      (expense.note ?? '').isNotEmpty
+                          ? "${expense.note} - ${formatTime(expense.createdTime).formatH}"
+                          : formatTime(expense.createdTime).formatH,
                     ),
                     trailing: Text(
-                      "${formatDouble(data.expenses[index].amount)} جنية",
+                      "${formatDouble(expense.amount)} جنية",
                       style: TextStyle(fontSize: 16),
                     ),
                   ),
-                ),
-              ),
+                );
+              }),
             );
           },
         ),
