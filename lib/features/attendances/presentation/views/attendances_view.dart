@@ -39,7 +39,7 @@ class _AttendancesViewState extends State<AttendancesView> {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Text("حُضور مجموعات اليوم", style: TextStyle(fontSize: 20)),
-            SizedBox(height: 40),
+            const SizedBox(height: 40),
           ],
         ),
         Input(

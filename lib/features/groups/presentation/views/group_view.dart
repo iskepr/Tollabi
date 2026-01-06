@@ -2,7 +2,7 @@ import 'package:abo_sadah/core/data/all.dart';
 import 'package:abo_sadah/core/data/typs.dart';
 import 'package:abo_sadah/core/Theme/Colors.dart';
 import 'package:abo_sadah/core/Theme/TextStyles.dart';
-import 'package:abo_sadah/core/widgets/Button.dart';
+import 'package:abo_sadah/core/widgets/custom_button.dart';
 import 'package:abo_sadah/features/groups/presentation/views/widgets/add_students_in_group.dart';
 import 'package:abo_sadah/features/groups/presentation/views/widgets/all_group_students.dart';
 import 'package:abo_sadah/features/groups/presentation/views/widgets/edit_group.dart';
@@ -42,7 +42,7 @@ class _GroupViewState extends State<GroupView> {
                     spacing: 5,
                     children: [
                       if (!isAddStudent)
-                        Button(
+                        CustomButton(
                           title: "إضافة طالب للمجموعة",
                           fontSize: 14,
                           padding: EdgeInsets.symmetric(
@@ -53,7 +53,7 @@ class _GroupViewState extends State<GroupView> {
                             setState(() => isAddStudent = true);
                           },
                         ),
-                      Button(
+                      CustomButton(
                         title: "الرجوع",
                         icon: LucideIcons.chevronRight,
                         padding: EdgeInsets.all(10),
@@ -70,7 +70,7 @@ class _GroupViewState extends State<GroupView> {
                 spacing: 10,
                 children: [
                   if (!isAddStudent)
-                    Button(
+                    CustomButton(
                       title: "تعديل",
                       icon: LucideIcons.squarePen,
                       padding: EdgeInsets.all(10),
@@ -115,7 +115,7 @@ class _GroupViewState extends State<GroupView> {
                 Column(
                   children: [
                     AddStudentsInGroup(group: widget.group),
-                    Button(
+                    CustomButton(
                       title: "موافق",
                       padding: EdgeInsets.symmetric(
                         horizontal: 40,

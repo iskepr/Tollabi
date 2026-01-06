@@ -1,8 +1,8 @@
 import 'package:abo_sadah/core/Theme/Colors.dart';
 import 'package:flutter/material.dart';
 
-class Button extends StatelessWidget {
-  const Button({
+class CustomButton extends StatelessWidget {
+  const CustomButton({
     super.key,
     required this.title,
     required this.onTap,

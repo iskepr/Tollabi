@@ -1,7 +1,7 @@
 import 'package:abo_sadah/core/data/all.dart';
 import 'package:abo_sadah/core/data/typs.dart';
-import 'package:abo_sadah/core/widgets/BottomSheet.dart';
-import 'package:abo_sadah/core/widgets/Button.dart';
+import 'package:abo_sadah/core/widgets/custom_bottom_sheet.dart';
+import 'package:abo_sadah/core/widgets/custom_button.dart';
 import 'package:abo_sadah/core/widgets/Inputs/Input.dart';
 import 'package:abo_sadah/core/widgets/Inputs/Select.dart';
 import 'package:day_night_time_picker/day_night_time_picker.dart';
@@ -66,7 +66,7 @@ class _AddGroupState extends State<AddGroup> {
   Widget build(BuildContext context) {
     final data = Provider.of<AppData>(context, listen: false);
 
-    return MyBottomsheet(
+    return CustomBottomSheet(
       child: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
@@ -196,7 +196,7 @@ class _AddGroupState extends State<AddGroup> {
                 ),
               ),
               const SizedBox(height: 20),
-              Button(
+              CustomButton(
                 title: "حفظ المجموعة",
                 onTap: () async {
                   if (c["price"]!.text.isEmpty) {

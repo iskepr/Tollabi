@@ -1,6 +1,6 @@
 import 'package:abo_sadah/core/constants/assets.dart';
 import 'package:flutter/material.dart';
-import 'package:abo_sadah/core/widgets/Button.dart';
+import 'package:abo_sadah/core/widgets/custom_button.dart';
 import 'package:abo_sadah/core/Theme/Colors.dart';
 import 'package:abo_sadah/core/widgets/BottomBar/UserNavBarScaffold.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -52,7 +52,7 @@ class SplashBody extends StatelessWidget {
                           ),
                         ),
 
-                        Button(
+                        CustomButton(
                           title: "ابدا الان",
                           onTap: () async {
                             final prefs = await SharedPreferences.getInstance();

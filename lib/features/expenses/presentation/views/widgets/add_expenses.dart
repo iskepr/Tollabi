@@ -1,7 +1,7 @@
 import 'package:abo_sadah/core/data/all.dart';
 import 'package:abo_sadah/core/data/typs.dart';
-import 'package:abo_sadah/core/widgets/BottomSheet.dart';
-import 'package:abo_sadah/core/widgets/Button.dart';
+import 'package:abo_sadah/core/widgets/custom_bottom_sheet.dart';
+import 'package:abo_sadah/core/widgets/custom_button.dart';
 import 'package:abo_sadah/core/widgets/Inputs/Input.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -19,7 +19,7 @@ class AddExpenses extends StatelessWidget {
   Widget build(BuildContext context) {
     final data = Provider.of<AppData>(context, listen: false);
 
-    return MyBottomsheet(
+    return CustomBottomSheet(
       child: Column(
         children: [
           const Text(
@@ -37,7 +37,7 @@ class AddExpenses extends StatelessWidget {
           Input(title: "ملاحظة (اختياري)", controller: c["note"]),
 
           const SizedBox(height: 20),
-          Button(
+          CustomButton(
             title: "إضافة",
             onTap: () async {
               data.addExpense(

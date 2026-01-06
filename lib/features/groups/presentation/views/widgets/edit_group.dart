@@ -1,6 +1,6 @@
 import 'package:abo_sadah/core/data/all.dart';
-import 'package:abo_sadah/core/widgets/BottomSheet.dart';
-import 'package:abo_sadah/core/widgets/Button.dart';
+import 'package:abo_sadah/core/widgets/custom_bottom_sheet.dart';
+import 'package:abo_sadah/core/widgets/custom_button.dart';
 import 'package:abo_sadah/core/widgets/Inputs/Input.dart';
 import 'package:abo_sadah/core/widgets/Inputs/Select.dart';
 import 'package:flutter/material.dart';
@@ -30,7 +30,7 @@ class _EditGroupState extends State<EditGroup> {
 
   @override
   Widget build(BuildContext context) {
-    return MyBottomsheet(
+    return CustomBottomSheet(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
@@ -119,7 +119,7 @@ class _EditGroupState extends State<EditGroup> {
           ),
 
           const SizedBox(height: 20),
-          Button(
+          CustomButton(
             title: "إضافة",
             onTap: () {
               Navigator.pop(context);

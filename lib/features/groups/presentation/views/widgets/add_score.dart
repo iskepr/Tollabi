@@ -2,8 +2,8 @@ import 'package:abo_sadah/core/data/all.dart';
 import 'package:abo_sadah/core/data/typs.dart';
 import 'package:abo_sadah/core/Theme/Colors.dart';
 import 'package:abo_sadah/core/Theme/TextStyles.dart';
-import 'package:abo_sadah/core/widgets/BottomSheet.dart';
-import 'package:abo_sadah/core/widgets/Button.dart';
+import 'package:abo_sadah/core/widgets/custom_bottom_sheet.dart';
+import 'package:abo_sadah/core/widgets/custom_button.dart';
 import 'package:abo_sadah/core/widgets/Inputs/Input.dart';
 import 'package:flutter/material.dart';
 import 'package:lucide_icons_flutter/lucide_icons.dart';
@@ -29,7 +29,7 @@ class AddScore extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MyBottomsheet(
+    return CustomBottomSheet(
       child: Column(
         spacing: 10,
         crossAxisAlignment: CrossAxisAlignment.center,
@@ -66,8 +66,8 @@ class AddScore extends StatelessWidget {
             "درجة الطالب (10 درجات)",
             Input(title: "00", controller: TextEditingController()),
           ),
-          SizedBox(height: 20),
-          Button(
+          const SizedBox(height: 20),
+          CustomButton(
             title: "إضافة",
             onTap: () {
               Navigator.pop(context);

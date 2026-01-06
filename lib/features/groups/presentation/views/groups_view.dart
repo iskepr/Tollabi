@@ -1,7 +1,7 @@
 import 'package:abo_sadah/core/data/all.dart';
 import 'package:abo_sadah/core/Theme/Colors.dart';
 import 'package:abo_sadah/core/Theme/TextStyles.dart';
-import 'package:abo_sadah/core/widgets/Button.dart';
+import 'package:abo_sadah/core/widgets/custom_button.dart';
 import 'package:abo_sadah/features/groups/presentation/views/widgets/add_group.dart';
 import 'package:abo_sadah/features/groups/presentation/views/group_view.dart';
 import 'package:flutter/material.dart';
@@ -19,7 +19,7 @@ class GroupsView extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Text("المجموعات", style: TextStyle(fontSize: 20)),
-            Button(
+            CustomButton(
               title: "+ إضافة مجموعة",
               fontSize: 14,
               padding: EdgeInsets.symmetric(horizontal: 20, vertical: 12),

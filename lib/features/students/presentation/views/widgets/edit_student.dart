@@ -1,8 +1,8 @@
 import 'package:abo_sadah/core/data/all.dart';
 import 'package:abo_sadah/core/data/typs.dart';
 import 'package:abo_sadah/core/Theme/TextStyles.dart';
-import 'package:abo_sadah/core/widgets/BottomSheet.dart';
-import 'package:abo_sadah/core/widgets/Button.dart';
+import 'package:abo_sadah/core/widgets/custom_bottom_sheet.dart';
+import 'package:abo_sadah/core/widgets/custom_button.dart';
 import 'package:abo_sadah/core/widgets/Inputs/Input.dart';
 import 'package:abo_sadah/core/widgets/Inputs/Select.dart';
 import 'package:flutter/material.dart';
@@ -24,7 +24,13 @@ class EditStud extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final data = Provider.of<AppData>(context, listen: false);
-    return MyBottomsheet(
+    c["groupID"]!.text = studentData.groupID == null
+        ? gTitle
+        : data.groups
+              .firstWhere((group) => group.id == studentData.groupID)
+              .id
+              .toString();
+    return CustomBottomSheet(
       child: Column(
         spacing: 5,
         children: [
@@ -44,12 +50,7 @@ class EditStud extends StatelessWidget {
               title: gTitle,
               controller: c["groupID"]!,
               type: "select",
-              value: studentData.groupID == null
-                  ? gTitle
-                  : data.groups
-                        .firstWhere((group) => group.id == studentData.groupID)
-                        .id
-                        .toString(),
+              value: c["groupID"]!.text,
               items: data.groups
                   .map(
                     (group) => SelectItem(
@@ -69,15 +70,16 @@ class EditStud extends StatelessWidget {
             ),
           ),
           const SizedBox(height: 30),
-          Button(
+          CustomButton(
             title: "حفظ",
             onTap: () {
+              final groupID = c["groupID"]!.text == gTitle
+                  ? null
+                  : int.parse(c["groupID"]!.text);
               data.editStudent(
                 StudentsEntity(
                   id: studentData.id,
-                  groupID: c["groupID"]!.text == gTitle
-                      ? null
-                      : int.parse(c["groupID"]!.text),
+                  groupID: groupID,
                   name: c["name"]!.text,
                   phone: c["phone"]!.text,
                   createdTime: studentData.createdTime,

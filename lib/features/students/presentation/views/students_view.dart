@@ -1,10 +1,10 @@
 import 'package:abo_sadah/core/data/all.dart';
 import 'package:abo_sadah/core/data/typs.dart';
 import 'package:abo_sadah/core/Theme/Colors.dart';
-import 'package:abo_sadah/core/widgets/Button.dart';
-import 'package:abo_sadah/core/widgets/Grid.dart';
+import 'package:abo_sadah/core/widgets/custom_button.dart';
+import 'package:abo_sadah/core/widgets/custom_grid.dart';
 import 'package:abo_sadah/core/widgets/Inputs/Input.dart';
-import 'package:abo_sadah/features/students/presentation/views/widgets/add.dart';
+import 'package:abo_sadah/features/students/presentation/views/widgets/add_student.dart';
 import 'package:abo_sadah/features/students/presentation/views/student_acount_view.dart';
 import 'package:flutter/material.dart';
 import 'package:lucide_icons_flutter/lucide_icons.dart';
@@ -27,7 +27,7 @@ class StudentsView extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text("كل الطلاب", style: TextStyle(fontSize: 20)),
-                Button(
+                CustomButton(
                   title: "+ إضافة طالب",
                   fontSize: 14,
                   padding: EdgeInsets.symmetric(horizontal: 20, vertical: 12),
@@ -51,7 +51,7 @@ class StudentsView extends StatelessWidget {
                   .where((stud) => stud.name.contains(value.toString()))
                   .toList(),
             ),
-            MyGrid(
+            CustomGrid(
               count: students.length,
               child: (BuildContext context, int index) => GestureDetector(
                 onTap: () {
@@ -59,7 +59,7 @@ class StudentsView extends StatelessWidget {
                     context,
                     MaterialPageRoute(
                       builder: (context) =>
-                          StudentAcountView(studentData: students[index]),
+                          StudentAcountView(studentID: students[index].id!),
                     ),
                   );
                 },

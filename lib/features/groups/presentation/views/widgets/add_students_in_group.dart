@@ -1,7 +1,7 @@
 import 'package:abo_sadah/core/Theme/Colors.dart';
 import 'package:abo_sadah/core/data/all.dart';
 import 'package:abo_sadah/core/data/typs.dart';
-import 'package:abo_sadah/core/widgets/Grid.dart';
+import 'package:abo_sadah/core/widgets/custom_grid.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -24,7 +24,7 @@ class AddStudentsInGroup extends StatelessWidget {
                 style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
               ),
               Consumer<AppData>(
-                builder: (context, data, child) => MyGrid(
+                builder: (context, data, child) => CustomGrid(
                   count: data.students.length,
                   child: (BuildContext context, int index) {
                     bool isCheck = data.students[index].groupID == group.id;

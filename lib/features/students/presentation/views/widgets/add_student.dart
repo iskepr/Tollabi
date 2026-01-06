@@ -1,7 +1,7 @@
 import 'package:abo_sadah/core/data/all.dart';
 import 'package:abo_sadah/core/data/typs.dart';
-import 'package:abo_sadah/core/widgets/BottomSheet.dart';
-import 'package:abo_sadah/core/widgets/Button.dart';
+import 'package:abo_sadah/core/widgets/custom_bottom_sheet.dart';
+import 'package:abo_sadah/core/widgets/custom_button.dart';
 import 'package:abo_sadah/core/widgets/Inputs/Input.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -22,7 +22,7 @@ class _AddStudState extends State<AddStud> {
   Widget build(BuildContext context) {
     final data = Provider.of<AppData>(context, listen: false);
 
-    return MyBottomsheet(
+    return CustomBottomSheet(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
@@ -35,8 +35,8 @@ class _AddStudState extends State<AddStud> {
           ),
           Input(title: "اسم الطالب", controller: c["name"]!),
           Input(title: "رقم الهاتف", controller: c["phone"]!),
-          SizedBox(height: 20),
-          Button(
+          const SizedBox(height: 20),
+          CustomButton(
             title: "إضافة",
             onTap: () {
               data.addStudent(

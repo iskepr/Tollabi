@@ -1,17 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:abo_sadah/core/Theme/Colors.dart';
 
-class MyBottomsheet extends StatefulWidget {
-  const MyBottomsheet({super.key, required this.child, this.bg = true});
+class CustomBottomSheet extends StatefulWidget {
+  const CustomBottomSheet({super.key, required this.child, this.bg = true});
 
   final Widget child;
   final bool bg;
 
   @override
-  State<MyBottomsheet> createState() => _MyBottomsheetState();
+  State<CustomBottomSheet> createState() => _CustomBottomSheetState();
 }
 
-class _MyBottomsheetState extends State<MyBottomsheet> {
+class _CustomBottomSheetState extends State<CustomBottomSheet> {
   @override
   Widget build(BuildContext context) {
     return DraggableScrollableSheet(
@@ -40,7 +40,7 @@ class _MyBottomsheetState extends State<MyBottomsheet> {
                 height: 5,
                 width: 100,
               ),
-              SizedBox(height: 10),
+              const SizedBox(height: 10),
               widget.child,
             ],
           ),

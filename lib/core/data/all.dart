@@ -38,7 +38,6 @@ class AppData extends ChangeNotifier {
     final rawAttendances = results[3];
     final rawExpenses = results[4];
 
-    // Mapping
     students = rawStudents.map(StudentsEntity.fromMap).toList();
     attendances = rawAttendances.map(AttendancesEntity.fromMap).toList();
     expenses = rawExpenses.map(ExpensesEntity.fromMap).toList();

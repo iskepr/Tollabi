@@ -1,7 +1,7 @@
 import 'package:abo_sadah/core/Theme/Colors.dart';
 import 'package:abo_sadah/core/data/all.dart';
 import 'package:abo_sadah/core/utils/format.dart';
-import 'package:abo_sadah/core/widgets/Button.dart';
+import 'package:abo_sadah/core/widgets/custom_button.dart';
 import 'package:abo_sadah/features/expenses/presentation/views/widgets/add_expenses.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -19,7 +19,7 @@ class ExpensesView extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Text("المصروفات", style: TextStyle(fontSize: 20)),
-            Button(
+            CustomButton(
               title: "+  إضافة مصروف",
               fontSize: 14,
               padding: EdgeInsets.symmetric(horizontal: 20, vertical: 12),
