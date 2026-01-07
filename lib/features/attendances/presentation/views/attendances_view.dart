@@ -1,12 +1,12 @@
-import 'package:abo_sadah/core/Theme/TextStyles.dart';
+import 'package:abo_sadah/core/Theme/text_styles.dart';
 import 'package:abo_sadah/core/data/typs.dart';
-import 'package:abo_sadah/core/widgets/Inputs/Input.dart';
+import 'package:abo_sadah/core/widgets/inputs/input.dart';
 import 'package:abo_sadah/features/attendances/presentation/views/widgets/add_attendances.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:abo_sadah/core/data/all.dart';
-import 'package:abo_sadah/core/Theme/Colors.dart';
+import 'package:abo_sadah/core/Theme/colors.dart';
 
 class AttendancesView extends StatefulWidget {
   const AttendancesView({super.key});
@@ -48,7 +48,9 @@ class _AttendancesViewState extends State<AttendancesView> {
           prefixIcon: Icons.search,
           controller: search,
           onChanged: (value) => setState(() {
-            groups = allGroups.where((stud) => stud.id == value).toList();
+            groups = allGroups
+                .where((stud) => stud.id.toString() == value)
+                .toList();
           }),
         ),
 

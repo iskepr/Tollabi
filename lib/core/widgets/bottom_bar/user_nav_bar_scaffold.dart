@@ -1,5 +1,5 @@
-import 'package:abo_sadah/core/widgets/BottomBar/NavBar.dart';
-import 'package:abo_sadah/core/widgets/BottomBar/NavBarEntity.dart';
+import 'package:abo_sadah/core/widgets/bottom_bar/nav_bar.dart';
+import 'package:abo_sadah/core/widgets/bottom_bar/nav_bar_entity.dart';
 import 'package:flutter/material.dart';
 
 class UserNavBarScaffold extends StatefulWidget {

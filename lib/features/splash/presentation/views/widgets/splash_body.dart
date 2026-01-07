@@ -1,8 +1,8 @@
 import 'package:abo_sadah/core/constants/assets.dart';
 import 'package:flutter/material.dart';
-import 'package:abo_sadah/core/widgets/Inputs/custom_button.dart';
-import 'package:abo_sadah/core/Theme/Colors.dart';
-import 'package:abo_sadah/core/widgets/BottomBar/UserNavBarScaffold.dart';
+import 'package:abo_sadah/core/widgets/inputs/custom_button.dart';
+import 'package:abo_sadah/core/Theme/colors.dart';
+import 'package:abo_sadah/core/widgets/bottom_bar/user_nav_bar_scaffold.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class SplashBody extends StatelessWidget {
@@ -57,12 +57,14 @@ class SplashBody extends StatelessWidget {
                             final prefs = await SharedPreferences.getInstance();
                             await prefs.setBool('isFirstTime', false);
 
-                            Navigator.pushReplacement(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => UserNavBarScaffold(),
-                              ),
-                            );
+                            if (context.mounted) {
+                              Navigator.pushReplacement(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => UserNavBarScaffold(),
+                                ),
+                              );
+                            }
                           },
                         ),
 

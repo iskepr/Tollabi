@@ -1,5 +1,5 @@
-import 'package:abo_sadah/core/Theme/Colors.dart';
-import 'package:abo_sadah/core/widgets/Inputs/Select.dart';
+import 'package:abo_sadah/core/Theme/colors.dart';
+import 'package:abo_sadah/core/widgets/inputs/select.dart';
 import 'package:flutter/material.dart';
 
 class Input extends StatelessWidget {

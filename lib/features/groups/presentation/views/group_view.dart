@@ -1,9 +1,9 @@
 import 'package:abo_sadah/core/data/all.dart';
 import 'package:abo_sadah/core/data/typs.dart';
-import 'package:abo_sadah/core/Theme/Colors.dart';
-import 'package:abo_sadah/core/Theme/TextStyles.dart';
+import 'package:abo_sadah/core/Theme/colors.dart';
+import 'package:abo_sadah/core/Theme/text_styles.dart';
 import 'package:abo_sadah/core/utils/format.dart';
-import 'package:abo_sadah/core/widgets/Inputs/custom_button.dart';
+import 'package:abo_sadah/core/widgets/inputs/custom_button.dart';
 import 'package:abo_sadah/features/groups/presentation/views/widgets/add_students_in_group.dart';
 import 'package:abo_sadah/features/groups/presentation/views/widgets/all_group_students.dart';
 import 'package:abo_sadah/features/groups/presentation/views/widgets/edit_group.dart';

@@ -1,9 +1,9 @@
 import 'dart:io';
 
 import 'package:abo_sadah/core/data/all.dart';
-import 'package:abo_sadah/core/Theme/Colors.dart';
+import 'package:abo_sadah/core/Theme/colors.dart';
 import 'package:abo_sadah/core/data/sqflite/sql.dart';
-import 'package:abo_sadah/core/widgets/BottomBar/UserNavBarScaffold.dart';
+import 'package:abo_sadah/core/widgets/bottom_bar/user_nav_bar_scaffold.dart';
 import 'package:abo_sadah/generated/l10n.dart' show S;
 import 'package:abo_sadah/features/splash/presentation/views/splash_view.dart';
 import 'package:flutter/material.dart';

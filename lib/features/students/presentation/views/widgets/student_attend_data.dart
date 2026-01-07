@@ -1,7 +1,7 @@
-import 'package:abo_sadah/core/Theme/Colors.dart';
+import 'package:abo_sadah/core/Theme/colors.dart';
 import 'package:abo_sadah/core/data/all.dart';
 import 'package:abo_sadah/core/utils/format.dart';
-import 'package:abo_sadah/core/widgets/Inputs/custom_button.dart';
+import 'package:abo_sadah/core/widgets/inputs/custom_button.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -27,6 +27,10 @@ class _StudentAttendDataState extends State<StudentAttendData> {
     final groupAttends = allAttends
         .where((a) => a.groupID == data.groups[selectedGroup].id)
         .toList();
+
+    if (allAttends.isEmpty) {
+      return Text("لم يحضر الطالب من قبل");
+    }
     return Column(
       children: [
         SizedBox(

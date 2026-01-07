@@ -1,8 +1,8 @@
 import 'package:abo_sadah/core/data/all.dart';
 import 'package:abo_sadah/core/data/typs.dart';
 import 'package:abo_sadah/core/widgets/custom_bottom_sheet.dart';
-import 'package:abo_sadah/core/widgets/Inputs/custom_button.dart';
-import 'package:abo_sadah/core/widgets/Inputs/Input.dart';
+import 'package:abo_sadah/core/widgets/inputs/custom_button.dart';
+import 'package:abo_sadah/core/widgets/inputs/input.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
