@@ -28,7 +28,7 @@ Future<void> createTables() async {
     "student_id": "INTEGER REFERENCES students(id) ON DELETE CASCADE",
     "group_id": "INTEGER REFERENCES groups(id) ON DELETE CASCADE",
     "grade": "REAL",
-    "price": "REAL",
+    "price": "REAL NOT NULL",
     "status": "INTEGER DEFAULT 0",
     "created_time": "TEXT",
   });

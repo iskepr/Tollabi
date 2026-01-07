@@ -10,6 +10,8 @@ class CustomButton extends StatelessWidget {
     this.fontSize,
     this.padding,
     this.radius,
+    this.disabled = false,
+    this.active = true,
   });
 
   final String title;
@@ -19,16 +21,20 @@ class CustomButton extends StatelessWidget {
   final double? fontSize;
   final EdgeInsets? padding;
   final double? radius;
+  final bool disabled;
+  final bool active;
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: onTap,
+      onTap: disabled ? null : onTap,
       child: Container(
         padding:
             padding ?? const EdgeInsets.symmetric(horizontal: 25, vertical: 15),
         decoration: BoxDecoration(
-          color: ThemeColors.third,
+          color: disabled || !active
+              ? ThemeColors.secondary
+              : ThemeColors.third,
           borderRadius: BorderRadius.circular(radius ?? 24),
         ),
         child: icon != null

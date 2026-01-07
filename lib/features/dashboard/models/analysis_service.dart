@@ -88,8 +88,7 @@ class AnalysisService {
     final filteredAttendance = attendanceList.where(test);
     for (var attendance in filteredAttendance) {
       try {
-        final group = groupsList.firstWhere((g) => g.id == attendance.groupID);
-        total += group.price;
+        total += attendance.price;
       } catch (e) {
         continue;
       }

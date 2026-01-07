@@ -108,8 +108,8 @@ class AttendancesEntity {
   int? id;
   int studentID;
   int groupID;
-  double? grade;
-  double? price;
+  double grade;
+  double price;
   int status;
   DateTime createdTime;
 
@@ -129,8 +129,8 @@ class AttendancesEntity {
     this.id,
     required this.studentID,
     required this.groupID,
-    this.grade,
-    this.price,
+    this.grade = 0,
+    required this.price,
     required this.status,
     required this.createdTime,
   });

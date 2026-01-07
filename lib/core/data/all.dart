@@ -217,6 +217,7 @@ class AppData extends ChangeNotifier {
       "student_id": attendance.studentID,
       "group_id": attendance.groupID,
       "grade": attendance.grade,
+      "price": attendance.price,
       "status": attendance.status,
       "created_time": attendance.createdTime.toString(),
     });
@@ -239,7 +240,7 @@ class AppData extends ChangeNotifier {
     "الاحد",
     "الاثنين",
     "الثلاثاء",
-    "الاربعاء",
+    "الأربعاء",
     "الخميس",
     "الجمعة",
   ];
