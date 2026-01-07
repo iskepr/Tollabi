@@ -1,7 +1,7 @@
 import 'package:abo_sadah/core/data/all.dart';
 import 'package:abo_sadah/core/Theme/Colors.dart';
 import 'package:abo_sadah/core/Theme/TextStyles.dart';
-import 'package:abo_sadah/core/widgets/custom_button.dart';
+import 'package:abo_sadah/core/widgets/Inputs/custom_button.dart';
 import 'package:abo_sadah/features/students/presentation/views/widgets/edit_student.dart';
 import 'package:abo_sadah/features/students/presentation/views/widgets/student_attend_data.dart';
 import 'package:flutter/material.dart';
