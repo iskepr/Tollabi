@@ -1,9 +1,8 @@
 import 'package:abo_sadah/core/constants/assets.dart';
+import 'package:abo_sadah/features/splash/presentation/views/widgets/login_view.dart';
 import 'package:flutter/material.dart';
 import 'package:abo_sadah/core/widgets/inputs/custom_button.dart';
 import 'package:abo_sadah/core/Theme/colors.dart';
-import 'package:abo_sadah/core/widgets/bottom_bar/user_nav_bar_scaffold.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class SplashBody extends StatelessWidget {
   const SplashBody({super.key});
@@ -13,6 +12,7 @@ class SplashBody extends StatelessWidget {
     return Scaffold(
       backgroundColor: ThemeColors.secondary,
       body: SafeArea(
+        bottom: false,
         child: Stack(
           children: [
             Column(
@@ -54,14 +54,11 @@ class SplashBody extends StatelessWidget {
                         CustomButton(
                           title: "ابدا الان",
                           onTap: () async {
-                            final prefs = await SharedPreferences.getInstance();
-                            await prefs.setBool('isFirstTime', false);
-
                             if (context.mounted) {
                               Navigator.pushReplacement(
                                 context,
                                 MaterialPageRoute(
-                                  builder: (context) => UserNavBarScaffold(),
+                                  builder: (context) => const LoginView(),
                                 ),
                               );
                             }
