@@ -178,3 +178,29 @@ class AnalysisEntity {
 
   AnalysisEntity({required this.title, required this.value});
 }
+
+class UserDataEntity {
+  String name;
+  String phone;
+  String password;
+  String code;
+  DateTime createdTime;
+
+  factory UserDataEntity.fromMap(Map<String, dynamic> map) {
+    return UserDataEntity(
+      name: map['name'],
+      phone: map['phone'],
+      password: map['pass'],
+      code: map['code'],
+      createdTime: DateTime.parse(map['created_time']),
+    );
+  }
+
+  UserDataEntity({
+    required this.name,
+    required this.phone,
+    required this.password,
+    required this.code,
+    required this.createdTime,
+  });
+}

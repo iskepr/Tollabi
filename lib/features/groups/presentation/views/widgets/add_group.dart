@@ -201,7 +201,7 @@ class _AddGroupState extends State<AddGroup> {
                 title: "حفظ المجموعة",
                 onTap: () async {
                   if (c["price"]!.text.isEmpty) {
-                    showMessage(context, "برجاء إدخال سعر الحصة");
+                    showMessage(context, "برجاء إدخال سعر الحصة", isError: true);
                     return;
                   }
 

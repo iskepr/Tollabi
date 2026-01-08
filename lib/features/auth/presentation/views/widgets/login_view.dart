@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:abo_sadah/core/Theme/colors.dart';
+import 'package:abo_sadah/core/functions/show_message.dart';
 import 'package:abo_sadah/core/widgets/bottom_bar/user_nav_bar_scaffold.dart';
 import 'package:abo_sadah/core/widgets/inputs/custom_button.dart';
 import 'package:abo_sadah/core/widgets/inputs/input.dart';
@@ -75,48 +76,75 @@ class _LoginViewState extends State<LoginView> {
                 onTap: () async {
                   final prefs = await SharedPreferences.getInstance();
                   if (isLogin) {
-                    if (context.mounted) {
-                      Navigator.pushReplacement(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => const UserNavBarScaffold(),
-                        ),
-                      );
+                    final userData = prefs.getString("user_data");
+
+                    if (userData != null) {
+                      final data = jsonDecode(userData);
+                      if (data["phone"] == c["phone"]!.text.trim() &&
+                          data["pass"] == c["pass"]!.text.trim()) {
+                        await prefs.setString("app_status", "isLogin");
+
+                        if (context.mounted) {
+                          Navigator.pushReplacement(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => const UserNavBarScaffold(),
+                            ),
+                          );
+                        }
+                      } else {
+                        if (context.mounted) {
+                          if (data["phone"] != c["phone"]!.text.trim()) {
+                            showMessage(
+                              context,
+                              "رقم الهاتف غير صحيح",
+                              isError: true,
+                            );
+                            return;
+                          }
+                          if (data["pass"] != c["pass"]!.text.trim()) {
+                            showMessage(
+                              context,
+                              "كلمة المرور غير صحيحة",
+                              isError: true,
+                            );
+                            return;
+                          }
+                        }
+                      }
                     }
                   } else {
-                    final phone = c["pass"]!.text.trim();
-                    final code = phone
-                        .substring(phone.length - 4)
-                        .split("")
-                        .reversed
-                        .join("");
+                    try {
+                      final phone = c["phone"]!.text.trim();
+                      final code = phone
+                          .substring(phone.length - 4)
+                          .split("")
+                          .reversed
+                          .join("");
 
-                    await prefs.setString(
-                      'user_data',
-                      jsonEncode({
-                        "name": c["name"]!.text.trim(),
-                        "phone": c["phone"]!.text.trim(),
-                        "pass": c["pass"]!.text.trim(),
-                        "code": code,
-                      }),
-                    );
-
-                    if (context.mounted) {
-                      Navigator.pushReplacement(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => const UserNavBarScaffold(),
-                        ),
+                      await prefs.setString(
+                        'user_data',
+                        jsonEncode({
+                          "name": c["name"]!.text.trim(),
+                          "phone": c["phone"]!.text.trim(),
+                          "pass": c["pass"]!.text.trim(),
+                          "code": code,
+                          "created_time": DateTime.now().toString(),
+                        }),
                       );
+
+                      await prefs.setString("app_status", "isLogin");
+
+                      setState(() => isLogin = !isLogin);
+                    } catch (e) {
+                      print(e);
                     }
                   }
                 },
               ),
               TextButton(
                 onPressed: () {
-                  setState(() {
-                    isLogin = !isLogin;
-                  });
+                  setState(() => isLogin = !isLogin);
                 },
                 child: Text(
                   isLogin

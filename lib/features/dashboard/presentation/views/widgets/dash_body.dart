@@ -19,10 +19,12 @@ class _DashBodyState extends State<DashBody> {
 
   @override
   Widget build(BuildContext context) {
+    final data = Provider.of<AppData>(context, listen: false);
+
     return Column(
       children: [
-        const Text(
-          "مرحبا بك أبو سداح !",
+        Text(
+          "مرحبا بك ${data.userData.name.split(" ")[0]} !",
           style: TextStyle(
             fontSize: 24,
             fontWeight: FontWeight.bold,

@@ -4,6 +4,7 @@ import 'package:abo_sadah/core/data/all.dart';
 import 'package:abo_sadah/core/Theme/colors.dart';
 import 'package:abo_sadah/core/data/sqflite/sql.dart';
 import 'package:abo_sadah/core/widgets/bottom_bar/user_nav_bar_scaffold.dart';
+import 'package:abo_sadah/features/auth/presentation/views/auth_view.dart';
 import 'package:abo_sadah/generated/l10n.dart' show S;
 import 'package:abo_sadah/features/splash/presentation/views/splash_view.dart';
 import 'package:flutter/material.dart';
@@ -33,6 +34,8 @@ class MyApp extends StatelessWidget {
     return ChangeNotifierProvider(
       create: (context) => AppData(),
       builder: (context, child) {
+        final appStatus = Provider.of<AppData>(context).appStatus;
+        final createdTime = Provider.of<AppData>(context).userData.createdTime;
         return MaterialApp(
           locale: Locale("ar"),
           localizationsDelegates: [
@@ -49,8 +52,14 @@ class MyApp extends StatelessWidget {
             colorScheme: ColorScheme.fromSeed(seedColor: ThemeColors.primary),
             scaffoldBackgroundColor: ThemeColors.background,
           ),
-          home: Provider.of<AppData>(context).isFirstTime
+          home: appStatus == "isFirstTime"
               ? const Splash()
+              : appStatus == "isLogout"
+              ? const AuthView()
+              : ((DateTime.now().difference(createdTime).inDays > 3) ||
+                        appStatus == "isNeedCode") &&
+                    appStatus != "isActive"
+              ? const AuthView(isCode: true)
               : const UserNavBarScaffold(),
         );
       },

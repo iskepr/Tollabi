@@ -204,7 +204,11 @@ class _EditGroupState extends State<EditGroup> {
                 title: "حفظ المجموعة",
                 onTap: () async {
                   if (c["price"]!.text.isEmpty) {
-                    showMessage(context, "برجاء إدخال سعر الحصة");
+                    showMessage(
+                      context,
+                      "برجاء إدخال سعر الحصة",
+                      isError: true,
+                    );
                     return;
                   }
 

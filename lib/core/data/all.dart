@@ -1,3 +1,5 @@
+import "dart:convert";
+
 import "package:abo_sadah/features/dashboard/models/analysis_service.dart";
 import "package:flutter/material.dart";
 import "package:shared_preferences/shared_preferences.dart";
@@ -7,7 +9,14 @@ import "package:abo_sadah/core/data/sqflite/sql.dart";
 class AppData extends ChangeNotifier {
   final MySqfLite _db = MySqfLite();
 
-  bool isFirstTime = false;
+  String appStatus = "isFirstTime";
+  UserDataEntity userData = UserDataEntity(
+    name: "",
+    phone: "",
+    password: "",
+    code: "",
+    createdTime: DateTime.now(),
+  );
   List<GroupsEntity> groups = [];
   List<StudentsEntity> students = [];
   List<AttendancesEntity> attendances = [];
@@ -22,7 +31,10 @@ class AppData extends ChangeNotifier {
   Future<void> init() async {
     isLoading = true;
     final prefs = await SharedPreferences.getInstance();
-    isFirstTime = prefs.getBool("isFirstTime") ?? true;
+    appStatus = prefs.getString("app_status") ?? "isFirstTime";
+    userData = UserDataEntity.fromMap(
+      (jsonDecode(prefs.getString("user_data")!)),
+    );
 
     final results = await Future.wait([
       _db.query("groups"),
