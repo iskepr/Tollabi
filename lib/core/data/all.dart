@@ -32,9 +32,10 @@ class AppData extends ChangeNotifier {
     isLoading = true;
     final prefs = await SharedPreferences.getInstance();
     appStatus = prefs.getString("app_status") ?? "isFirstTime";
-    userData = UserDataEntity.fromMap(
-      (jsonDecode(prefs.getString("user_data")!)),
-    );
+    String? rawData = prefs.getString("user_data");
+    if (rawData != null) {
+      userData = UserDataEntity.fromMap(jsonDecode(rawData));
+    }
 
     final results = await Future.wait([
       _db.query("groups"),

@@ -1,11 +1,13 @@
 import 'dart:convert';
 
 import 'package:abo_sadah/core/Theme/colors.dart';
+import 'package:abo_sadah/core/data/all.dart';
 import 'package:abo_sadah/core/functions/show_message.dart';
 import 'package:abo_sadah/core/widgets/bottom_bar/user_nav_bar_scaffold.dart';
 import 'package:abo_sadah/core/widgets/inputs/custom_button.dart';
 import 'package:abo_sadah/core/widgets/inputs/input.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class LoginView extends StatefulWidget {
@@ -135,7 +137,15 @@ class _LoginViewState extends State<LoginView> {
 
                       await prefs.setString("app_status", "isLogin");
 
-                      setState(() => isLogin = !isLogin);
+                      if (context.mounted) {
+                        Provider.of<AppData>(context, listen: false).init();
+                        Navigator.pushReplacement(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const UserNavBarScaffold(),
+                          ),
+                        );
+                      }
                     } catch (e) {
                       print(e);
                     }
