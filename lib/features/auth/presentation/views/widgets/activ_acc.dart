@@ -1,7 +1,7 @@
-import 'package:abo_sadah/core/data/all.dart';
-import 'package:abo_sadah/core/functions/show_message.dart';
-import 'package:abo_sadah/core/widgets/bottom_bar/user_nav_bar_scaffold.dart';
-import 'package:abo_sadah/core/widgets/inputs/custom_button.dart';
+import 'package:tollabi/core/data/all.dart';
+import 'package:tollabi/core/functions/show_message.dart';
+import 'package:tollabi/core/widgets/bottom_bar/user_nav_bar_scaffold.dart';
+import 'package:tollabi/core/widgets/inputs/custom_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_otp_text_field/flutter_otp_text_field.dart';
 import 'package:url_launcher/url_launcher.dart';

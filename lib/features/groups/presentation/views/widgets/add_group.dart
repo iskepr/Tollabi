@@ -1,10 +1,10 @@
-import 'package:abo_sadah/core/data/all.dart';
-import 'package:abo_sadah/core/data/typs.dart';
-import 'package:abo_sadah/core/functions/show_message.dart';
-import 'package:abo_sadah/core/widgets/custom_bottom_sheet.dart';
-import 'package:abo_sadah/core/widgets/inputs/custom_button.dart';
-import 'package:abo_sadah/core/widgets/inputs/input.dart';
-import 'package:abo_sadah/core/widgets/inputs/select.dart';
+import 'package:tollabi/core/data/all.dart';
+import 'package:tollabi/core/data/typs.dart';
+import 'package:tollabi/core/functions/show_message.dart';
+import 'package:tollabi/core/widgets/custom_bottom_sheet.dart';
+import 'package:tollabi/core/widgets/inputs/custom_button.dart';
+import 'package:tollabi/core/widgets/inputs/input.dart';
+import 'package:tollabi/core/widgets/inputs/select.dart';
 import 'package:day_night_time_picker/day_night_time_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:lucide_icons_flutter/lucide_icons.dart';
@@ -201,7 +201,11 @@ class _AddGroupState extends State<AddGroup> {
                 title: "حفظ المجموعة",
                 onTap: () async {
                   if (c["price"]!.text.isEmpty) {
-                    showMessage(context, "برجاء إدخال سعر الحصة", isError: true);
+                    showMessage(
+                      context,
+                      "برجاء إدخال سعر الحصة",
+                      isError: true,
+                    );
                     return;
                   }
 

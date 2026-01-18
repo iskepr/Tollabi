@@ -1,11 +1,11 @@
 import 'dart:convert';
 
-import 'package:abo_sadah/core/Theme/colors.dart';
-import 'package:abo_sadah/core/data/all.dart';
-import 'package:abo_sadah/core/functions/show_message.dart';
-import 'package:abo_sadah/core/widgets/bottom_bar/user_nav_bar_scaffold.dart';
-import 'package:abo_sadah/core/widgets/inputs/custom_button.dart';
-import 'package:abo_sadah/core/widgets/inputs/input.dart';
+import 'package:tollabi/core/Theme/colors.dart';
+import 'package:tollabi/core/data/all.dart';
+import 'package:tollabi/core/functions/show_message.dart';
+import 'package:tollabi/core/widgets/bottom_bar/user_nav_bar_scaffold.dart';
+import 'package:tollabi/core/widgets/inputs/custom_button.dart';
+import 'package:tollabi/core/widgets/inputs/input.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -57,6 +57,7 @@ class _LoginViewState extends State<LoginView> {
                     Input(
                       title: "رقم الهاتف",
                       style: "solid",
+                      type: "number",
                       controller: c["phone"],
                     ),
                     Input(

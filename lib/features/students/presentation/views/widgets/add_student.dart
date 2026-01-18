@@ -1,8 +1,8 @@
-import 'package:abo_sadah/core/data/all.dart';
-import 'package:abo_sadah/core/data/typs.dart';
-import 'package:abo_sadah/core/widgets/custom_bottom_sheet.dart';
-import 'package:abo_sadah/core/widgets/inputs/custom_button.dart';
-import 'package:abo_sadah/core/widgets/inputs/input.dart';
+import 'package:tollabi/core/data/all.dart';
+import 'package:tollabi/core/data/typs.dart';
+import 'package:tollabi/core/widgets/custom_bottom_sheet.dart';
+import 'package:tollabi/core/widgets/inputs/custom_button.dart';
+import 'package:tollabi/core/widgets/inputs/input.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -34,7 +34,7 @@ class _AddStudState extends State<AddStud> {
             ),
           ),
           Input(title: "اسم الطالب", controller: c["name"]!),
-          Input(title: "رقم الهاتف", controller: c["phone"]!),
+          Input(title: "رقم الهاتف", type: "number", controller: c["phone"]!),
           const SizedBox(height: 20),
           CustomButton(
             title: "إضافة",

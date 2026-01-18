@@ -1,11 +1,11 @@
-import 'package:abo_sadah/core/Theme/text_styles.dart';
-import 'package:abo_sadah/core/data/typs.dart';
-import 'package:abo_sadah/features/attendances/presentation/views/widgets/add_attendances.dart';
+import 'package:tollabi/core/Theme/text_styles.dart';
+import 'package:tollabi/core/data/typs.dart';
+import 'package:tollabi/features/attendances/presentation/views/widgets/add_attendances.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
-import 'package:abo_sadah/core/data/all.dart';
-import 'package:abo_sadah/core/Theme/colors.dart';
+import 'package:tollabi/core/data/all.dart';
+import 'package:tollabi/core/Theme/colors.dart';
 
 class AttendancesView extends StatefulWidget {
   const AttendancesView({super.key});

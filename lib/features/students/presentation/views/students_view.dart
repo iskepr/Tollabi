@@ -1,11 +1,11 @@
-import 'package:abo_sadah/core/data/all.dart';
-import 'package:abo_sadah/core/data/typs.dart';
-import 'package:abo_sadah/core/Theme/colors.dart';
-import 'package:abo_sadah/core/widgets/inputs/custom_button.dart';
-import 'package:abo_sadah/core/widgets/custom_grid.dart';
-import 'package:abo_sadah/core/widgets/inputs/input.dart';
-import 'package:abo_sadah/features/students/presentation/views/widgets/add_student.dart';
-import 'package:abo_sadah/features/students/presentation/views/student_acount_view.dart';
+import 'package:tollabi/core/data/all.dart';
+import 'package:tollabi/core/data/typs.dart';
+import 'package:tollabi/core/Theme/colors.dart';
+import 'package:tollabi/core/widgets/inputs/custom_button.dart';
+import 'package:tollabi/core/widgets/custom_grid.dart';
+import 'package:tollabi/core/widgets/inputs/input.dart';
+import 'package:tollabi/features/students/presentation/views/widgets/add_student.dart';
+import 'package:tollabi/features/students/presentation/views/student_acount_view.dart';
 import 'package:flutter/material.dart';
 import 'package:lucide_icons_flutter/lucide_icons.dart';
 import 'package:provider/provider.dart';
@@ -80,7 +80,6 @@ class _StudentsViewState extends State<StudentsView> {
                   );
                 },
                 child: Container(
-                  padding: EdgeInsets.all(5),
                   decoration: BoxDecoration(
                     color: ThemeColors.forground,
                     borderRadius: BorderRadius.circular(24),

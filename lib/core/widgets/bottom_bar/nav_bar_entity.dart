@@ -1,8 +1,8 @@
-import 'package:abo_sadah/features/attendances/presentation/views/attendances_view.dart';
-import 'package:abo_sadah/features/expenses/presentation/views/expenses_view.dart';
-import 'package:abo_sadah/features/groups/presentation/views/groups_view.dart';
-import 'package:abo_sadah/features/dashboard/presentation/views/dash_view.dart';
-import 'package:abo_sadah/features/students/presentation/views/students_view.dart';
+import 'package:tollabi/features/attendances/presentation/views/attendances_view.dart';
+import 'package:tollabi/features/expenses/presentation/views/expenses_view.dart';
+import 'package:tollabi/features/groups/presentation/views/groups_view.dart';
+import 'package:tollabi/features/dashboard/presentation/views/dash_view.dart';
+import 'package:tollabi/features/students/presentation/views/students_view.dart';
 import 'package:flutter/material.dart';
 import 'package:lucide_icons_flutter/lucide_icons.dart';
 

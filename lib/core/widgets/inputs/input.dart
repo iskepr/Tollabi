@@ -1,5 +1,5 @@
-import 'package:abo_sadah/core/Theme/colors.dart';
-import 'package:abo_sadah/core/widgets/inputs/select.dart';
+import 'package:tollabi/core/Theme/colors.dart';
+import 'package:tollabi/core/widgets/inputs/select.dart';
 import 'package:flutter/material.dart';
 
 class Input extends StatelessWidget {
@@ -28,7 +28,6 @@ class Input extends StatelessWidget {
 
   final List<SelectItem>? items;
 
-  // 1️⃣ التعديل الأول: لازم تكون String? عشان الـ Dropdown بيرجع null أحياناً
   final Function(String? value)? onChanged;
 
   @override
@@ -63,6 +62,11 @@ class Input extends StatelessWidget {
           : TextField(
               controller: controller,
               decoration: decoration,
+              keyboardType: type == "number"
+                  ? TextInputType.number
+                  : type == "email"
+                  ? TextInputType.emailAddress
+                  : null,
               onChanged: (v) {
                 if (onChanged != null) {
                   onChanged!(v);

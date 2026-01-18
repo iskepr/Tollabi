@@ -1,4 +1,4 @@
-import 'package:abo_sadah/core/Theme/colors.dart';
+import 'package:tollabi/core/Theme/colors.dart';
 import 'package:flutter/material.dart';
 
 abstract class TextStyles {

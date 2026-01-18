@@ -1,10 +1,10 @@
 import "dart:convert";
 
-import "package:abo_sadah/features/dashboard/models/analysis_service.dart";
+import "package:tollabi/features/dashboard/models/analysis_service.dart";
 import "package:flutter/material.dart";
 import "package:shared_preferences/shared_preferences.dart";
-import "package:abo_sadah/core/data/typs.dart";
-import "package:abo_sadah/core/data/sqflite/sql.dart";
+import "package:tollabi/core/data/typs.dart";
+import "package:tollabi/core/data/sqflite/sql.dart";
 
 class AppData extends ChangeNotifier {
   final MySqfLite _db = MySqfLite();

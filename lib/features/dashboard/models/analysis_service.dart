@@ -1,4 +1,4 @@
-import 'package:abo_sadah/core/data/typs.dart';
+import 'package:tollabi/core/data/typs.dart';
 
 class AnalysisService {
   static List<AnalysisEntity> calculate(

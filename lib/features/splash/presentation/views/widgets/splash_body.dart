@@ -1,8 +1,8 @@
-import 'package:abo_sadah/core/constants/assets.dart';
-import 'package:abo_sadah/features/auth/presentation/views/auth_view.dart';
+import 'package:tollabi/core/constants/assets.dart';
+import 'package:tollabi/features/auth/presentation/views/auth_view.dart';
 import 'package:flutter/material.dart';
-import 'package:abo_sadah/core/widgets/inputs/custom_button.dart';
-import 'package:abo_sadah/core/Theme/colors.dart';
+import 'package:tollabi/core/widgets/inputs/custom_button.dart';
+import 'package:tollabi/core/Theme/colors.dart';
 
 class SplashBody extends StatelessWidget {
   const SplashBody({super.key});

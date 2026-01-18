@@ -1,4 +1,4 @@
-import "package:abo_sadah/core/data/sqflite/sql.dart";
+import "package:tollabi/core/data/sqflite/sql.dart";
 
 Future<void> createTables() async {
   await MySqfLite().createTable("groups", {

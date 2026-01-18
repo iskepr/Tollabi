@@ -1,5 +1,5 @@
-import 'package:abo_sadah/features/auth/presentation/views/widgets/activ_acc.dart';
-import 'package:abo_sadah/features/auth/presentation/views/widgets/login_view.dart';
+import 'package:tollabi/features/auth/presentation/views/widgets/activ_acc.dart';
+import 'package:tollabi/features/auth/presentation/views/widgets/login_view.dart';
 import 'package:flutter/material.dart';
 
 class AuthView extends StatelessWidget {
