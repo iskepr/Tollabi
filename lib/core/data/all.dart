@@ -248,6 +248,18 @@ class AppData extends ChangeNotifier {
     notifyListeners();
   }
 
+  // Grades
+  void addGrade(int attendanceID, double grade) async {
+    await MySqfLite().update(
+      "attendances",
+      {"grade": grade},
+      whereClause: "id = ?",
+      whereArgs: [attendanceID],
+    );
+    init();
+    notifyListeners();
+  }
+
   static final List days = [
     "السبت",
     "الأحد",

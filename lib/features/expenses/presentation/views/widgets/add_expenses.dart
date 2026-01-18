@@ -62,9 +62,7 @@ class _AddExpensesState extends State<AddExpenses> {
                 ),
               );
 
-              if (context.mounted) {
-                Navigator.pop(context);
-              }
+              if (context.mounted) Navigator.pop(context);
             },
           ),
           const SizedBox(height: 20),

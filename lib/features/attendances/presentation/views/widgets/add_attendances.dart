@@ -9,13 +9,26 @@ import 'package:flutter/material.dart';
 import 'package:lucide_icons_flutter/lucide_icons.dart';
 import 'package:provider/provider.dart';
 
-class AddAttendances extends StatelessWidget {
+class AddAttendances extends StatefulWidget {
   const AddAttendances({super.key, required this.group});
 
   final GroupsEntity group;
 
   @override
+  State<AddAttendances> createState() => _AddAttendancesState();
+}
+
+class _AddAttendancesState extends State<AddAttendances> {
+  TextEditingController search = TextEditingController();
+  List<StudentsEntity>? filteredStudents;
+  final DateTime today = DateTime.now();
+
+  @override
   Widget build(BuildContext context) {
+    final data = Provider.of<AppData>(context);
+
+    final students = filteredStudents ?? data.students;
+
     return Scaffold(
       body: SafeArea(
         child: SingleChildScrollView(
@@ -27,7 +40,10 @@ class AddAttendances extends StatelessWidget {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text("مجموعة ${group.id}", style: TextStyle(fontSize: 20)),
+                    Text(
+                      "مجموعة ${widget.group.id}",
+                      style: TextStyle(fontSize: 20),
+                    ),
 
                     CustomButton(
                       title: "الرجوع",
@@ -48,16 +64,14 @@ class AddAttendances extends StatelessWidget {
                   ),
                   margin: EdgeInsets.symmetric(vertical: 5),
                   child: ListTile(
-                    title: Consumer<AppData>(
-                      builder: (context, data, child) => Text(
-                        "عدد الحضور: ${data.attendances.where((e) => e.groupID == group.id && e.createdTime.day == DateTime.now().day).length} من ${group.students!.length}",
-                      ),
+                    title: Text(
+                      "عدد الحضور: ${data.attendances.where((e) => e.groupID == widget.group.id && e.createdTime.day == DateTime.now().day).length} من ${widget.group.students!.length}",
                     ),
                     subtitle: Text(
-                      group.timeGroups!.map((e) => e.day).join(" - "),
+                      widget.group.timeGroups!.map((e) => e.day).join(" - "),
                     ),
                     trailing: Text(
-                      "مجموعة ${group.id}",
+                      "مجموعة ${widget.group.id}",
                       style: TextStyles.trailing,
                     ),
                   ),
@@ -66,99 +80,95 @@ class AddAttendances extends StatelessWidget {
                   title: "ابحث عن طالب",
                   style: "border",
                   prefixIcon: Icons.search,
-                  // controller: search,
-                  // onChanged: (value) => setState(() {
-                  //   students = allStudents
-                  //       .where((stud) => stud.name.contains(value.toString()))
-                  //       .toList();
-                  // }),
+                  controller: search,
+                  onChanged: (value) => setState(() {
+                    setState(() {
+                      filteredStudents = data.students
+                          .where((stud) => stud.name.contains(value.toString()))
+                          .toList();
+                    });
+                  }),
                 ),
 
-                Consumer<AppData>(
-                  builder: (context, data, child) {
-                    final DateTime today = DateTime.now();
-                    final students = data.students
-                        .where((stud) => stud.groupID == group.id)
-                        .toList();
-                    return Column(
-                      children: List.generate(students.length, (index) {
-                        final student = students[index];
-                        AttendancesEntity? attendedData;
-                        try {
-                          attendedData = data.attendances.firstWhere((att) {
-                            DateTime attDate = att.createdTime;
-                            return att.studentID == student.id &&
-                                att.groupID == group.id &&
-                                attDate.year == today.year &&
-                                attDate.month == today.month &&
-                                attDate.day == today.day;
-                          });
-                        } catch (e) {
-                          attendedData = null;
-                        }
+                Column(
+                  children: List.generate(students.length, (index) {
+                    final student = students[index];
+                    AttendancesEntity? attendedData;
+                    try {
+                      attendedData = data.attendances.firstWhere((att) {
+                        DateTime attDate = att.createdTime;
+                        return att.studentID == student.id &&
+                            att.groupID == widget.group.id &&
+                            attDate.year == today.year &&
+                            attDate.month == today.month &&
+                            attDate.day == today.day;
+                      });
+                    } catch (e) {
+                      attendedData = null;
+                    }
 
-                        bool isAttended = attendedData != null;
+                    bool isAttended = attendedData != null;
 
-                        return Container(
-                          padding: const EdgeInsets.all(5),
-                          decoration: BoxDecoration(
-                            color: ThemeColors.forground,
-                            borderRadius: BorderRadius.circular(16),
-                          ),
-                          margin: const EdgeInsets.symmetric(vertical: 5),
-                          child: ListTile(
-                            leading: Icon(LucideIcons.user),
-                            title: Text(student.name),
-                            subtitle: Text(student.phone),
-                            trailing: Row(
-                              mainAxisSize: MainAxisSize.min,
-                              spacing: 5,
-                              children: [
-                                CustomButton(
-                                  title: "إعطاء درجة التاسك",
-                                  fontSize: 10,
-                                  padding: EdgeInsets.symmetric(
-                                    horizontal: 10,
-                                    vertical: 5,
-                                  ),
-                                  onTap: () {
-                                    showModalBottomSheet(
-                                      context: context,
-                                      isScrollControlled: true,
-                                      builder: (context) => AddScore(
-                                        studentData: students[index],
-                                      ),
-                                    );
-                                  },
+                    return Container(
+                      padding: const EdgeInsets.all(5),
+                      decoration: BoxDecoration(
+                        color: ThemeColors.forground,
+                        borderRadius: BorderRadius.circular(16),
+                      ),
+                      margin: const EdgeInsets.symmetric(vertical: 5),
+                      child: ListTile(
+                        leading: Icon(LucideIcons.user),
+                        title: Text(student.name),
+                        subtitle: Text(student.phone),
+                        trailing: Row(
+                          mainAxisSize: MainAxisSize.min,
+                          spacing: 5,
+                          children: [
+                            if (isAttended)
+                              CustomButton(
+                                title: "إعطاء درجة التاسك",
+                                fontSize: 10,
+                                padding: EdgeInsets.symmetric(
+                                  horizontal: 10,
+                                  vertical: 5,
                                 ),
-                                Checkbox(
-                                  value: isAttended,
-                                  onChanged: (v) {
-                                    if (v == true) {
-                                      data.addAttendance(
-                                        AttendancesEntity(
-                                          studentID: student.id!,
-                                          groupID: group.id!,
-                                          grade: 0,
-                                          price: group.price,
-                                          status: 1,
-                                          createdTime: DateTime.now(),
-                                        ),
-                                      );
-                                    } else {
-                                      if (attendedData != null) {
-                                        data.deleteAttendance(attendedData.id!);
-                                      }
-                                    }
-                                  },
-                                ),
-                              ],
+                                onTap: () {
+                                  showModalBottomSheet(
+                                    context: context,
+                                    isScrollControlled: true,
+                                    builder: (context) => AddScore(
+                                      studentData: students[index],
+                                      groupData: widget.group,
+                                    ),
+                                  );
+                                },
+                              ),
+                            Checkbox(
+                              value: isAttended,
+                              onChanged: (v) {
+                                if (v == true) {
+                                  data.addAttendance(
+                                    AttendancesEntity(
+                                      studentID: student.id!,
+                                      groupID: widget.group.id!,
+                                      grade: 0,
+                                      price: widget.group.price,
+                                      status: 1,
+                                      createdTime: DateTime.now(),
+                                    ),
+                                  );
+                                } else {
+                                  if (attendedData != null) {
+                                    data.deleteAttendance(attendedData.id!);
+                                  }
+                                }
+                              },
                             ),
-                          ),
-                        );
-                      }),
+                          ],
+                        ),
+                      ),
                     );
-                  },
+                  }),
                 ),
               ],
             ),

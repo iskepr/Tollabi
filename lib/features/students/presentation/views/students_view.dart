@@ -57,11 +57,7 @@ class _StudentsViewState extends State<StudentsView> {
               onChanged: (value) {
                 setState(() {
                   filteredStudents = data.students
-                      .where(
-                        (stud) => stud.name.toLowerCase().contains(
-                          value.toString().toLowerCase(),
-                        ),
-                      )
+                      .where((stud) => stud.name.contains(value.toString()))
                       .toList();
                 });
               },

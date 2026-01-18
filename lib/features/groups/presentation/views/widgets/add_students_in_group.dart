@@ -36,7 +36,6 @@ class AddStudentsInGroup extends StatelessWidget {
                       child: (BuildContext context, int index) {
                         bool isCheck = data.students[index].groupID == group.id;
                         return Container(
-                          padding: EdgeInsets.all(5),
                           decoration: BoxDecoration(
                             color: ThemeColors.forground,
                             borderRadius: BorderRadius.circular(24),

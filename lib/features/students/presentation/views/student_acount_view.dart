@@ -57,29 +57,27 @@ class StudentAcountView extends StatelessWidget {
                             leading: Icon(LucideIcons.user),
                             title: Text(studentData.name),
                             subtitle: Text(studentData.phone),
-                            trailing: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              crossAxisAlignment: CrossAxisAlignment.end,
-                              children: [
-                                IconButton(
-                                  onPressed: () {
-                                    showModalBottomSheet(
-                                      context: context,
-                                      isScrollControlled: true,
-                                      builder: (context) =>
-                                          EditStud(studentData: studentData),
-                                    );
-                                  },
-                                  padding: EdgeInsets.zero,
-                                  constraints: BoxConstraints(),
-                                  icon: Icon(LucideIcons.squarePen, size: 14),
-                                ),
-                                const SizedBox(height: 5),
-                                Text(
-                                  "مجموعة ${studentData.groupID == null ? "غير محددة" : data.groups.firstWhere((group) => studentData.groupID == group.id).id}",
-                                  style: TextStyles.trailing,
-                                ),
-                              ],
+                            trailing: GestureDetector(
+                              onTap: () {
+                                showModalBottomSheet(
+                                  context: context,
+                                  isScrollControlled: true,
+                                  builder: (context) =>
+                                      EditStud(studentData: studentData),
+                                );
+                              },
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                crossAxisAlignment: CrossAxisAlignment.end,
+                                children: [
+                                  const Icon(LucideIcons.squarePen, size: 14),
+                                  const SizedBox(height: 5),
+                                  Text(
+                                    "مجموعة ${studentData.groupID == null ? "غير محددة" : data.groups.firstWhere((group) => studentData.groupID == group.id).id}",
+                                    style: TextStyles.trailing,
+                                  ),
+                                ],
+                              ),
                             ),
                           );
                         },
