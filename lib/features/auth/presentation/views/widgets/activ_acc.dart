@@ -47,6 +47,7 @@ class ActivAcc extends StatelessWidget {
                           builder: (context) => const UserNavBarScaffold(),
                         ),
                       );
+                      showMessage(context, "تم تفعيل الحساب بنجاح");
                     }
                   } else {
                     if (context.mounted) {
@@ -60,7 +61,7 @@ class ActivAcc extends StatelessWidget {
             CustomButton(
               title: "تواصل معنا عبر الواتساب",
               onTap: () async {
-                final Uri url = Uri.parse('https://wa.me/966525254254');
+                final Uri url = Uri.parse('https://wa.me/201551450098');
                 if (!await launchUrl(url)) {
                   throw Exception('Could not launch $url');
                 }

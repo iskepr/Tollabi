@@ -10,16 +10,23 @@ import 'package:flutter/material.dart';
 import 'package:lucide_icons_flutter/lucide_icons.dart';
 import 'package:provider/provider.dart';
 
-class StudentsView extends StatelessWidget {
-  StudentsView({super.key});
+class StudentsView extends StatefulWidget {
+  const StudentsView({super.key});
 
-  List<StudentsEntity> students = [];
+  @override
+  State<StudentsView> createState() => _StudentsViewState();
+}
+
+class _StudentsViewState extends State<StudentsView> {
   TextEditingController search = TextEditingController();
+  List<StudentsEntity>? filteredStudents;
+
   @override
   Widget build(BuildContext context) {
     return Consumer<AppData>(
       builder: (context, data, child) {
-        students = data.students;
+        final students = filteredStudents ?? data.students;
+
         return Column(
           spacing: 10,
           children: [
@@ -47,14 +54,22 @@ class StudentsView extends StatelessWidget {
               style: "border",
               prefixIcon: Icons.search,
               controller: search,
-              onChanged: (value) => students = data.students
-                  .where((stud) => stud.name.contains(value.toString()))
-                  .toList(),
+              onChanged: (value) {
+                setState(() {
+                  filteredStudents = data.students
+                      .where(
+                        (stud) => stud.name.toLowerCase().contains(
+                          value.toString().toLowerCase(),
+                        ),
+                      )
+                      .toList();
+                });
+              },
             ),
             CustomGrid(
               count: students.length,
               emptyText: "لا يوجد طلاب",
-              child: (BuildContext context, int index) => GestureDetector(
+              child: (context, index) => GestureDetector(
                 onTap: () {
                   Navigator.push(
                     context,
@@ -71,17 +86,8 @@ class StudentsView extends StatelessWidget {
                     borderRadius: BorderRadius.circular(24),
                   ),
                   child: ListTile(
-                    contentPadding: EdgeInsets.zero,
-                    title: Text(
-                      students[index].name,
-                      style: TextStyle(fontSize: 14),
-                    ),
-                    subtitle: Text(
-                      students[index].phone,
-                      textDirection: TextDirection.ltr,
-                      textAlign: TextAlign.right,
-                      style: TextStyle(fontSize: 14),
-                    ),
+                    title: Text(students[index].name),
+                    subtitle: Text(students[index].phone),
                     leading: Icon(LucideIcons.user),
                   ),
                 ),

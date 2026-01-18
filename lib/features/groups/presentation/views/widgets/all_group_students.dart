@@ -1,7 +1,7 @@
 import 'package:abo_sadah/core/Theme/colors.dart';
 import 'package:abo_sadah/core/data/all.dart';
 import 'package:abo_sadah/core/data/typs.dart';
-import 'package:abo_sadah/core/widgets/inputs/input.dart';
+import 'package:abo_sadah/core/widgets/custom_grid.dart';
 import 'package:flutter/material.dart';
 import 'package:lucide_icons_flutter/lucide_icons.dart';
 import 'package:provider/provider.dart';
@@ -16,16 +16,13 @@ class AllGroupStudents extends StatefulWidget {
 }
 
 class _AllGroupStudentsState extends State<AllGroupStudents> {
-  TextEditingController search = TextEditingController();
-  List<StudentsEntity> allStudents = [];
   List<StudentsEntity> students = [];
 
   @override
   void initState() {
     super.initState();
     final data = Provider.of<AppData>(context, listen: false);
-    allStudents = data.students;
-    students = allStudents
+    students = data.students
         .where((student) => student.groupID == widget.group.id)
         .toList();
   }
@@ -34,26 +31,21 @@ class _AllGroupStudentsState extends State<AllGroupStudents> {
   Widget build(BuildContext context) {
     return Column(
       spacing: 10,
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Input(
-          title: "ابحث عن طالب",
-          style: "border",
-          prefixIcon: Icons.search,
-          controller: search,
-          onChanged: (value) => setState(() {
-            students = allStudents
-                .where((stud) => stud.name.contains(value.toString()))
-                .toList();
-          }),
+        const Text(
+          "جميع طلاب المجموعة:",
+          style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
         ),
         Consumer<AppData>(
           builder: (context, data, child) {
             students = (data.students)
                 .where((e) => e.groupID == widget.group.id)
                 .toList();
-            return Column(
-              spacing: 5,
-              children: List.generate(students.length, (index) {
+            return CustomGrid(
+              count: students.length,
+              emptyText: "لا يوجد طلاب",
+              child: (context, index) {
                 final student = students[index];
                 return Container(
                   decoration: BoxDecoration(
@@ -65,10 +57,10 @@ class _AllGroupStudentsState extends State<AllGroupStudents> {
                     contentPadding: EdgeInsets.symmetric(horizontal: 10),
                     leading: Icon(LucideIcons.user),
                     title: Text(student.name),
-                    subtitle: Text(student.name),
+                    subtitle: Text(student.phone),
                   ),
                 );
-              }),
+              },
             );
           },
         ),

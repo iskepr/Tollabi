@@ -1,6 +1,5 @@
 import 'package:abo_sadah/core/Theme/text_styles.dart';
 import 'package:abo_sadah/core/data/typs.dart';
-import 'package:abo_sadah/core/widgets/inputs/input.dart';
 import 'package:abo_sadah/features/attendances/presentation/views/widgets/add_attendances.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -16,16 +15,14 @@ class AttendancesView extends StatefulWidget {
 }
 
 class _AttendancesViewState extends State<AttendancesView> {
-  List<GroupsEntity> allGroups = [];
   List<GroupsEntity> groups = [];
-  TextEditingController search = TextEditingController();
 
   @override
   void initState() {
     super.initState();
     String todayName = DateFormat('EEEE').format(DateTime.now());
     final data = Provider.of<AppData>(context, listen: false);
-    allGroups = data.groups
+    groups = data.groups
         .where((g) => g.timeGroups?.any((t) => t.day == todayName) ?? false)
         .toList();
   }
@@ -35,34 +32,23 @@ class _AttendancesViewState extends State<AttendancesView> {
     return Column(
       spacing: 10,
       children: [
-        Row(
+        const Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Text("حُضور مجموعات اليوم", style: TextStyle(fontSize: 20)),
-            const SizedBox(height: 40),
+            Text("مجموعات اليوم", style: TextStyle(fontSize: 20)),
+            SizedBox(height: 40),
           ],
-        ),
-        Input(
-          title: "ابحث عن مجموعة",
-          style: "border",
-          prefixIcon: Icons.search,
-          controller: search,
-          onChanged: (value) => setState(() {
-            groups = allGroups
-                .where((stud) => stud.id.toString() == value)
-                .toList();
-          }),
         ),
 
         Consumer<AppData>(
           builder: (context, data, child) {
-            if (allGroups.isEmpty) {
+            if (groups.isEmpty) {
               return Text("لا يوجد مجموعات لليوم");
             }
             return Column(
               spacing: 10,
-              children: List.generate(allGroups.length, (index) {
-                final group = allGroups[index];
+              children: List.generate(groups.length, (index) {
+                final group = groups[index];
                 return GestureDetector(
                   onTap: () => Navigator.push(
                     context,

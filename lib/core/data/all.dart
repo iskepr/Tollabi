@@ -250,7 +250,7 @@ class AppData extends ChangeNotifier {
 
   static final List days = [
     "السبت",
-    "الاحد",
+    "الأحد",
     "الاثنين",
     "الثلاثاء",
     "الأربعاء",
