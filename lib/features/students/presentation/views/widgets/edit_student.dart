@@ -1,6 +1,7 @@
 import 'package:tollabi/core/data/all.dart';
 import 'package:tollabi/core/data/typs.dart';
 import 'package:tollabi/core/Theme/text_styles.dart';
+import 'package:tollabi/core/functions/show_message.dart';
 import 'package:tollabi/core/widgets/custom_bottom_sheet.dart';
 import 'package:tollabi/core/widgets/inputs/custom_button.dart';
 import 'package:tollabi/core/widgets/inputs/input.dart';
@@ -43,6 +44,7 @@ class EditStud extends StatelessWidget {
           Input(
             title: "الهاتف",
             value: studentData.phone,
+            type: "number",
             controller: c["phone"]!,
           ),
           Consumer<AppData>(
@@ -86,6 +88,7 @@ class EditStud extends StatelessWidget {
                 ),
               );
               Navigator.pop(context);
+              showMessage(context, "تم تعديل بيانات الطالب بنجاح");
             },
           ),
         ],

@@ -7,8 +7,6 @@ List<AnalysisEntity> calculateAnalysis(BuildContext context) {
   final data = Provider.of<AppData>(context, listen: false);
   final now = DateTime.now();
 
-  print(data.students.length);
-
   double expMonth = _sumExpenses(
     data.expenses,
     (e) => e.createdTime.month == now.month && e.createdTime.year == now.year,

@@ -200,7 +200,10 @@ class _AddGroupState extends State<AddGroup> {
               CustomButton(
                 title: "حفظ المجموعة",
                 onTap: () async {
-                  if (c["price"]!.text.isEmpty) {
+                  final priceText = c["price"]!.text.trim();
+                  final gradeText = c["grade"]!.text.trim();
+
+                  if (priceText.isEmpty) {
                     showMessage(
                       context,
                       "برجاء إدخال سعر الحصة",
@@ -209,15 +212,28 @@ class _AddGroupState extends State<AddGroup> {
                     return;
                   }
 
+                  final price = double.tryParse(priceText);
+                  final grade = double.tryParse(gradeText);
+
+                  if (price == null) {
+                    showMessage(
+                      context,
+                      "سعر الحصة يجب أن يكون رقماً",
+                      isError: true,
+                    );
+                    return;
+                  }
+
                   data.addGroup(
                     GroupsEntity(
                       timeGroups: groupDays,
-                      price: double.parse(c["price"]!.text),
-                      grade: double.parse(c["grade"]!.text),
+                      price: price,
+                      grade: grade ?? 10.0,
                     ),
                   );
 
                   if (context.mounted) Navigator.pop(context);
+                  showMessage(context, "تم اضافة المجموعة بنجاح");
                 },
               ),
               const SizedBox(height: 20),

@@ -1,5 +1,6 @@
 import 'package:tollabi/core/data/all.dart';
 import 'package:tollabi/core/data/typs.dart';
+import 'package:tollabi/core/functions/show_message.dart';
 import 'package:tollabi/core/widgets/custom_bottom_sheet.dart';
 import 'package:tollabi/core/widgets/inputs/custom_button.dart';
 import 'package:tollabi/core/widgets/inputs/input.dart';
@@ -47,6 +48,7 @@ class _AddStudState extends State<AddStud> {
                 ),
               );
               Navigator.pop(context);
+              showMessage(context, "تم اضافة الطالب بنجاح");
             },
           ),
         ],

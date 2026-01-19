@@ -65,7 +65,6 @@ class AddStudentsInGroup extends StatelessWidget {
                                                   .id)
                                         .toString(),
                               onChanged: (val) {
-                                print(val);
                                 if (val == "true") {
                                   data.students[index].groupID = group.id;
                                 } else {

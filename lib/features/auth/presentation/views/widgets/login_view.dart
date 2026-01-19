@@ -77,14 +77,22 @@ class _LoginViewState extends State<LoginView> {
                 padding: EdgeInsets.symmetric(horizontal: 30, vertical: 12),
                 title: isLogin ? "تسجيل الدخول" : "إنشاء حساب",
                 onTap: () async {
+                  final phone = c["phone"]!.text.trim();
+                  final pass = c["pass"]!.text.trim();
+                  final name = c["name"]!.text.trim();
+
+                  if (phone.isEmpty || pass.isEmpty || (!isLogin && name.isEmpty)) {
+                    showMessage(context, "برجاء ملء جميع الحقول", isError: true);
+                    return;
+                  }
+
                   final prefs = await SharedPreferences.getInstance();
                   if (isLogin) {
                     final userData = prefs.getString("user_data");
 
                     if (userData != null) {
                       final data = jsonDecode(userData);
-                      if (data["phone"] == c["phone"]!.text.trim() &&
-                          data["pass"] == c["pass"]!.text.trim()) {
+                      if (data["phone"] == phone && data["pass"] == pass) {
                         await prefs.setString("app_status", "isLogin");
 
                         if (context.mounted) {
@@ -97,7 +105,7 @@ class _LoginViewState extends State<LoginView> {
                         }
                       } else {
                         if (context.mounted) {
-                          if (data["phone"] != c["phone"]!.text.trim()) {
+                          if (data["phone"] != phone) {
                             showMessage(
                               context,
                               "رقم الهاتف غير صحيح",
@@ -105,7 +113,7 @@ class _LoginViewState extends State<LoginView> {
                             );
                             return;
                           }
-                          if (data["pass"] != c["pass"]!.text.trim()) {
+                          if (data["pass"] != pass) {
                             showMessage(
                               context,
                               "كلمة المرور غير صحيحة",
@@ -115,10 +123,17 @@ class _LoginViewState extends State<LoginView> {
                           }
                         }
                       }
+                    } else {
+                      if (context.mounted) {
+                        showMessage(context, "الحساب غير موجود، برجاء إنشاء حساب", isError: true);
+                      }
                     }
                   } else {
+                    if (phone.length < 11) {
+                      showMessage(context, "رقم الهاتف غير صحيح", isError: true);
+                      return;
+                    }
                     try {
-                      final phone = c["phone"]!.text.trim();
                       final code = phone
                           .substring(phone.length - 4)
                           .split("")
@@ -128,9 +143,9 @@ class _LoginViewState extends State<LoginView> {
                       await prefs.setString(
                         'user_data',
                         jsonEncode({
-                          "name": c["name"]!.text.trim(),
-                          "phone": c["phone"]!.text.trim(),
-                          "pass": c["pass"]!.text.trim(),
+                          "name": name,
+                          "phone": phone,
+                          "pass": pass,
                           "code": code,
                           "created_time": DateTime.now().toString(),
                         }),
@@ -148,7 +163,7 @@ class _LoginViewState extends State<LoginView> {
                         );
                       }
                     } catch (e) {
-                      print(e);
+                      debugPrint(e.toString());
                     }
                   }
                 },

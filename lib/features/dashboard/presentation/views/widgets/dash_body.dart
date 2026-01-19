@@ -53,10 +53,17 @@ class _DashBodyState extends State<DashBody> {
               ),
               itemCount: data.analysisData.length,
               itemBuilder: (context, index) => Container(
-                padding: EdgeInsets.all(5),
+                padding: EdgeInsets.all(12),
                 decoration: BoxDecoration(
                   color: ThemeColors.forground,
                   borderRadius: BorderRadius.circular(24),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.black.withOpacity(0.05),
+                      blurRadius: 10,
+                      offset: Offset(0, 4),
+                    ),
+                  ],
                 ),
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -65,10 +72,20 @@ class _DashBodyState extends State<DashBody> {
                     Text(
                       data.analysisData[index].title,
                       textAlign: TextAlign.center,
+                      style: TextStyle(
+                        fontSize: 12,
+                        color: Colors.grey[600],
+                        fontFamily: "Tajawal",
+                      ),
                     ),
+                    const SizedBox(height: 4),
                     Text(
                       formatDouble(data.analysisData[index].value.toDouble()),
-                      style: TextStyle(fontWeight: FontWeight.bold),
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 18,
+                        color: ThemeColors.primary,
+                      ),
                     ),
                   ],
                 ),

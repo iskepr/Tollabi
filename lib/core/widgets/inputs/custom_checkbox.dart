@@ -19,9 +19,9 @@ class CustomCheckbox extends StatelessWidget {
         height: 20,
         margin: EdgeInsets.all(5),
         decoration: BoxDecoration(
-          color: value == "true" ? ThemeColors.fourth : Colors.transparent,
+          color: value == "true" ? ThemeColors.third : Colors.transparent,
           border: Border.all(
-            color: value == "true" ? ThemeColors.fourth : ThemeColors.secondary,
+            color: value == "true" ? ThemeColors.third : ThemeColors.secondary,
           ),
           borderRadius: BorderRadius.circular(7),
         ),

@@ -222,6 +222,7 @@ class _EditGroupState extends State<EditGroup> {
                   );
 
                   if (context.mounted) Navigator.pop(context);
+                  showMessage(context, "تم تعديل بيانات المجموعة بنجاح");
                 },
               ),
             ],

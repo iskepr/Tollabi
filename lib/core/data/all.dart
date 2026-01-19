@@ -170,7 +170,7 @@ class AppData extends ChangeNotifier {
 
       if (timeGroup.id == null || timeGroup.id == 0) {
         await MySqfLite().insert("time_groups", data);
-        print("تم إضافة موعد جديد");
+        debugPrint("تم إضافة موعد جديد");
       } else {
         await MySqfLite().update(
           "time_groups",
@@ -178,7 +178,7 @@ class AppData extends ChangeNotifier {
           whereClause: "id = ?",
           whereArgs: [timeGroup.id],
         );
-        print("تم تعديل موعد");
+        debugPrint("تم تعديل موعد");
       }
     }
 

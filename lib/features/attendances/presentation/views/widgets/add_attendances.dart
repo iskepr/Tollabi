@@ -2,6 +2,7 @@ import 'package:tollabi/core/Theme/colors.dart';
 import 'package:tollabi/core/Theme/text_styles.dart';
 import 'package:tollabi/core/data/all.dart';
 import 'package:tollabi/core/data/typs.dart';
+import 'package:tollabi/core/functions/show_message.dart';
 import 'package:tollabi/core/widgets/inputs/custom_button.dart';
 import 'package:tollabi/core/widgets/inputs/input.dart';
 import 'package:tollabi/features/groups/presentation/views/widgets/add_score.dart';
@@ -157,9 +158,17 @@ class _AddAttendancesState extends State<AddAttendances> {
                                       createdTime: DateTime.now(),
                                     ),
                                   );
+                                  showMessage(
+                                    context,
+                                    "تم تسجيل حضور الطالب بنجاح",
+                                  );
                                 } else {
                                   if (attendedData != null) {
                                     data.deleteAttendance(attendedData.id!);
+                                    showMessage(
+                                      context,
+                                      "تم ازالة تسجيل حضور الطالب بنجاح",
+                                    );
                                   }
                                 }
                               },

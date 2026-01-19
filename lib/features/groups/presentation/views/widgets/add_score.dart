@@ -2,6 +2,7 @@ import 'package:tollabi/core/data/all.dart';
 import 'package:tollabi/core/data/typs.dart';
 import 'package:tollabi/core/Theme/colors.dart';
 import 'package:tollabi/core/Theme/text_styles.dart';
+import 'package:tollabi/core/functions/show_message.dart';
 import 'package:tollabi/core/utils/format.dart';
 import 'package:tollabi/core/widgets/custom_bottom_sheet.dart';
 import 'package:tollabi/core/widgets/inputs/custom_button.dart';
@@ -117,13 +118,13 @@ class _AddScoreState extends State<AddScore> {
             title: "إضافة",
             onTap: () {
               if (attendID != null) {
-                // بنستخدم الـ data والـ attendID اللي جبناهم فوق مرة واحدة
                 data.addGrade(
                   attendID!,
                   double.tryParse(gradeController.text) ?? 0.0,
                 );
               }
               Navigator.pop(context);
+              showMessage(context, "تم اضافة الدرجة بنجاح");
             },
           ),
         ],
