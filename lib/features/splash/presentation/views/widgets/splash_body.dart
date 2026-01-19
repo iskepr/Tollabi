@@ -34,7 +34,7 @@ class SplashBody extends StatelessWidget {
                         const SizedBox(height: 20),
 
                         const Text(
-                          "مرحبا بك أبو سداح !",
+                          "مرحبا بك في تطبيق طلابي!",
                           style: TextStyle(
                             fontSize: 24,
                             fontFamily: "VEXA",
@@ -64,7 +64,6 @@ class SplashBody extends StatelessWidget {
                             }
                           },
                         ),
-
                         const SizedBox(height: 20),
                       ],
                     ),
@@ -72,7 +71,7 @@ class SplashBody extends StatelessWidget {
                 ),
               ],
             ),
-            Center(child: Image.asset(Assets.assetsImgsLogo)),
+            Center(child: Image.asset(Assets.assetsImgsFullLogo, height: 80)),
           ],
         ),
       ),

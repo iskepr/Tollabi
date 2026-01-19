@@ -42,9 +42,10 @@ class EditStud extends StatelessWidget {
             controller: c["name"]!,
           ),
           Input(
-            title: "الهاتف",
-            value: studentData.phone,
+            title: "رقم الهاتف",
             type: "number",
+            maxLength: 11,
+            value: studentData.phone,
             controller: c["phone"]!,
           ),
           Consumer<AppData>(

@@ -7,6 +7,7 @@ class Input extends StatelessWidget {
     super.key,
     required this.title,
     this.controller,
+    this.maxLength,
     this.value,
     this.prefixIcon,
     this.type = "text",
@@ -22,6 +23,7 @@ class Input extends StatelessWidget {
   final String title;
   final TextEditingController? controller;
   final String? value;
+  final int? maxLength;
   final IconData? prefixIcon;
   final String? type;
   final String? style;
@@ -33,6 +35,7 @@ class Input extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final decoration = InputDecoration(
+      counterText: "",
       contentPadding: const EdgeInsets.symmetric(horizontal: 10),
       prefixIcon: prefixIcon != null ? Icon(prefixIcon) : null,
       hintText: title,
@@ -62,6 +65,7 @@ class Input extends StatelessWidget {
           : TextField(
               controller: controller,
               decoration: decoration,
+              maxLength: maxLength,
               keyboardType: type == "number"
                   ? TextInputType.number
                   : type == "email"

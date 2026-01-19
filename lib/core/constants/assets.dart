@@ -38,12 +38,16 @@ class Assets {
   /// assets/fonts/VEXA/VEXA-light.ttf
   static const String assetsFontsVEXAVEXALight = "assets/fonts/VEXA/VEXA-light.ttf";
 
+  /// Assets for assetsImgsFullLogo
+  /// assets/imgs/full_logo.png
+  static const String assetsImgsFullLogo = "assets/imgs/full_logo.png";
+
   /// Assets for assetsImgsLogo
   /// assets/imgs/logo.png
   static const String assetsImgsLogo = "assets/imgs/logo.png";
 
   /// Assets for assetsImgsSpalshMen
-  /// assets/imgs/spalshMen.png
-  static const String assetsImgsSpalshMen = "assets/imgs/spalshMen.png";
+  /// assets/imgs/spalsh_men.png
+  static const String assetsImgsSpalshMen = "assets/imgs/spalsh_men.png";
 }
 

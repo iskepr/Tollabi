@@ -5,6 +5,7 @@ import 'package:tollabi/core/widgets/custom_grid.dart';
 import 'package:flutter/material.dart';
 import 'package:lucide_icons_flutter/lucide_icons.dart';
 import 'package:provider/provider.dart';
+import 'package:tollabi/features/students/presentation/views/student_acount_view.dart';
 
 class AllGroupStudents extends StatefulWidget {
   const AllGroupStudents({super.key, required this.group});
@@ -47,16 +48,27 @@ class _AllGroupStudentsState extends State<AllGroupStudents> {
               emptyText: "لا يوجد طلاب",
               child: (context, index) {
                 final student = students[index];
-                return Container(
-                  decoration: BoxDecoration(
-                    color: ThemeColors.forground,
-                    borderRadius: BorderRadius.circular(24),
-                  ),
-                  child: ListTile(
-                    contentPadding: EdgeInsets.symmetric(horizontal: 10),
-                    leading: Icon(LucideIcons.user),
-                    title: Text(student.name),
-                    subtitle: Text(student.phone),
+                return GestureDetector(
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) =>
+                            StudentAcountView(studentID: students[index].id!),
+                      ),
+                    );
+                  },
+                  child: Container(
+                    decoration: BoxDecoration(
+                      color: ThemeColors.forground,
+                      borderRadius: BorderRadius.circular(24),
+                    ),
+                    child: ListTile(
+                      contentPadding: EdgeInsets.symmetric(horizontal: 10),
+                      leading: Icon(LucideIcons.user),
+                      title: Text(student.name),
+                      subtitle: Text(student.phone),
+                    ),
                   ),
                 );
               },

@@ -49,22 +49,14 @@ class _LoginViewState extends State<LoginView> {
                 child: Column(
                   children: [
                     if (!isLogin)
-                      Input(
-                        title: "الاسم بالكامل",
-                        style: "solid",
-                        controller: c["name"],
-                      ),
+                      Input(title: "الاسم بالكامل", controller: c["name"]),
                     Input(
                       title: "رقم الهاتف",
-                      style: "solid",
                       type: "number",
+                      maxLength: 11,
                       controller: c["phone"],
                     ),
-                    Input(
-                      title: "كلمة المرور",
-                      style: "solid",
-                      controller: c["pass"],
-                    ),
+                    Input(title: "كلمة المرور", controller: c["pass"]),
                   ],
                 ),
               ),
@@ -81,8 +73,14 @@ class _LoginViewState extends State<LoginView> {
                   final pass = c["pass"]!.text.trim();
                   final name = c["name"]!.text.trim();
 
-                  if (phone.isEmpty || pass.isEmpty || (!isLogin && name.isEmpty)) {
-                    showMessage(context, "برجاء ملء جميع الحقول", isError: true);
+                  if (phone.isEmpty ||
+                      pass.isEmpty ||
+                      (!isLogin && name.isEmpty)) {
+                    showMessage(
+                      context,
+                      "برجاء ملء جميع الحقول",
+                      isError: true,
+                    );
                     return;
                   }
 
@@ -125,12 +123,22 @@ class _LoginViewState extends State<LoginView> {
                       }
                     } else {
                       if (context.mounted) {
-                        showMessage(context, "الحساب غير موجود، برجاء إنشاء حساب", isError: true);
+                        showMessage(
+                          context,
+                          "الحساب غير موجود، برجاء إنشاء حساب",
+                          isError: true,
+                        );
                       }
                     }
                   } else {
                     if (phone.length < 11) {
-                      showMessage(context, "رقم الهاتف غير صحيح", isError: true);
+                      if (context.mounted) {
+                        showMessage(
+                          context,
+                          "رقم الهاتف غير صحيح",
+                          isError: true,
+                        );
+                      }
                       return;
                     }
                     try {

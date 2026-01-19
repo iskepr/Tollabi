@@ -1,6 +1,7 @@
 import 'package:tollabi/core/Theme/colors.dart';
 import 'package:tollabi/core/data/all.dart';
 import 'package:tollabi/core/utils/format.dart';
+import 'package:tollabi/core/widgets/confirm_delete.dart';
 import 'package:tollabi/core/widgets/inputs/custom_button.dart';
 import 'package:tollabi/features/expenses/presentation/views/widgets/add_expenses.dart';
 import 'package:flutter/material.dart';
@@ -75,21 +76,36 @@ class ExpensesView extends StatelessWidget {
               spacing: 10,
               children: List.generate(data.expenses.length, (index) {
                 final expense = data.expenses[index];
-                return Container(
-                  decoration: BoxDecoration(
-                    color: ThemeColors.forground,
-                    borderRadius: BorderRadius.circular(16),
-                  ),
-                  child: ListTile(
-                    title: Text(expense.title),
-                    subtitle: Text(
-                      (expense.note ?? '').isNotEmpty
-                          ? "${expense.note} - ${formatTime(expense.createdTime).formatH}"
-                          : formatTime(expense.createdTime).formatH,
+                return GestureDetector(
+                  onLongPress: () {
+                    showModalBottomSheet(
+                      context: context,
+                      isScrollControlled: true,
+                      builder: (context) => ConfirmDelete(
+                        title: expense.title,
+                        onConfirm: () {
+                          data.deleteExpense(expense.id!);
+                          Navigator.pop(context);
+                        },
+                      ),
+                    );
+                  },
+                  child: Container(
+                    decoration: BoxDecoration(
+                      color: ThemeColors.forground,
+                      borderRadius: BorderRadius.circular(16),
                     ),
-                    trailing: Text(
-                      "${formatDouble(expense.amount)} جنية",
-                      style: TextStyle(fontSize: 16),
+                    child: ListTile(
+                      title: Text(expense.title),
+                      subtitle: Text(
+                        (expense.note ?? '').isNotEmpty
+                            ? "${expense.note} - ${formatTime(expense.createdTime).formatH}"
+                            : formatTime(expense.createdTime).formatH,
+                      ),
+                      trailing: Text(
+                        "${formatDouble(expense.amount)} جنية",
+                        style: TextStyle(fontSize: 16),
+                      ),
                     ),
                   ),
                 );

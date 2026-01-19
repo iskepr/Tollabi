@@ -191,8 +191,19 @@ class AppData extends ChangeNotifier {
     await MySqfLite().insert("students", {
       "name": student.name,
       "phone": student.phone,
+      "group_id": student.groupID,
       "created_time": student.createdTime.toString(),
     });
+    init();
+    notifyListeners();
+  }
+
+  void deleteStudent(int id) async {
+    await MySqfLite().delete(
+      "students",
+      whereClause: "id = ?",
+      whereArgs: [id],
+    );
     init();
     notifyListeners();
   }
@@ -220,6 +231,16 @@ class AppData extends ChangeNotifier {
       "description": expense.note,
       "created_time": expense.createdTime.toString(),
     });
+    init();
+    notifyListeners();
+  }
+
+  void deleteExpense(int id) async {
+    await MySqfLite().delete(
+      "expenses",
+      whereClause: "id = ?",
+      whereArgs: [id],
+    );
     init();
     notifyListeners();
   }

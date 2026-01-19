@@ -1,6 +1,7 @@
 import 'package:tollabi/core/data/all.dart';
 import 'package:tollabi/core/Theme/colors.dart';
 import 'package:tollabi/core/Theme/text_styles.dart';
+import 'package:tollabi/core/widgets/confirm_delete.dart';
 import 'package:tollabi/core/widgets/inputs/custom_button.dart';
 import 'package:tollabi/features/students/presentation/views/widgets/edit_student.dart';
 import 'package:tollabi/features/students/presentation/views/widgets/student_attend_data.dart';
@@ -53,32 +54,78 @@ class StudentAcountView extends StatelessWidget {
                           final studentData = data.students.firstWhere(
                             (stud) => stud.id == studentID,
                           );
-                          return ListTile(
-                            leading: Icon(LucideIcons.user),
-                            title: Text(studentData.name),
-                            subtitle: Text(studentData.phone),
-                            trailing: GestureDetector(
-                              onTap: () {
-                                showModalBottomSheet(
-                                  context: context,
-                                  isScrollControlled: true,
-                                  builder: (context) =>
-                                      EditStud(studentData: studentData),
-                                );
-                              },
-                              child: Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                crossAxisAlignment: CrossAxisAlignment.end,
-                                children: [
-                                  const Icon(LucideIcons.squarePen, size: 14),
-                                  const SizedBox(height: 5),
-                                  Text(
-                                    "مجموعة ${studentData.groupID == null ? "غير محددة" : data.groups.firstWhere((group) => studentData.groupID == group.id).id}",
-                                    style: TextStyles.trailing,
-                                  ),
-                                ],
+                          return Column(
+                            children: [
+                              ListTile(
+                                contentPadding: EdgeInsets.only(
+                                  right: 10,
+                                  left: 5,
+                                  top: 5,
+                                  bottom: 5,
+                                ),
+                                leading: Icon(LucideIcons.user),
+                                title: Text(studentData.name),
+                                subtitle: Text(studentData.phone),
+                                trailing: Row(
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: [
+                                    IconButton(
+                                      onPressed: () {
+                                        showModalBottomSheet(
+                                          context: context,
+                                          isScrollControlled: true,
+                                          builder: (context) => ConfirmDelete(
+                                            title: "الطالب",
+                                            onConfirm: () {
+                                              data.deleteStudent(
+                                                studentData.id!,
+                                              );
+                                              Navigator.pop(context);
+                                              Navigator.pop(context);
+                                            },
+                                          ),
+                                        );
+                                      },
+                                      constraints: const BoxConstraints(),
+                                      padding: const EdgeInsets.symmetric(
+                                        horizontal: 10,
+                                        vertical: 5,
+                                      ),
+                                      icon: const Icon(
+                                        LucideIcons.trash,
+                                        color: ThemeColors.error,
+                                        size: 14,
+                                      ),
+                                    ),
+                                    IconButton(
+                                      onPressed: () {
+                                        showModalBottomSheet(
+                                          context: context,
+                                          isScrollControlled: true,
+                                          builder: (context) => EditStud(
+                                            studentData: studentData,
+                                          ),
+                                        );
+                                      },
+                                      constraints: const BoxConstraints(),
+                                      padding: const EdgeInsets.symmetric(
+                                        horizontal: 10,
+                                        vertical: 5,
+                                      ),
+                                      icon: const Icon(
+                                        LucideIcons.squarePen,
+                                        size: 14,
+                                      ),
+                                    ),
+                                  ],
+                                ),
                               ),
-                            ),
+                              Text(
+                                "مجموعة ${studentData.groupID == null ? "غير محددة" : data.groups.firstWhere((group) => studentData.groupID == group.id).id}",
+                                style: TextStyles.trailing,
+                              ),
+                              const SizedBox(height: 10),
+                            ],
                           );
                         },
                       ),
